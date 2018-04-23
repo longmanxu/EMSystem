@@ -35,7 +35,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
-        setPreferredSize(new java.awt.Dimension(640, 480));
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -50,7 +49,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGap(0, 475, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("tab1", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/cat.png")), jPanel1); // NOI18N
+        jTabbedPane1.addTab("tab1", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/cat.png")), jPanel1, "cats"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
