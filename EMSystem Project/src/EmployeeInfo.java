@@ -1,6 +1,6 @@
 /**
  * An object for storing an employee's first name, last name, employee number, sex, work location, and deductions rate.
- * @author Longman Xu
+ * @author Longman Xu and Tommy Huang
  * @version Date: 2018-04-04
  * 
  */

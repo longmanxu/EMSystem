@@ -1,6 +1,7 @@
 /**
  *
- * @author longm
+ * @author longman and tommy
+ * @version Date: 2018-05-02
  */
 public class Main extends MainJFrame{
 	
