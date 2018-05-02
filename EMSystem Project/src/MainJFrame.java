@@ -39,6 +39,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         helpPanel = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Management System");
@@ -156,6 +157,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/newfolder.png"))); // NOI18N
         jButton1.setText("buttonNew");
+        jButton1.setMaximumSize(new java.awt.Dimension(187, 92));
+        jButton1.setMinimumSize(new java.awt.Dimension(187, 92));
+        jButton1.setName(""); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -164,9 +168,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/open.png"))); // NOI18N
         jButton2.setText("buttonOpen");
+        jButton2.setMaximumSize(new java.awt.Dimension(187, 92));
+        jButton2.setMinimumSize(new java.awt.Dimension(187, 92));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/save.png"))); // NOI18N
         jButton3.setText("buttonSave");
+        jButton3.setMaximumSize(new java.awt.Dimension(187, 92));
+        jButton3.setMinimumSize(new java.awt.Dimension(187, 92));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/saveAs.png"))); // NOI18N
         jButton4.setText("buttonSaveAs");
@@ -181,9 +189,9 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63)
-                .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(138, 138, 138))
         );
         filePanelLayout.setVerticalGroup(
@@ -191,12 +199,12 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(filePanelLayout.createSequentialGroup()
                 .addGap(138, 138, 138)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
 
@@ -219,15 +227,28 @@ public class MainJFrame extends javax.swing.JFrame {
 
         helpPanel.setPreferredSize(new java.awt.Dimension(700, 600));
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/clippy.jpg"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout helpPanelLayout = new javax.swing.GroupLayout(helpPanel);
         helpPanel.setLayout(helpPanelLayout);
         helpPanelLayout.setHorizontalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 653, Short.MAX_VALUE)
+            .addGroup(helpPanelLayout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(jButton5)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 553, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
+                .addContainerGap(127, Short.MAX_VALUE)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101))
         );
 
         jTabbedPane1.addTab("Help", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/help.png")), helpPanel); // NOI18N
@@ -249,6 +270,10 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -293,6 +318,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
