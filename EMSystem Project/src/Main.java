@@ -1,3 +1,7 @@
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author longman and tommy
@@ -5,10 +9,18 @@
  */
 public class Main extends MainJFrame{
 	
-	EmployeeHashTable employeeTable = new EmployeeHashTable(10);
+	private EmployeeHashTable employeeTable;
+	private FileWriter saveWriter;
+	private FileReader saveReader;
+	private static FileWriter settingsWriter;
+	private static FileReader settingsReader;
+	
+	
+	
 	
 	public Main() {
 		super();
+		employeeTable = new EmployeeHashTable(10);
 		// TODO: get stuff done
 	}
 	
@@ -16,6 +28,13 @@ public class Main extends MainJFrame{
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
+		try {
+			settingsWriter = new FileWriter("settings.cfg");
+			settingsReader = new FileReader("settings.cfg");
+		} catch (IOException e) {
+			System.err.println(e);
+		} 
+		
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
