@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Properties;
 
 /**
  *
@@ -6,19 +7,25 @@ import java.io.*;
  * @version Date: 2018-05-02
  */
 public class Main extends MainJFrame{
-	
+	// initizlize a bunch of IO stuff
 	private EmployeeHashTable employeeTable;
-	private BufferedWriter saveWriter;
+	private BufferedWriter saveWriter;  // io for employee info
 	private BufferedReader saveReader;
-	private static BufferedWriter settingsWriter;
+	private static BufferedWriter settingsWriter;  // io for setting info
 	private static BufferedReader settingsReader;
 	
-	
+	// settings stuffs
+	private static Properties settingsProp = new Properties();
 	
 	public Main() {
 		super();
 		employeeTable = new EmployeeHashTable(10);
 		// TODO: get stuff done
+	}
+	
+	public static void DefSettings(){
+		settingsProp.setProperty("Look and Feel", "Windows");
+		
 	}
 	
 	/**
@@ -32,6 +39,15 @@ public class Main extends MainJFrame{
 			System.err.println(e);
 		} 
 		
+		// if the file is empty, initialize settings
+		try {
+			if (settingsReader.read() == -1){
+				DefSettings();
+			}
+		} catch (IOException e){
+			System.err.println(e);
+		}
+		
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -39,7 +55,7 @@ public class Main extends MainJFrame{
 		 */
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Windows".equals(info.getName())) {
+				if (settingsProp.getProperty("Look and Feel").equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
 					break;
 				}
