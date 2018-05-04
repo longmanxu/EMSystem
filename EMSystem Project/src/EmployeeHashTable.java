@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class EmployeeHashTable {
 	
-	private int k; // the k value (number of buckets, length of hashTable)
-	
+	private int k;  // the k value (number of buckets, length of hashTable)
+	private int num;  // keep track of total number of employees, for re-optimizing 
 	private ArrayList<EmployeeInfo>[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
 	
 	
@@ -21,7 +21,7 @@ public class EmployeeHashTable {
 	@SuppressWarnings("unchecked")
 	public EmployeeHashTable(int k) {
 		this.k = k; // set the k value
-		
+		num = 0;
 		this.hashTable = new ArrayList[k]; // initialize the hashTable array to contain k number of buckets
 		
 		// initialize the ArrayLists (buckets) within the hashTable array
@@ -37,6 +37,7 @@ public class EmployeeHashTable {
 	public void add(EmployeeInfo newItem) {
 		// adds the new EmployeeInfo object to the bucket with index employee number % k
 		hashTable[newItem.getEmployeeNumber() % k].add(newItem);
+		num++;
 	}
 	
 	/**
@@ -68,6 +69,7 @@ public class EmployeeHashTable {
 		for (int i = 0; i < targetBucket.size(); i++) {
 			// if the EmployeeInfo object has the correct SN, return and remove it
 			if (targetBucket.get(i).getEmployeeNumber() == employeeNumber) {
+				num--;
 				return targetBucket.remove(i);
 			}
 		}
@@ -81,6 +83,7 @@ public class EmployeeHashTable {
 	 */
 	public void display() {
 		for (int i = 0; i < k; i++) {
+			System.out.println("number of employees: " + num);
 			// print the bucket number
 			System.out.print("Bucket " + Integer.toString(i) + ": ");
 			
