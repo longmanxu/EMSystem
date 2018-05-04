@@ -1,6 +1,4 @@
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  *
@@ -10,11 +8,10 @@ import java.io.IOException;
 public class Main extends MainJFrame{
 	
 	private EmployeeHashTable employeeTable;
-	private FileWriter saveWriter;
-	private FileReader saveReader;
-	private static FileWriter settingsWriter;
-	private static FileReader settingsReader;
-	
+	private BufferedWriter saveWriter;
+	private BufferedReader saveReader;
+	private static BufferedWriter settingsWriter;
+	private static BufferedReader settingsReader;
 	
 	
 	
@@ -29,8 +26,8 @@ public class Main extends MainJFrame{
 	 */
 	public static void main(String args[]) {
 		try {
-			settingsWriter = new FileWriter("settings.cfg");
-			settingsReader = new FileReader("settings.cfg");
+			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg"));
+			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
 		} catch (IOException e) {
 			System.err.println(e);
 		} 
