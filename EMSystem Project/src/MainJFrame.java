@@ -1,3 +1,12 @@
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Properties;
+import javax.swing.JComboBox;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +18,24 @@
  * @author longm
  */
 public class MainJFrame extends javax.swing.JFrame {
-
+	
+	// initizlize a bunch of IO stuff
+	private EmployeeHashTable employeeTable;
+	private BufferedWriter saveWriter;  // io for employee info
+	private BufferedReader saveReader;
+	private static BufferedWriter settingsWriter;  // io for setting info
+	private static BufferedReader settingsReader;
+	
+	// settings stuffs
+	private static Properties defSettingsProp = new Properties();
+	private static Properties settingsProp;
+	
 	/**
 	 * Creates new form MainJFrame
 	 */
 	public MainJFrame() {
 		initComponents();
+		employeeTable = new EmployeeHashTable(10);
 	}
 
 	/**
@@ -47,6 +68,11 @@ public class MainJFrame extends javax.swing.JFrame {
         setTitle("Employee Management System");
         setMinimumSize(new java.awt.Dimension(640, 480));
         setPreferredSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(800, 600));
@@ -107,7 +133,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Emp #", "First", "Last", "Location", "Position"
+                "Emp #", "First", "Last", "Location", "Employee Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -142,7 +168,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ManagerPanelLayout.setVerticalGroup(
             ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +241,7 @@ public class MainJFrame extends javax.swing.JFrame {
         settingsPanel.setPreferredSize(new java.awt.Dimension(700, 600));
 
         jComboBox1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "a", "b", "c", "d" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Windows", "Windows Classic", "Nimbus", "Metal", "Dark Metal", "Dark Nimbus" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -299,14 +325,49 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-		System.out.println("hi");
+		// change the default theme on next startup
+		JComboBox cb = (JComboBox) evt.getSource();
+		settingsProp.setProperty("Look and Feel", (String)cb.getSelectedItem());
+		try{
+			settingsProp.store(settingsWriter, "pls work");
+		} catch (IOException e){
+			System.err.println(e);
+		}
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+		try {
+			if (saveWriter != null) saveWriter.close();
+			if (saveReader != null) saveReader.close();
+			if (settingsWriter != null) settingsWriter.close();
+			if (settingsReader != null) settingsReader.close();
+			System.out.println("asdf");
+		} catch (IOException e){
+			
+		}
+    }//GEN-LAST:event_formWindowClosing
 
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
+		
+		// set the settings properties
+		try {
+			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg"));
+			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
+			
+			defSettingsProp.setProperty("Look and Feel", "Windows");
+		
+			settingsProp = new Properties(defSettingsProp);
+			settingsProp.load(settingsReader);
+		} catch (IOException e) {
+			System.err.println(e);
+		}
+		
+		settingsProp.list(System.out);
+		
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -314,7 +375,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		 */
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Windows".equals(info.getName())) {
+				if (settingsProp.getProperty("Look and Feel").equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
 					break;
 				}

@@ -27,6 +27,7 @@ public class Main extends MainJFrame{
 
 	private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
 		// change the default theme on next startup
+		System.out.println("If you are seeing this, it's working");
 		JComboBox cb = (JComboBox) evt.getSource();
 		settingsProp.setProperty("Look and Feel", (String)cb.getSelectedItem());
 		settingsProp.list(System.out);
@@ -51,6 +52,8 @@ public class Main extends MainJFrame{
 		
 			settingsProp = new Properties(defSettingsProp);
 			settingsProp.load(settingsReader);
+			settingsProp.list(System.out);
+			System.out.println("totally working");
 		} catch (IOException e) {
 			System.err.println(e);
 		}

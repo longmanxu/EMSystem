@@ -15,6 +15,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -76,7 +79,7 @@
                       <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="219" max="-2" attributes="0"/>
-                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -108,7 +111,7 @@
                         <Column editable="false" title="First" type="java.lang.Object"/>
                         <Column editable="false" title="Last" type="java.lang.Object"/>
                         <Column editable="false" title="Location" type="java.lang.Object"/>
-                        <Column editable="false" title="Position" type="java.lang.Object"/>
+                        <Column editable="false" title="Employee Type" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -344,11 +347,13 @@
                   <Font name="sansserif" size="16" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="a"/>
-                    <StringItem index="1" value="b"/>
-                    <StringItem index="2" value="c"/>
-                    <StringItem index="3" value="d"/>
+                  <StringArray count="6">
+                    <StringItem index="0" value="Windows"/>
+                    <StringItem index="1" value="Windows Classic"/>
+                    <StringItem index="2" value="Nimbus"/>
+                    <StringItem index="3" value="Metal"/>
+                    <StringItem index="4" value="Dark Metal"/>
+                    <StringItem index="5" value="Dark Nimbus"/>
                   </StringArray>
                 </Property>
               </Properties>
