@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Properties;
+import javax.swing.*;
 
 /**
  *
@@ -22,6 +23,18 @@ public class Main extends MainJFrame{
 		super();
 		employeeTable = new EmployeeHashTable(10);
 		// TODO: get stuff done
+	}
+
+	private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
+		// change the default theme on next startup
+		JComboBox cb = (JComboBox) evt.getSource();
+		settingsProp.setProperty("Look and Feel", (String)cb.getSelectedItem());
+		settingsProp.list(System.out);
+		try{
+			settingsProp.store(settingsWriter, "pls work");
+		} catch (IOException e){
+			System.err.println(e);
+		}
 	}
 	
 	/**

@@ -215,7 +215,7 @@ public class MainJFrame extends javax.swing.JFrame {
         settingsPanel.setPreferredSize(new java.awt.Dimension(700, 600));
 
         jComboBox1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "a", "b", "c", "d" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -300,6 +300,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+		System.out.println("hi");
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 	/**
