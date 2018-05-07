@@ -15,7 +15,8 @@ public class Main extends MainJFrame{
 	private static BufferedReader settingsReader;
 	
 	// settings stuffs
-	private static Properties settingsProp = new Properties();
+	private static Properties defSettingsProp = new Properties();
+	private static Properties settingsProp;
 	
 	public Main() {
 		super();
@@ -23,30 +24,24 @@ public class Main extends MainJFrame{
 		// TODO: get stuff done
 	}
 	
-	public static void DefSettings(){
-		settingsProp.setProperty("Look and Feel", "Windows");
-		
-	}
-	
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
+		
+		// set the settings properties
 		try {
 			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg"));
 			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
+			
+			defSettingsProp.setProperty("Look and Feel", "Windows");
+		
+			settingsProp = new Properties(defSettingsProp);
+			settingsProp.load(settingsReader);
 		} catch (IOException e) {
 			System.err.println(e);
-		} 
-		
-		// if the file is empty, initialize settings
-		try {
-			if (settingsReader.read() == -1){
-				DefSettings();
-			}
-		} catch (IOException e){
-			System.err.println(e);
 		}
+		
 		
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
