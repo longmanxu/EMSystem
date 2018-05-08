@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,21 @@ public class EmployeeHashTable {
 		for (int i = 0; i < k; i++) {
 			this.hashTable[i] = new ArrayList<EmployeeInfo>();
 		}
+	}
+	
+	public void store (String tableName, File location) throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(location));
+		writer.write(Integer.toString(k));	// first line is num of buckets
+		writer.newLine();
+		for (int i = 0; i < k; i++) {
+			ArrayList<EmployeeInfo> bucket = hashTable[i % k];
+			writer.write(i);	// 
+			writer.newLine();
+			for (int j = 0; j < bucket.size(); j++) {
+				writer.write(bucket.get(j).toString());
+			}
+		}
+		writer.close();
 	}
 	
 	/**
