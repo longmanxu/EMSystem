@@ -331,7 +331,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		JComboBox cb = (JComboBox) evt.getSource();
 		settings.setProperty("Look and Feel", (String)cb.getSelectedItem());
 		try{
-			settings.store(settingsWriter, "pls work");
+			settings.store(settingsWriter, "");
 		} catch (IOException e){
 			System.err.println(e);
 		}
@@ -345,9 +345,9 @@ public class MainJFrame extends javax.swing.JFrame {
 			if (saveReader != null) saveReader.close();
 			if (settingsWriter != null) settingsWriter.close();
 			if (settingsReader != null) settingsReader.close();
-			System.out.println("asdf");
+			System.out.println("Closed all IO");
 		} catch (IOException e){
-			
+			System.err.println(e);
 		}
     }//GEN-LAST:event_formWindowClosing
 
