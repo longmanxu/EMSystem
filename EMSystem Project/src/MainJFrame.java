@@ -212,7 +212,7 @@ public class MainJFrame extends javax.swing.JFrame {
         filePanelLayout.setHorizontalGroup(
             filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filePanelLayout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
+                .addContainerGap(159, Short.MAX_VALUE)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -260,7 +260,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(306, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,6 +277,7 @@ public class MainJFrame extends javax.swing.JFrame {
         helpPanel.setPreferredSize(new java.awt.Dimension(700, 600));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/clippy.jpg"))); // NOI18N
+        jButton5.setToolTipText("Clippy will solve all your problems!");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -290,7 +291,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(helpPanelLayout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(jButton5)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
