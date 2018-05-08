@@ -333,10 +333,11 @@ public class MainJFrame extends javax.swing.JFrame {
 		} catch (IOException e){
 			System.err.println(e);
 		}
+		settingsProp.list(System.out);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+       // close the readers and writers
 		try {
 			if (saveWriter != null) saveWriter.close();
 			if (saveReader != null) saveReader.close();
@@ -355,13 +356,18 @@ public class MainJFrame extends javax.swing.JFrame {
 		
 		// set the settings properties
 		try {
-			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg"));
+			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg", true));
 			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
 			
 			defSettingsProp.setProperty("Look and Feel", "Windows");
 		
 			settingsProp = new Properties(defSettingsProp);
 			settingsProp.load(settingsReader);
+			
+			// close the settings reader, since it is unneeded
+			if (settingsReader != null) {
+				settingsReader.close();
+			}
 		} catch (IOException e) {
 			System.err.println(e);
 		}
