@@ -27,8 +27,8 @@ public class MainJFrame extends javax.swing.JFrame {
 	private static BufferedReader settingsReader;
 	
 	// settings stuffs
-	private static Properties defSettingsProp = new Properties();
-	private static Properties settingsProp;
+	private static Properties defSettings = new Properties();
+	private static Properties settings;
 	
 	/**
 	 * Creates new form MainJFrame
@@ -327,13 +327,13 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 		// change the default theme on next startup
 		JComboBox cb = (JComboBox) evt.getSource();
-		settingsProp.setProperty("Look and Feel", (String)cb.getSelectedItem());
+		settings.setProperty("Look and Feel", (String)cb.getSelectedItem());
 		try{
-			settingsProp.store(settingsWriter, "pls work");
+			settings.store(settingsWriter, "pls work");
 		} catch (IOException e){
 			System.err.println(e);
 		}
-		settingsProp.list(System.out);
+		settings.list(System.out);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -359,10 +359,10 @@ public class MainJFrame extends javax.swing.JFrame {
 			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg", true));
 			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
 			
-			defSettingsProp.setProperty("Look and Feel", "Windows");
+			defSettings.setProperty("Look and Feel", "Windows");
 		
-			settingsProp = new Properties(defSettingsProp);
-			settingsProp.load(settingsReader);
+			settings = new Properties(defSettings);
+			settings.load(settingsReader);
 			
 			// close the settings reader, since it is unneeded
 			if (settingsReader != null) {
@@ -372,16 +372,16 @@ public class MainJFrame extends javax.swing.JFrame {
 			System.err.println(e);
 		}
 		
-		settingsProp.list(System.out);
+		settings.list(System.out);
 		
-		/* Set the Nimbus look and feel */
+		/* Set the look and feel from the settings*/
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
 		 */
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if (settingsProp.getProperty("Look and Feel").equals(info.getName())) {
+				if (settings.getProperty("Look and Feel").equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
 					break;
 				}
