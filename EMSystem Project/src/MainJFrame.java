@@ -35,6 +35,7 @@ public class MainJFrame extends javax.swing.JFrame {
 	 */
 	public MainJFrame() {
 		initComponents();
+		jComboBox1.setSelectedItem(settings.getProperty("Look and Feel"));
 		employeeTable = new EmployeeHashTable(10);
 	}
 
