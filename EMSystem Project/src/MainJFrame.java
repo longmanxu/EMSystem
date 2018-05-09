@@ -401,7 +401,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-		this.setFocusableWindowState(false);
+		this.setFocusableWindowState(true);
 		addPopup.setVisible(false);
 		
     }//GEN-LAST:event_backButtonActionPerformed
