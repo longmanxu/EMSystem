@@ -395,13 +395,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:this.setVisible(false);
-		jTabbedPane1.setFocusable(false);
+		this.setFocusableWindowState(false);
 		addPopup.setVisible(true);
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-		jTabbedPane1.setFocusable(true);
+		this.setFocusableWindowState(false);
 		addPopup.setVisible(false);
 		
     }//GEN-LAST:event_backButtonActionPerformed
