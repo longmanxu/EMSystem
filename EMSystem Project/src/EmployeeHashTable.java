@@ -74,6 +74,23 @@ public class EmployeeHashTable {
 		writer.close();
 	}
 	
+	public static EmployeeHashTable open(String filePath) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+		int numBuckets = Integer.parseInt(reader.readLine());
+		EmployeeHashTable newTable = new EmployeeHashTable(numBuckets);
+		for (int i = 0; i < numBuckets; i++) {
+			int numEmployeesInBucket = Integer.parseInt(reader.readLine());
+			for (int j = 0; j < numEmployeesInBucket; j++) {
+				String[] employeeData = reader.readLine().split(",");
+				if (employeeData[0].equals("F")) {
+					// newTable.add(new FullTimeEmployee(Integer.parseInt(employeeData[2]), employeeData[3], employeeData[4], j, i, numBuckets, Double.parseDouble(employeeData[1])));
+					// TODO: GET THIS DONE
+				}
+			}
+		}
+		return newTable;
+	}
+	
 	/**
 	 * Adds the specified EmployeeInfo object to the hash table.
 	 * @param newItem the new EmployeeInfo to be added.
