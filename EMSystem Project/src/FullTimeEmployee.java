@@ -28,6 +28,22 @@ public class FullTimeEmployee extends EmployeeInfo{
 	}
 	
 	/**
+	 * Gets the annual salary.
+	 * @return the annual salary.
+	 */
+	public double getYearlySalary() {
+		return yearlySalary;
+	}
+	
+	/**
+	 * Sets the annual salary.
+	 * @param yearlySalary the annual salary.
+	 */
+	public void setYearlySalary(double yearlySalary) {
+		this.yearlySalary = yearlySalary;
+	}
+	
+	/**
 	 * Calculate the part time employee's annual gross income.
 	 * @return the employee's annual gross income.
 	 */
