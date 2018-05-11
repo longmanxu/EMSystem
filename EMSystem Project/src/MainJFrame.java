@@ -53,6 +53,18 @@ public class MainJFrame extends javax.swing.JFrame {
 
         addPopup = new javax.swing.JDialog();
         backButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        dropDownType = new javax.swing.JComboBox<>();
+        fieldLocation = new javax.swing.JTextField();
+        fieldLName = new javax.swing.JTextField();
+        fieldFName = new javax.swing.JTextField();
+        fieldNumber = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        fieldSexes = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ManagerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -71,11 +83,12 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         helpPanel = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         addPopup.setTitle("Add an employee");
-        addPopup.setMinimumSize(new java.awt.Dimension(400, 300));
+        addPopup.setMinimumSize(new java.awt.Dimension(600, 450));
 
-        backButton.setText(":D");
+        backButton.setText("return");
         backButton.setToolTipText("");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,21 +96,87 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Emp. #");
+
+        jLabel3.setText("First name");
+
+        jLabel4.setText("Last name");
+
+        jLabel5.setText("Location");
+
+        jLabel7.setText("Emp. Type");
+
+        dropDownType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full time", "part time" }));
+
+        fieldLocation.setText("jTextField1");
+
+        fieldLName.setText("jTextField2");
+
+        fieldFName.setText("jTextField3");
+
+        fieldNumber.setText("jTextField4");
+
+        jLabel8.setText("Sex");
+
+        fieldSexes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
+
         javax.swing.GroupLayout addPopupLayout = new javax.swing.GroupLayout(addPopup.getContentPane());
         addPopup.getContentPane().setLayout(addPopupLayout);
         addPopupLayout.setHorizontalGroup(
             addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addPopupLayout.createSequentialGroup()
-                .addGap(164, 164, 164)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(backButton)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGap(56, 56, 56))
+            .addGroup(addPopupLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addGap(41, 41, 41)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dropDownType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(392, Short.MAX_VALUE))
         );
         addPopupLayout.setVerticalGroup(
             addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addPopupLayout.createSequentialGroup()
-                .addGap(126, 126, 126)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(fieldNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(fieldFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(fieldLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(fieldLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(dropDownType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(backButton)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,7 +205,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Emp #", "First", "Last", "Location", "Employee Type"
+                "Emp #", "First", "Last", "Location", "Emp. Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -320,6 +399,8 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Made by Longman Xu and Tommy Huang");
+
         javax.swing.GroupLayout helpPanelLayout = new javax.swing.GroupLayout(helpPanel);
         helpPanel.setLayout(helpPanelLayout);
         helpPanelLayout.setHorizontalGroup(
@@ -327,17 +408,23 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(helpPanelLayout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(25, 25, 25))
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
                 .addContainerGap(116, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                .addGap(61, 61, 61)
+                .addComponent(jLabel6)
+                .addGap(24, 24, 24))
         );
 
-        jTabbedPane1.addTab("Help", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/help.png")), helpPanel); // NOI18N
+        jTabbedPane1.addTab("<html>Help &<br />About</html>", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/help.png")), helpPanel); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -402,7 +489,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
 		this.setFocusableWindowState(true);
-		addPopup.setVisible(false);
+		addPopup.setVisible(false);	
 		
     }//GEN-LAST:event_backButtonActionPerformed
 
@@ -468,6 +555,12 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JDialog addPopup;
     private javax.swing.JButton backButton;
     private javax.swing.JButton delButton;
+    private javax.swing.JComboBox<String> dropDownType;
+    private javax.swing.JTextField fieldFName;
+    private javax.swing.JTextField fieldLName;
+    private javax.swing.JTextField fieldLocation;
+    private javax.swing.JTextField fieldNumber;
+    private javax.swing.JComboBox<String> fieldSexes;
     private javax.swing.JPanel filePanel;
     private javax.swing.JPanel helpPanel;
     private javax.swing.JButton jButton1;
@@ -477,6 +570,13 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
