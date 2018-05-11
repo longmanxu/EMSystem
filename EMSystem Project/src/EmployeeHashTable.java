@@ -31,64 +31,99 @@ public class EmployeeHashTable {
 		}
 	}
 	
-	public void store (String filePath) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-		writer.write(Integer.toString(k));	// first line is num of buckets
-		writer.newLine();
-		for (int i = 0; i < k; i++) {
-			ArrayList<EmployeeInfo> bucket = hashTable[i % k];
-			writer.write(Integer.toString(bucket.size()));	// second line is num of employees in bucket
+	/**
+	 * Stores the EmployeeHashTable at the specified file path name.
+	 * @param filePath the file's path name.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	public void store(String filePath) throws IOException {
+		// use try-with-resources to automatically close writer
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+			writer.write(Integer.toString(k));	// first line is num of buckets
 			writer.newLine();
-			for (int j = 0; j < bucket.size(); j++) {
-				EmployeeInfo employee = bucket.get(j);
-				// third line is data of employee
-				// 'F' for full time, 'P' for part time, '?' for neither
-				// on same line, print employee num, name, sex, loc, etc.
-				if (employee instanceof FullTimeEmployee) {
-					writer.write(String.format("F,%f",
-							((FullTimeEmployee) employee).getYearlySalary())
-					);
-				}
-				else if (employee instanceof PartTimeEmployee) {
-					PartTimeEmployee fullEmployee = (PartTimeEmployee) employee;
-					writer.write(String.format("P,%f,%f,%f",
-							fullEmployee.getHourlyWage(),
-							fullEmployee.getHoursPerWeek(),
-							fullEmployee.getWeeksPerYear()
-					));
-				}
-				else {
-					writer.write("?,");
-				}
-				writer.write(String.format("%d,%s,%s,%s,%s,%f",
-						employee.getEmployeeNumber(),
-						employee.getFirstName(),
-						employee.getLastName(),
-						employee.getSex(),
-						employee.getWorkLocation(),
-						employee.getDeductionsRate()
-				));
+			for (int i = 0; i < k; i++) {
+				ArrayList<EmployeeInfo> bucket = hashTable[i % k];
+				writer.write(Integer.toString(bucket.size()));	// second line is num of employees in bucket
 				writer.newLine();
+				for (int j = 0; j < bucket.size(); j++) {
+					EmployeeInfo employee = bucket.get(j);
+					// third line is data of employee
+					// 'F' for full time, 'P' for part time, '?' for neither
+					if (employee instanceof FullTimeEmployee) {
+						writer.write(String.format("F,%f,",
+								((FullTimeEmployee) employee).getYearlySalary())
+						);
+					}
+					else if (employee instanceof PartTimeEmployee) {
+						PartTimeEmployee fullEmployee = (PartTimeEmployee) employee;
+						writer.write(String.format("P,%f,%f,%f,",
+								fullEmployee.getHourlyWage(),
+								fullEmployee.getHoursPerWeek(),
+								fullEmployee.getWeeksPerYear()
+						));
+					}
+					else {
+						writer.write("?,");
+					}
+					// on same line, print employee num, name, sex, loc, etc.
+					writer.write(String.format("%d,%s,%s,%s,%s,%f",
+							employee.getEmployeeNumber(),
+							employee.getFirstName(),
+							employee.getLastName(),
+							employee.getSex(),
+							employee.getWorkLocation(),
+							employee.getDeductionsRate()
+					));
+					writer.newLine();
+				}
 			}
 		}
-		writer.close();
 	}
 	
+	/**
+	 * Open and return a new EmployeeHashTable saved at the given file path name.
+	 * @param filePath the file path name of the saved EmployeeHashTable.
+	 * @return the EmployeeHashTable.
+	 * @throws IOException if an I/O exception occurs.
+	 */
 	public static EmployeeHashTable open(String filePath) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
-		int numBuckets = Integer.parseInt(reader.readLine());
-		EmployeeHashTable newTable = new EmployeeHashTable(numBuckets);
-		for (int i = 0; i < numBuckets; i++) {
-			int numEmployeesInBucket = Integer.parseInt(reader.readLine());
-			for (int j = 0; j < numEmployeesInBucket; j++) {
-				String[] employeeData = reader.readLine().split(",");
-				if (employeeData[0].equals("F")) {
-					// newTable.add(new FullTimeEmployee(Integer.parseInt(employeeData[2]), employeeData[3], employeeData[4], j, i, numBuckets, Double.parseDouble(employeeData[1])));
-					// TODO: GET THIS DONE
+		// use try-with-resources to automatically close reader
+		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+			// initialize a new EmployeeHashTable using # of buckets from 1st line
+			int numBuckets = Integer.parseInt(reader.readLine());
+			EmployeeHashTable newTable = new EmployeeHashTable(numBuckets);
+			for (int i = 0; i < numBuckets; i++) {
+				int numEmployeesInBucket = Integer.parseInt(reader.readLine());
+				for (int j = 0; j < numEmployeesInBucket; j++) {
+					String[] data = reader.readLine().split(",");
+					if (data[0].equals("F")) {
+						newTable.add(new FullTimeEmployee(
+								Integer.parseInt(data[2]),
+								data[3],
+								data[4],
+								Integer.parseInt(data[5]),
+								Integer.parseInt(data[6]),
+								Double.parseDouble(data[7]),
+								Double.parseDouble(data[1])
+						));
+					}
+					else if (data[0].equals("P")) {
+						newTable.add(new PartTimeEmployee(
+								Integer.parseInt(data[4]),
+								data[5],
+								data[6],
+								Integer.parseInt(data[7]),
+								Integer.parseInt(data[8]),
+								Double.parseDouble(data[9]),
+								Double.parseDouble(data[1]),
+								Double.parseDouble(data[2]),
+								Double.parseDouble(data[3])
+						));
+					}
 				}
 			}
+			return newTable;
 		}
-		return newTable;
 	}
 	
 	/**
@@ -144,7 +179,6 @@ public class EmployeeHashTable {
 	 */
 	public void display() {
 		for (int i = 0; i < k; i++) {
-			System.out.println("number of employees: " + num);
 			// print the bucket number
 			System.out.print("Bucket " + Integer.toString(i) + ": ");
 			
@@ -152,7 +186,7 @@ public class EmployeeHashTable {
 			ArrayList<EmployeeInfo> tempBucket = hashTable[i];
 			
 			// only iterate through the current bucket if it is not empty (will get IndexOutOfBounds otherwise)
-			if (tempBucket.size() != 0) {
+			if (!tempBucket.isEmpty()) {
 				// display every employee in the bucket with a trailing comma, except the last one
 				for (int j = 0; j < tempBucket.size() - 1; j++) {
 					System.out.print("[" + tempBucket.get(j).toString() + "], ");
