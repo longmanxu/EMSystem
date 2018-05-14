@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import java.awt.Toolkit;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -65,6 +66,7 @@ public class MainJFrame extends javax.swing.JFrame {
         fieldNumber = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         fieldSexes = new javax.swing.JComboBox<>();
+        addTheEmployee = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ManagerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -108,17 +110,23 @@ public class MainJFrame extends javax.swing.JFrame {
 
         dropDownType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full time", "part time" }));
 
-        fieldLocation.setText("jTextField1");
-
-        fieldLName.setText("jTextField2");
-
-        fieldFName.setText("jTextField3");
-
-        fieldNumber.setText("jTextField4");
+        fieldNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNumberActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Sex");
 
         fieldSexes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
+
+        addTheEmployee.setText("add");
+        addTheEmployee.setToolTipText("");
+        addTheEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTheEmployeeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout addPopupLayout = new javax.swing.GroupLayout(addPopup.getContentPane());
         addPopup.getContentPane().setLayout(addPopupLayout);
@@ -126,6 +134,8 @@ public class MainJFrame extends javax.swing.JFrame {
             addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addTheEmployee)
+                .addGap(35, 35, 35)
                 .addComponent(backButton)
                 .addGap(56, 56, 56))
             .addGroup(addPopupLayout.createSequentialGroup()
@@ -138,13 +148,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
                 .addGap(41, 41, 41)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dropDownType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dropDownType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fieldNumber)
+                    .addComponent(fieldFName)
+                    .addComponent(fieldLName)
+                    .addComponent(fieldLocation)
+                    .addComponent(fieldSexes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(392, Short.MAX_VALUE))
         );
         addPopupLayout.setVerticalGroup(
@@ -175,7 +185,9 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-                .addComponent(backButton)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backButton)
+                    .addComponent(addTheEmployee))
                 .addContainerGap())
         );
 
@@ -482,6 +494,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:this.setVisible(false);
+		// TODO: Toolkit.getDefaultToolkit().beep();
 		this.setFocusableWindowState(false);
 		addPopup.setVisible(true);
     }//GEN-LAST:event_addButtonActionPerformed
@@ -492,6 +505,20 @@ public class MainJFrame extends javax.swing.JFrame {
 		addPopup.setVisible(false);	
 		
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void fieldNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNumberActionPerformed
+
+    private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
+        // TODO add your handling code here:
+		// check to make sure none of the text fields are empty
+		if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty() || fieldLocation.getText().isEmpty()){
+			System.err.println("Ask dalwejf anlwkejn");
+		}
+		
+		// clear all 
+    }//GEN-LAST:event_addTheEmployeeActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -553,6 +580,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel ManagerPanel;
     private javax.swing.JButton addButton;
     private javax.swing.JDialog addPopup;
+    private javax.swing.JButton addTheEmployee;
     private javax.swing.JButton backButton;
     private javax.swing.JButton delButton;
     private javax.swing.JComboBox<String> dropDownType;
