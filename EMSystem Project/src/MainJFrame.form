@@ -15,6 +15,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="addTheEmployee" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="backButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
               </Group>
@@ -29,13 +31,13 @@
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dropDownType" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldLocation" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldLName" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldFName" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldNumber" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldSexes" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="dropDownType" max="32767" attributes="0"/>
+                      <Component id="fieldNumber" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fieldFName" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fieldLName" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fieldLocation" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fieldSexes" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="392" max="32767" attributes="0"/>
               </Group>
@@ -75,7 +77,10 @@
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="130" max="32767" attributes="0"/>
-                  <Component id="backButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="backButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="addTheEmployee" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -130,24 +135,15 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldLocation">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldLName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldFName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField3"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldNumber">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField4"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldNumberActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -167,6 +163,15 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="addTheEmployee">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="add"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addTheEmployeeActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
