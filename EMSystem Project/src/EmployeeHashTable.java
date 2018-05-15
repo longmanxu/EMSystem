@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * A open hashing/closed addressing hash table class for EmployeeInfo objects.
  * Contains methods for adding and removing EmployeeInfo objects from the hash table, as well as a method for displaying its contents.
  * @author Longman Xu
- * @version 2018-04-03
+ * @version 2018-05-15
  * 
  */
 public class EmployeeHashTable {
@@ -196,6 +196,14 @@ public class EmployeeHashTable {
 			
 			System.out.println(); // print a newline after every bucket
 		}
+	}
+	
+	/**
+	 * Get the number of employees.
+	 * @return the number of employees.
+	 */
+	public int getNum() {
+		return this.num;
 	}
 	
 }
