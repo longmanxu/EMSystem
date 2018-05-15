@@ -10,16 +10,15 @@ import java.util.ArrayList;
  */
 public class EmployeeHashTable {
 	
-	private int k;  // the k value (number of buckets, length of hashTable)
+	private final int k;  // the k value (number of buckets, length of hashTable)
 	private int num;  // keep track of total number of employees, for re-optimizing 
-	private ArrayList<EmployeeInfo>[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
+	private final ArrayList<EmployeeInfo>[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
 	
 	
 	/**
 	 * Constructs a new open hashing/closed addressing hash table with the specified k value.
 	 * @param k the k value (number of buckets).
 	 */
-	@SuppressWarnings("unchecked")
 	public EmployeeHashTable(int k) {
 		this.k = k; // set the k value
 		num = 0;
@@ -27,7 +26,7 @@ public class EmployeeHashTable {
 		
 		// initialize the ArrayLists (buckets) within the hashTable array
 		for (int i = 0; i < k; i++) {
-			this.hashTable[i] = new ArrayList<EmployeeInfo>();
+			this.hashTable[i] = new ArrayList<>();
 		}
 	}
 	
