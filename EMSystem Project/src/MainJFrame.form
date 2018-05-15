@@ -31,15 +31,15 @@
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="dropDownType" max="32767" attributes="0"/>
-                      <Component id="fieldNumber" alignment="0" max="32767" attributes="0"/>
-                      <Component id="fieldFName" alignment="0" max="32767" attributes="0"/>
-                      <Component id="fieldLName" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="fieldLocation" alignment="0" max="32767" attributes="0"/>
                       <Component id="fieldSexes" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fieldNumber" max="32767" attributes="0"/>
+                      <Component id="fieldFName" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fieldLName" alignment="0" max="32767" attributes="0"/>
+                      <Component id="dropDownType" alignment="0" pref="90" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="392" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="381" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -126,7 +126,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
                 <StringItem index="0" value="Full time"/>
-                <StringItem index="1" value="part time"/>
+                <StringItem index="1" value="Part time"/>
               </StringArray>
             </Property>
           </Properties>

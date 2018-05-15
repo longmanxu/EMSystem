@@ -108,7 +108,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel7.setText("Emp. Type");
 
-        dropDownType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full time", "part time" }));
+        dropDownType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full time", "Part time" }));
 
         fieldNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,14 +148,14 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
                 .addGap(41, 41, 41)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(dropDownType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fieldLocation)
+                    .addComponent(fieldSexes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(fieldNumber)
                     .addComponent(fieldFName)
                     .addComponent(fieldLName)
-                    .addComponent(fieldLocation)
-                    .addComponent(fieldSexes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(392, Short.MAX_VALUE))
+                    .addComponent(dropDownType, 0, 90, Short.MAX_VALUE))
+                .addGap(381, 381, 381))
         );
         addPopupLayout.setVerticalGroup(
             addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,7 +472,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		} catch (IOException e){
 			System.err.println(e);
 		}
-		settings.list(System.out);
+		
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -513,8 +513,16 @@ public class MainJFrame extends javax.swing.JFrame {
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
         // TODO add your handling code here:
 		// check to make sure none of the text fields are empty
+		// Update this if everytime we add/del a field
 		if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty() || fieldLocation.getText().isEmpty()){
-			System.err.println("Ask dalwejf anlwkejn");
+			System.err.println("Some of the fields are blank!");
+		}
+		else if(dropDownType.getSelectedItem().equals("Full time")) {
+			System.out.println("ITS WORKING (full)");
+			PartTimeEmployee temp = new PartTimeEmployee(integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText())
+		}
+		else if (dropDownType.getSelectedItem().equals("Part time")) {
+			System.out.println("ITS WORKING (part)");;
 		}
 		
 		// clear all 
@@ -543,7 +551,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			System.err.println(e);
 		}
 		
-		settings.list(System.out);
 		
 		/* Set the look and feel from the settings*/
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
