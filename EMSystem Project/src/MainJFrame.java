@@ -67,6 +67,16 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         fieldSexes = new javax.swing.JComboBox<>();
         addTheEmployee = new javax.swing.JButton();
+        labelFull0 = new javax.swing.JLabel();
+        labelRate = new javax.swing.JLabel();
+        fieldSalary = new javax.swing.JTextField();
+        fieldDedRate = new javax.swing.JTextField();
+        labelPart0 = new javax.swing.JLabel();
+        labelPart1 = new javax.swing.JLabel();
+        labelPart2 = new javax.swing.JLabel();
+        fieldHourWage = new javax.swing.JTextField();
+        fieldHourWeek = new javax.swing.JTextField();
+        fieldWeekYear = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ManagerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -88,9 +98,10 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         addPopup.setTitle("Add an employee");
-        addPopup.setMinimumSize(new java.awt.Dimension(600, 450));
+        addPopup.setMinimumSize(new java.awt.Dimension(600, 400));
+        addPopup.setResizable(false);
 
-        backButton.setText("return");
+        backButton.setText("cancel");
         backButton.setToolTipText("");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +120,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel7.setText("Emp. Type");
 
         dropDownType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full time", "Part time" }));
+        dropDownType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dropDownTypeActionPerformed(evt);
+            }
+        });
 
         fieldNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,18 +144,52 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        labelFull0.setText("Salary");
+
+        labelRate.setText("Deductions rate");
+
+        fieldSalary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldSalaryActionPerformed(evt);
+            }
+        });
+
+        fieldDedRate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldDedRateActionPerformed(evt);
+            }
+        });
+
+        labelPart0.setText("Hourly Wage");
+
+        labelPart1.setText("Hours per week");
+
+        labelPart2.setText("Weeks per year");
+
+        fieldHourWage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldHourWageActionPerformed(evt);
+            }
+        });
+
+        fieldHourWeek.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldHourWeekActionPerformed(evt);
+            }
+        });
+
+        fieldWeekYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldWeekYearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout addPopupLayout = new javax.swing.GroupLayout(addPopup.getContentPane());
         addPopup.getContentPane().setLayout(addPopupLayout);
         addPopupLayout.setHorizontalGroup(
             addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addTheEmployee)
-                .addGap(35, 35, 35)
-                .addComponent(backButton)
-                .addGap(56, 56, 56))
-            .addGroup(addPopupLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(37, 37, 37)
                 .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel3)
@@ -147,15 +197,40 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
-                .addGap(41, 41, 41)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldLocation)
-                    .addComponent(fieldSexes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(fieldNumber)
                     .addComponent(fieldFName)
                     .addComponent(fieldLName)
-                    .addComponent(dropDownType, 0, 90, Short.MAX_VALUE))
-                .addGap(381, 381, 381))
+                    .addComponent(fieldLocation)
+                    .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dropDownType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
+                        .addComponent(labelRate)
+                        .addGap(18, 18, 18)
+                        .addComponent(fieldDedRate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(backButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelFull0, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldSalary, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addTheEmployee, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelPart0, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelPart1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelPart2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldWeekYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(fieldHourWage, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                .addComponent(fieldHourWeek)))))
+                .addGap(111, 111, 111))
         );
         addPopupLayout.setVerticalGroup(
             addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,37 +238,61 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(fieldNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(fieldFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(fieldLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(fieldLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(dropDownType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backButton)
-                    .addComponent(addTheEmployee))
-                .addContainerGap())
+                    .addComponent(fieldNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelFull0, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addPopupLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(25, 25, 25)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(25, 25, 25)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelPart0, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldHourWage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelPart1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldHourWeek, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldWeekYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPart2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)))
+                .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addPopupLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addTheEmployee)
+                            .addComponent(backButton)))
+                    .addGroup(addPopupLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dropDownType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(labelRate, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldDedRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))))
+                .addGap(29, 29, 29))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Management System");
         setMinimumSize(new java.awt.Dimension(640, 480));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -495,38 +594,114 @@ public class MainJFrame extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:this.setVisible(false);
 		// TODO: Toolkit.getDefaultToolkit().beep();
-		this.setFocusableWindowState(false);
 		addPopup.setVisible(true);
+		if (dropDownType.getSelectedItem().equals("Full time")) {
+			changeSelection(0);
+        }
+		else if (dropDownType.getSelectedItem().equals("Part time")) {
+			changeSelection(1);
+		}
+		
+		this.setFocusableWindowState(false);
+		
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
         // TODO add your handling code here:
-		this.setFocusableWindowState(true);
-		addPopup.setVisible(false);	
-		
-    }//GEN-LAST:event_backButtonActionPerformed
+        // check to make sure none of the text fields are empty
+        // Update this if everytime we add/del a field
+        if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty() || fieldLocation.getText().isEmpty()){
+        }
+        else if(dropDownType.getSelectedItem().equals("Full time")) {
+            // do full time stuff
+			
+			addPopup.setVisible(false);
+			changeSelection(0);
+        }
+        else if (dropDownType.getSelectedItem().equals("Part time")) {
+            // do part time stuff
+			addPopup.setVisible(false);
+			changeSelection(1);
+        }
+        // FIELDS:
+        /**
+        * Constructs a new FullTimeEmployee object.
+        * @param employeeNumber the employee number.
+        * @param firstName the first name.
+        * @param lastName the last name.
+        * @param sex the sex (0 is male, 1 is female, 2 is other).
+        * @param workLocation the work location.
+        * @param deductionsRate the deductions rate (between 0.0 and 1.0).
+        * @param yearlySalary the annual salary.
+        */
+    }//GEN-LAST:event_addTheEmployeeActionPerformed
 
     private void fieldNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldNumberActionPerformed
 
-    private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
+    private void dropDownTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownTypeActionPerformed
         // TODO add your handling code here:
-		// check to make sure none of the text fields are empty
-		// Update this if everytime we add/del a field
-		if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty() || fieldLocation.getText().isEmpty()){
-			System.err.println("Some of the fields are blank!");
-		}
-		else if(dropDownType.getSelectedItem().equals("Full time")) {
-			System.out.println("ITS WORKING (full)");
-			PartTimeEmployee temp = new PartTimeEmployee(integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText())
-		}
+        System.out.println("hai");
+        if (dropDownType.getSelectedItem().equals("Full time")) {
+			changeSelection(0);
+        }
 		else if (dropDownType.getSelectedItem().equals("Part time")) {
-			System.out.println("ITS WORKING (part)");;
+			changeSelection(1);
 		}
-		
-		// clear all 
-    }//GEN-LAST:event_addTheEmployeeActionPerformed
+    }//GEN-LAST:event_dropDownTypeActionPerformed
+	
+	private void changeSelection(int type) {
+		if (type == 0) { // full time
+			labelFull0.setVisible(true);
+			fieldSalary.setVisible(true);
+			
+			labelPart0.setVisible(false);
+			fieldHourWage.setVisible(false);
+			labelPart1.setVisible(false);
+			fieldHourWeek.setVisible(false);
+			labelPart2.setVisible(false);
+			fieldWeekYear.setVisible(false);
+		}
+		else if (type == 1) { // part time
+			labelFull0.setVisible(false);
+			fieldSalary.setVisible(false);
+			
+			labelPart0.setVisible(true);
+			fieldHourWage.setVisible(true);
+			labelPart1.setVisible(true);
+			fieldHourWeek.setVisible(true);
+			labelPart2.setVisible(true);
+			fieldWeekYear.setVisible(true);
+		}
+	}
+	
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+        this.setFocusableWindowState(true);
+        addPopup.setVisible(false);
+
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void fieldSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldSalaryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldSalaryActionPerformed
+
+    private void fieldDedRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldDedRateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldDedRateActionPerformed
+
+    private void fieldHourWageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldHourWageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldHourWageActionPerformed
+
+    private void fieldHourWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldHourWeekActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldHourWeekActionPerformed
+
+    private void fieldWeekYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldWeekYearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldWeekYearActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -591,11 +766,16 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JButton delButton;
     private javax.swing.JComboBox<String> dropDownType;
+    private javax.swing.JTextField fieldDedRate;
     private javax.swing.JTextField fieldFName;
+    private javax.swing.JTextField fieldHourWage;
+    private javax.swing.JTextField fieldHourWeek;
     private javax.swing.JTextField fieldLName;
     private javax.swing.JTextField fieldLocation;
     private javax.swing.JTextField fieldNumber;
+    private javax.swing.JTextField fieldSalary;
     private javax.swing.JComboBox<String> fieldSexes;
+    private javax.swing.JTextField fieldWeekYear;
     private javax.swing.JPanel filePanel;
     private javax.swing.JPanel helpPanel;
     private javax.swing.JButton jButton1;
@@ -617,6 +797,11 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel labelFull0;
+    private javax.swing.JLabel labelPart0;
+    private javax.swing.JLabel labelPart1;
+    private javax.swing.JLabel labelPart2;
+    private javax.swing.JLabel labelRate;
     private javax.swing.JPanel settingsPanel;
     // End of variables declaration//GEN-END:variables
 }
