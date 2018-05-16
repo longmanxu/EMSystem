@@ -26,8 +26,17 @@ public class PartTimeEmployee extends EmployeeInfo{
 	 */
 	public PartTimeEmployee(int employeeNumber, String firstName, String lastName, int sex, int workLocation,
 			double deductionsRate, double hourlyWage, double hoursPerWeek, double weeksPerYear) {
-		// call constructor of EmployeeInfo superclass
 		super(employeeNumber, firstName, lastName, sex, workLocation, deductionsRate);
+		if (hourlyWage < 0) {
+			throw new IllegalArgumentException("The hourly wage should be greater than 0.");
+		}
+		else if (hoursPerWeek < 0 || hoursPerWeek > 168) {
+			throw new IllegalArgumentException("The hours worked per week should be between 0 and 168.");
+		}
+		else if (weeksPerYear < 0 || weeksPerYear > 365/7) {
+			throw new IllegalArgumentException("The weeks worked per year should be between 0 and 365/7");
+		}
+		// call constructor of EmployeeInfo superclass
 		this.hourlyWage = hourlyWage;
 		this.hoursPerWeek = hoursPerWeek;
 		this.weeksPerYear = weeksPerYear;

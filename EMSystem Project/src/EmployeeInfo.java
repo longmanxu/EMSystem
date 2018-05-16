@@ -26,31 +26,31 @@ public class EmployeeInfo {
 	 */
 	public EmployeeInfo(int employeeNumber, String firstName, String lastName, int sex, int workLocation,
 			double deductionsRate) {
-		if (employeeNumber >= 0) {
-			this.employeeNumber = employeeNumber;
-		}
-		else {
+		if (employeeNumber < 0) {
 			throw new IllegalArgumentException("The employee number should be a non-negative integer.");
 		}
-		this.firstName = firstName;
-		this.lastName = lastName;
-		if (sex >= 0 && sex <= 2) {
-			this.sex = sex;
+		else if (firstName.contains("~")) {
+			throw new IllegalArgumentException("The first name may not contain '~'");
 		}
-		else {
-			throw new IllegalArgumentException("The sex should be 0, 1, or 2.");
+		else if (lastName.contains("~")) {
+			throw new IllegalArgumentException("The last name may not contain '~'");
 		}
-		if (workLocation >= 0) {
-			this.workLocation = workLocation;
+		else if (sex < 0 || sex > 2) {
+			throw new IllegalArgumentException("The sex should be 0 (male), 1 (female), or 2 (other).");
 		}
-		else {
+		else if (workLocation < 0) {
 			throw new IllegalArgumentException("The work locations should be a non-negative integer");
 		}
-		if (deductionsRate >= 0 && deductionsRate <= 1) {
-			this.deductionsRate = deductionsRate;
+		else if (deductionsRate < 0 || deductionsRate > 1) {
+			throw new IllegalArgumentException("The deductions rate should be between 0.0 and 1.0");
 		}
 		else {
-			throw new IllegalArgumentException("The deductions rate should be between 0.0 and 1.0");
+			this.employeeNumber = employeeNumber;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.sex = sex;
+			this.workLocation = workLocation;
+			this.deductionsRate = deductionsRate;
 		}
 	}
 
