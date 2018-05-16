@@ -40,32 +40,32 @@ public class EmployeeHashTable {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
 			writer.write(Integer.toString(k));	// first line is num of buckets
 			writer.newLine();
-			for (int i = 0; i < k; i++) {
+			for (int i = 0; i < k; i++) {	// iterate through every bucket
 				ArrayList<EmployeeInfo> bucket = hashTable[i % k];
 				writer.write(Integer.toString(bucket.size()));	// second line is num of employees in bucket
 				writer.newLine();
-				for (int j = 0; j < bucket.size(); j++) {
+				for (int j = 0; j < bucket.size(); j++) {	// iterate through every employee in bucket
 					EmployeeInfo employee = bucket.get(j);
 					// third line is data of employee
 					// 'F' for full time, 'P' for part time, '?' for neither
 					if (employee instanceof FullTimeEmployee) {
-						writer.write(String.format("F,%f,",
+						writer.write(String.format("F~%f~",
 								((FullTimeEmployee) employee).getYearlySalary())
 						);
 					}
 					else if (employee instanceof PartTimeEmployee) {
 						PartTimeEmployee fullEmployee = (PartTimeEmployee) employee;
-						writer.write(String.format("P,%f,%f,%f,",
+						writer.write(String.format("P~%f~%f~%f~",
 								fullEmployee.getHourlyWage(),
 								fullEmployee.getHoursPerWeek(),
 								fullEmployee.getWeeksPerYear()
 						));
 					}
 					else {
-						writer.write("?,");
+						writer.write("?~");
 					}
 					// on same line, print employee num, name, sex, loc, etc.
-					writer.write(String.format("%d,%s,%s,%s,%s,%f",
+					writer.write(String.format("%d~%s~%s~%s~%s~%f",
 							employee.getEmployeeNumber(),
 							employee.getFirstName(),
 							employee.getLastName(),
@@ -94,7 +94,7 @@ public class EmployeeHashTable {
 			for (int i = 0; i < numBuckets; i++) {
 				int numEmployeesInBucket = Integer.parseInt(reader.readLine());
 				for (int j = 0; j < numEmployeesInBucket; j++) {
-					String[] data = reader.readLine().split(",");
+					String[] data = reader.readLine().split("~");
 					if (data[0].equals("F")) {
 						newTable.add(new FullTimeEmployee(
 								Integer.parseInt(data[2]),
