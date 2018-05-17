@@ -29,27 +29,16 @@
                       <Component id="fieldNumber" alignment="0" max="32767" attributes="0"/>
                       <Component id="fieldFName" alignment="0" max="32767" attributes="0"/>
                       <Component id="fieldLName" alignment="0" max="32767" attributes="0"/>
-                      <Component id="fieldLocation" alignment="0" max="32767" attributes="0"/>
                       <Component id="fieldSexes" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="dropDownType" alignment="0" max="32767" attributes="0"/>
+                      <Component id="dropDownLocation" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="65" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="labelRate" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFull0" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="fieldDedRate" min="-2" pref="100" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="backButton" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelFull0" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="fieldSalary" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="addTheEmployee" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="fieldSalary" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -64,6 +53,18 @@
                                   <Component id="fieldHourWage" pref="100" max="32767" attributes="0"/>
                                   <Component id="fieldHourWeek" alignment="0" max="32767" attributes="0"/>
                               </Group>
+                          </Group>
+                      </Group>
+                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="backButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="addTheEmployee" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="labelRate" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="fieldDedRate" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -95,8 +96,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="fieldLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="dropDownLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -197,8 +198,6 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldLocation">
-        </Component>
         <Component class="javax.swing.JTextField" name="fieldLName">
         </Component>
         <Component class="javax.swing.JTextField" name="fieldFName">
@@ -285,6 +284,23 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldWeekYearActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="dropDownLocation">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="loc a"/>
+                <StringItem index="1" value="loc b"/>
+                <StringItem index="2" value="loc c"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dropDownLocationActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
