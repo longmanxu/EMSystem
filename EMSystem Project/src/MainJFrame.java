@@ -720,7 +720,13 @@ public class MainJFrame extends javax.swing.JFrame {
 		
 		// set the settings properties
 		try {
-			employeeTable = EmployeeHashTable.open("saved_employees");
+			try {
+				employeeTable = EmployeeHashTable.open("saved_employees");
+			} catch (Exception e) {
+				System.err.println("xD: " + e.toString());
+				System.err.println("creating new table");
+				employeeTable = new EmployeeHashTable(10);
+			}
 			
 			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg", true));
 			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
