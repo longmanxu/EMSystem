@@ -198,6 +198,16 @@ public class EmployeeHashTable {
 		}
 	}
 	
+	// returns an array off all the employees
+	public ArrayList<EmployeeInfo> returnAllEmployees() {
+		final ArrayList<EmployeeInfo> resultList = new ArrayList<>();
+		for (int i = 0; i < k; i++) {
+			resultList.addAll(hashTable[i]);
+		}
+		
+		return resultList;
+	}
+	
 	/**
 	 * Get the number of employees.
 	 * @return the number of employees.
