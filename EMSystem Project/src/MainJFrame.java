@@ -8,6 +8,9 @@ import java.util.Properties;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import java.awt.Toolkit;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -42,6 +45,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		jTable2.setAutoCreateRowSorter(true);
 		jComboBox1.setSelectedItem(settings.getProperty("Look and Feel"));
 		employeeTable = new EmployeeHashTable(10);
+		resetEmployeeJTable(employeeTable, jTable1);
 	}
 
 	/**
@@ -329,7 +333,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -720,7 +724,23 @@ public class MainJFrame extends javax.swing.JFrame {
     private void dropDownLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dropDownLocationActionPerformed
-
+	
+	private static void resetEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
+		DefaultTableModel employeeTableModel = new DefaultTableModel();
+		ArrayList<EmployeeInfo> employeeList = hashTable.returnAllEmployees();
+		for (EmployeeInfo employee : employeeList) {
+			Object[] rowData = {
+				employee.getEmployeeNumber(),
+				employee.getFirstName(),
+				employee.getLastName(),
+				employee.getWorkLocation(),
+				employee.getClass()
+			};
+			employeeTableModel.addRow(rowData);
+		}
+		table.setModel(employeeTableModel);
+	}
+	
 	/**
 	 * @param args the command line arguments
 	 */
@@ -751,7 +771,6 @@ public class MainJFrame extends javax.swing.JFrame {
 		} catch (IOException e) {
 			System.err.println(e);
 		}
-		
 		
 		/* Set the look and feel from the settings*/
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

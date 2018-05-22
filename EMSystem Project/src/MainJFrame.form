@@ -429,8 +429,8 @@
                         <Column editable="false" title="Emp #" type="java.lang.Integer"/>
                         <Column editable="false" title="First" type="java.lang.String"/>
                         <Column editable="false" title="Last" type="java.lang.String"/>
-                        <Column editable="false" title="Location" type="java.lang.Integer"/>
-                        <Column editable="false" title="Emp. Type" type="java.lang.Integer"/>
+                        <Column editable="false" title="Location" type="java.lang.String"/>
+                        <Column editable="false" title="Emp. Type" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

@@ -216,4 +216,12 @@ public class EmployeeHashTable {
 		return this.num;
 	}
 	
+	/**
+	 * Get the k value.
+	 * @return the k value.
+	 */
+	public int getK() {
+		return this.k;
+	}
+	
 }
