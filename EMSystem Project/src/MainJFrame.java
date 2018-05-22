@@ -38,6 +38,8 @@ public class MainJFrame extends javax.swing.JFrame {
 	 */
 	public MainJFrame() {
 		initComponents();
+		jTable1.setAutoCreateRowSorter(true);
+		jTable2.setAutoCreateRowSorter(true);
 		jComboBox1.setSelectedItem(settings.getProperty("Look and Feel"));
 		employeeTable = new EmployeeHashTable(10);
 	}
@@ -335,6 +337,13 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Emp #");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("First");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Last");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Location");
+            jTable1.getColumnModel().getColumn(4).setHeaderValue("Emp. Type");
+        }
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -387,14 +396,14 @@ public class MainJFrame extends javax.swing.JFrame {
         ManagerPanelLayout.setHorizontalGroup(
             ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ManagerPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ManagerPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(delButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
