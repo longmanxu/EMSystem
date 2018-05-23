@@ -44,8 +44,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		jTable1.setAutoCreateRowSorter(true);
 		jTable2.setAutoCreateRowSorter(true);
 		jComboBox1.setSelectedItem(settings.getProperty("Look and Feel"));
-		employeeTable = new EmployeeHashTable(10);
-		resetEmployeeJTable(employeeTable, jTable1);
+		initEmployeeJTable(employeeTable, jTable1);
 	}
 
 	/**
@@ -319,14 +318,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Emp #", "First", "Last", "Location", "Emp. Type"
@@ -606,6 +598,12 @@ public class MainJFrame extends javax.swing.JFrame {
 		} catch (IOException e){
 			System.err.println(e);
 		}
+		// save the employees
+		try {
+			employeeTable.store("saved_employees");
+		} catch (IOException e) {
+			System.err.println(e);
+		}
     }//GEN-LAST:event_formWindowClosing
 
     private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
@@ -639,6 +637,7 @@ public class MainJFrame extends javax.swing.JFrame {
 					fieldSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
 			
 			employeeTable.add(temp);
+			addToEmployeeJTable(temp, jTable1);
 			addPopup.setVisible(false);
         }
         else if (dropDownType.getSelectedItem().equals("Part time") && fieldHourWage.getText().isEmpty() == false && fieldHourWeek.getText().isEmpty() == false && fieldWeekYear.getText().isEmpty() == false) {
@@ -647,6 +646,7 @@ public class MainJFrame extends javax.swing.JFrame {
 					fieldSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
 			
 			employeeTable.add(temp);
+			addToEmployeeJTable(temp, jTable1);
 			addPopup.setVisible(false);
         }
 		employeeTable.display();
@@ -725,8 +725,8 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dropDownLocationActionPerformed
 	
-	private static void resetEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
-		DefaultTableModel employeeTableModel = new DefaultTableModel();
+	private static void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
+		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
 		ArrayList<EmployeeInfo> employeeList = hashTable.returnAllEmployees();
 		for (EmployeeInfo employee : employeeList) {
 			Object[] rowData = {
@@ -738,6 +738,19 @@ public class MainJFrame extends javax.swing.JFrame {
 			};
 			employeeTableModel.addRow(rowData);
 		}
+		table.setModel(employeeTableModel);
+	}
+	
+	private static void addToEmployeeJTable(EmployeeInfo newEmployee, javax.swing.JTable table) {
+		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
+		Object[] rowData = {
+			newEmployee.getEmployeeNumber(),
+			newEmployee.getFirstName(),
+			newEmployee.getLastName(),
+			newEmployee.getWorkLocation(),
+			newEmployee.getClass()
+		};
+		employeeTableModel.addRow(rowData);
 		table.setModel(employeeTableModel);
 	}
 	
