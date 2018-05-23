@@ -216,6 +216,19 @@ public class EmployeeHashTable {
 	}
 	
 	/**
+	 * Converts an ArrayList<EmployeeInfo> into an EmployeeHashTable.
+	 * @param sourceList the ArrayList<EmployeeInfo> to be converted.
+	 * @return the EmployeeHashTable created from the sourceList.
+	 */
+	public static EmployeeHashTable arrayListToHashTable (ArrayList<EmployeeInfo> sourceList) {
+		EmployeeHashTable newTable = new EmployeeHashTable(10);
+		for (EmployeeInfo newEmployee : sourceList) {
+			newTable.add(newEmployee);
+		}
+		return newTable;
+	}
+	
+	/**
 	 * Get the number of employees.
 	 * @return the number of employees.
 	 */
