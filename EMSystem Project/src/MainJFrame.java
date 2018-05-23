@@ -41,10 +41,9 @@ public class MainJFrame extends javax.swing.JFrame {
 	 */
 	public MainJFrame() {
 		initComponents();
-		jTable1.setAutoCreateRowSorter(true);
-		jTable2.setAutoCreateRowSorter(true);
 		jComboBox1.setSelectedItem(settings.getProperty("Look and Feel"));
 		initEmployeeJTable(employeeTable, jTable1);
+		
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class MainJFrame extends javax.swing.JFrame {
         fieldFName = new javax.swing.JTextField();
         fieldNumber = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        fieldSexes = new javax.swing.JComboBox<>();
+        dropDownSexes = new javax.swing.JComboBox<>();
         addTheEmployee = new javax.swing.JButton();
         labelFull0 = new javax.swing.JLabel();
         labelRate = new javax.swing.JLabel();
@@ -107,6 +106,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
         backButton.setText("cancel");
         backButton.setToolTipText("");
+        backButton.setMaximumSize(new java.awt.Dimension(70, 25));
+        backButton.setMinimumSize(new java.awt.Dimension(70, 25));
+        backButton.setPreferredSize(new java.awt.Dimension(70, 25));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -138,10 +140,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel8.setText("Sex");
 
-        fieldSexes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
+        dropDownSexes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
 
         addTheEmployee.setText("add");
         addTheEmployee.setToolTipText("");
+        addTheEmployee.setMaximumSize(new java.awt.Dimension(70, 25));
+        addTheEmployee.setMinimumSize(new java.awt.Dimension(70, 25));
+        addTheEmployee.setPreferredSize(new java.awt.Dimension(70, 25));
         addTheEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addTheEmployeeActionPerformed(evt);
@@ -213,7 +218,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(fieldNumber)
                     .addComponent(fieldFName)
                     .addComponent(fieldLName)
-                    .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dropDownSexes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dropDownType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dropDownLocation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
@@ -234,10 +239,10 @@ public class MainJFrame extends javax.swing.JFrame {
                                 .addComponent(fieldHourWage, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                                 .addComponent(fieldHourWeek))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
-                            .addComponent(backButton)
+                        .addGroup(addPopupLayout.createSequentialGroup()
+                            .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addTheEmployee))
+                            .addComponent(addTheEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPopupLayout.createSequentialGroup()
                             .addComponent(labelRate)
                             .addGap(18, 18, 18)
@@ -285,8 +290,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(addPopupLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                         .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(addTheEmployee)
-                            .addComponent(backButton)))
+                            .addComponent(addTheEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(addPopupLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -296,7 +301,7 @@ public class MainJFrame extends javax.swing.JFrame {
                             .addComponent(fieldDedRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25)
                         .addGroup(addPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fieldSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dropDownSexes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))))
                 .addGap(29, 29, 29))
         );
@@ -339,7 +344,14 @@ public class MainJFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -634,33 +646,50 @@ public class MainJFrame extends javax.swing.JFrame {
         else if(dropDownType.getSelectedItem().equals("Full time") && fieldNumber.getText().isEmpty() == false) {
             // do full time stuff
 			FullTimeEmployee temp = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
-					fieldSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
-			
+					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
 			employeeTable.add(temp);
 			addToEmployeeJTable(temp, jTable1);
 			addPopup.setVisible(false);
+			this.setFocusableWindowState(true);
+			clearFields();
+			
         }
         else if (dropDownType.getSelectedItem().equals("Part time") && fieldHourWage.getText().isEmpty() == false && fieldHourWeek.getText().isEmpty() == false && fieldWeekYear.getText().isEmpty() == false) {
             // do part time stuff
 			PartTimeEmployee temp = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
-					fieldSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
-			
+					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
 			employeeTable.add(temp);
 			addToEmployeeJTable(temp, jTable1);
 			addPopup.setVisible(false);
+			this.setFocusableWindowState(true);
+			clearFields();
+			
         }
-		employeeTable.display();
-        // FIELDS:
-
     }//GEN-LAST:event_addTheEmployeeActionPerformed
-
+	// clears all the text in the "add" popup menu
+	private void clearFields() {
+		// clear all text fields
+		fieldNumber.setText("");
+		fieldFName.setText("");
+		fieldLName.setText("");
+		fieldDedRate.setText("");
+		fieldHourWage.setText("");
+		fieldHourWeek.setText("");
+		fieldWeekYear.setText("");
+		fieldSalary.setText("");
+		// reset all drop down menus
+		dropDownLocation.setSelectedIndex(0);
+		dropDownSexes.setSelectedIndex(0);
+		dropDownLocation.setSelectedIndex(0);
+		
+	}
+	
     private void fieldNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldNumberActionPerformed
 
     private void dropDownTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownTypeActionPerformed
         // TODO add your handling code here:
-        System.out.println("hai");
         if (dropDownType.getSelectedItem().equals("Full time")) {
 			changeSelection(0);
         }
@@ -724,6 +753,20 @@ public class MainJFrame extends javax.swing.JFrame {
     private void dropDownLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dropDownLocationActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+		if (jTable1.getRowSelectionAllowed()) {
+			int selRow = jTable1.getSelectedRow();
+			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
+			
+			int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0);
+			EmployeeInfo selectedEmployee = employeeTable.find(selectedEmpNumber);
+			System.out.println(selectedEmployee.getFirstName());
+			
+			// int colIndex = jTable1.getSelectedColumn();
+		}
+    }//GEN-LAST:event_jTable1MouseClicked
 	
 	private static void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
@@ -824,6 +867,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JButton delButton;
     private javax.swing.JComboBox<String> dropDownLocation;
+    private javax.swing.JComboBox<String> dropDownSexes;
     private javax.swing.JComboBox<String> dropDownType;
     private javax.swing.JTextField fieldDedRate;
     private javax.swing.JTextField fieldFName;
@@ -832,7 +876,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField fieldLName;
     private javax.swing.JTextField fieldNumber;
     private javax.swing.JTextField fieldSalary;
-    private javax.swing.JComboBox<String> fieldSexes;
     private javax.swing.JTextField fieldWeekYear;
     private javax.swing.JPanel filePanel;
     private javax.swing.JPanel helpPanel;
