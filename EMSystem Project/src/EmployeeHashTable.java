@@ -128,11 +128,18 @@ public class EmployeeHashTable {
 	/**
 	 * Adds the specified EmployeeInfo object to the hash table.
 	 * @param newItem the new EmployeeInfo to be added.
+	 * @return true if the new EmployeeInfo was successfully added.
 	 */
-	public void add(EmployeeInfo newItem) {
+	public boolean add(EmployeeInfo newItem) {
 		// adds the new EmployeeInfo object to the bucket with index employee number % k
-		hashTable[newItem.getEmployeeNumber() % k].add(newItem);
-		num++;
+		if (find(newItem.getEmployeeNumber()) != null){
+			hashTable[newItem.getEmployeeNumber() % k].add(newItem);
+			num++;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
