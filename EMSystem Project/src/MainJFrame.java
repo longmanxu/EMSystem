@@ -309,12 +309,12 @@ public class MainJFrame extends javax.swing.JFrame {
         );
 
         errorPopup.setTitle("ERROR");
-        errorPopup.setMaximumSize(new java.awt.Dimension(300, 150));
+        errorPopup.setMaximumSize(new java.awt.Dimension(500, 200));
         errorPopup.setMinimumSize(new java.awt.Dimension(300, 150));
-        errorPopup.setResizable(false);
         errorPopup.setSize(new java.awt.Dimension(300, 150));
 
         errorMsgLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        errorMsgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/error.png"))); // NOI18N
         errorMsgLabel.setText("Enter ur error msg here");
         errorMsgLabel.setMaximumSize(new java.awt.Dimension(300, 150));
         errorMsgLabel.setMinimumSize(new java.awt.Dimension(300, 150));
@@ -325,17 +325,17 @@ public class MainJFrame extends javax.swing.JFrame {
         errorPopup.getContentPane().setLayout(errorPopupLayout);
         errorPopupLayout.setHorizontalGroup(
             errorPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(errorPopupLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, errorPopupLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 276, Short.MAX_VALUE)
+                .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 288, Short.MAX_VALUE)
                 .addContainerGap())
         );
         errorPopupLayout.setVerticalGroup(
             errorPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(errorPopupLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
