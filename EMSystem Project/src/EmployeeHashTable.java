@@ -132,7 +132,7 @@ public class EmployeeHashTable {
 	 */
 	public boolean add(EmployeeInfo newItem) {
 		// adds the new EmployeeInfo object to the bucket with index employee number % k
-		if (find(newItem.getEmployeeNumber()) != null){
+		if (find(newItem.getEmployeeNumber()) == null){
 			hashTable[newItem.getEmployeeNumber() % k].add(newItem);
 			num++;
 			return true;
