@@ -647,8 +647,9 @@ public class MainJFrame extends javax.swing.JFrame {
             // do full time stuff
 			FullTimeEmployee temp = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
 					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
-			employeeTable.add(temp);
-			addToEmployeeJTable(temp, jTable1);
+			if (employeeTable.add(temp)) {
+				addToEmployeeJTable(temp, jTable1);
+			}
 			addPopup.setVisible(false);
 			this.setFocusableWindowState(true);
 			clearFields();
@@ -658,8 +659,9 @@ public class MainJFrame extends javax.swing.JFrame {
             // do part time stuff
 			PartTimeEmployee temp = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
 					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
-			employeeTable.add(temp);
-			addToEmployeeJTable(temp, jTable1);
+			if (employeeTable.add(temp)) {
+				addToEmployeeJTable(temp, jTable1);
+			}
 			addPopup.setVisible(false);
 			this.setFocusableWindowState(true);
 			clearFields();
