@@ -80,6 +80,8 @@ public class MainJFrame extends javax.swing.JFrame {
         fieldHourWeek = new javax.swing.JTextField();
         fieldWeekYear = new javax.swing.JTextField();
         dropDownLocation = new javax.swing.JComboBox<>();
+        errorPopup = new javax.swing.JDialog();
+        errorMsgLabel = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ManagerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -306,6 +308,36 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
         );
 
+        errorPopup.setTitle("ERROR");
+        errorPopup.setMaximumSize(new java.awt.Dimension(300, 150));
+        errorPopup.setMinimumSize(new java.awt.Dimension(300, 150));
+        errorPopup.setResizable(false);
+        errorPopup.setSize(new java.awt.Dimension(300, 150));
+
+        errorMsgLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        errorMsgLabel.setText("Enter ur error msg here");
+        errorMsgLabel.setMaximumSize(new java.awt.Dimension(300, 150));
+        errorMsgLabel.setMinimumSize(new java.awt.Dimension(300, 150));
+        errorMsgLabel.setName(""); // NOI18N
+        errorMsgLabel.setPreferredSize(new java.awt.Dimension(300, 150));
+
+        javax.swing.GroupLayout errorPopupLayout = new javax.swing.GroupLayout(errorPopup.getContentPane());
+        errorPopup.getContentPane().setLayout(errorPopupLayout);
+        errorPopupLayout.setHorizontalGroup(
+            errorPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorPopupLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 276, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        errorPopupLayout.setVerticalGroup(
+            errorPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorPopupLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Management System");
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -482,7 +514,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("File", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/file.png")), filePanel); // NOI18N
@@ -518,7 +550,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(431, Short.MAX_VALUE))
+                .addContainerGap(484, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Settings", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/settings.png")), settingsPanel); // NOI18N
@@ -551,7 +583,7 @@ public class MainJFrame extends javax.swing.JFrame {
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
+                .addContainerGap(169, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel6)
@@ -633,15 +665,24 @@ public class MainJFrame extends javax.swing.JFrame {
 			changeSelection(1);
 		}
 		
-		this.setFocusableWindowState(false);
-		
     }//GEN-LAST:event_addButtonActionPerformed
-
+	
+	public void getAngryAtUser(String msg) {
+		errorPopup.setVisible(true);
+		if(msg.isEmpty()) {
+			errorMsgLabel.setText("Error");
+		}
+		else{
+			errorMsgLabel.setText(msg);
+		}
+	}
+	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
         // TODO add your handling code here:
         // check to make sure none of the text fields are empty
         // Update this if everytime we add/del a field
         if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty()){
+			getAngryAtUser("Some of the fields are empty!!! :(");
         }
         else if(dropDownType.getSelectedItem().equals("Full time") && fieldNumber.getText().isEmpty() == false) {
             // do full time stuff
@@ -650,8 +691,10 @@ public class MainJFrame extends javax.swing.JFrame {
 			if (employeeTable.add(temp)) {
 				addToEmployeeJTable(temp, jTable1);
 			}
+			else {
+				getAngryAtUser("Duplicate employee number!");
+			}
 			addPopup.setVisible(false);
-			this.setFocusableWindowState(true);
 			clearFields();
 			
         }
@@ -662,8 +705,10 @@ public class MainJFrame extends javax.swing.JFrame {
 			if (employeeTable.add(temp)) {
 				addToEmployeeJTable(temp, jTable1);
 			}
+			else {
+				getAngryAtUser("Duplicate employee number!");
+			}
 			addPopup.setVisible(false);
-			this.setFocusableWindowState(true);
 			clearFields();
 			
         }
@@ -871,6 +916,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> dropDownLocation;
     private javax.swing.JComboBox<String> dropDownSexes;
     private javax.swing.JComboBox<String> dropDownType;
+    private javax.swing.JLabel errorMsgLabel;
+    private javax.swing.JDialog errorPopup;
     private javax.swing.JTextField fieldDedRate;
     private javax.swing.JTextField fieldFName;
     private javax.swing.JTextField fieldHourWage;
