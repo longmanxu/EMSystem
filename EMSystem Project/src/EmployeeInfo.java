@@ -4,7 +4,7 @@
  * @version Date: 2018-04-04
  * 
  */
-public class EmployeeInfo {
+abstract public class EmployeeInfo {
 	
 	// the contents of the EmployeeInfo object
 	private int employeeNumber;
@@ -56,7 +56,9 @@ public class EmployeeInfo {
 
 	/**
 	 * Converts the EmployeeInfo object into a legible string.
+	 * @return a string representation of the EmployeeInfo.
 	 */
+	@Override
 	public String toString() {
 		return Integer.toString(this.employeeNumber) + ", " + this.firstName + " " + this.lastName;
 	}
@@ -186,16 +188,12 @@ public class EmployeeInfo {
 	 * Calculate the employee's annual gross income. To be overridden by subclasses.
 	 * @return the employee's annual gross income.
 	 */
-	public double calcAnnualGrossIncome() {
-		return Double.NaN;
-	}
+	abstract public double calcAnnualGrossIncome();
 	
 	/**
 	 * Calculate the employee's annual net income. To be overridden by subclasses.
 	 * @return the employee's annual net income.
 	 */
-	public double calcAnnualNetIncome() {
-		return Double.NaN;
-	}
+	abstract public double calcAnnualNetIncome();
 	
 }
