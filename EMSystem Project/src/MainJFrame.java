@@ -309,7 +309,6 @@ public class MainJFrame extends javax.swing.JFrame {
         );
 
         errorPopup.setTitle("ERROR");
-        errorPopup.setMaximumSize(new java.awt.Dimension(500, 200));
         errorPopup.setMinimumSize(new java.awt.Dimension(300, 150));
         errorPopup.setSize(new java.awt.Dimension(300, 150));
 
@@ -387,25 +386,25 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {"", null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null},
+                {null},
+                {""},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Attribute", "Information"
+                "Attribute"
             }
         ));
         jTable2.setColumnSelectionAllowed(true);
@@ -806,14 +805,44 @@ public class MainJFrame extends javax.swing.JFrame {
 		if (jTable1.getRowSelectionAllowed()) {
 			int selRow = jTable1.getSelectedRow();
 			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
-			
-			int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0);
+			int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0)
+			;
 			EmployeeInfo selectedEmployee = employeeTable.find(selectedEmpNumber);
 			System.out.println(selectedEmployee.getFirstName());
+			
+			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+			ArrayList<EmployeeInfo> employeeList = employeeTable.returnAllEmployees();
+			// run through every employee in employeeList
+				// add the part time employee info as a column
+				if (selectedEmployee instanceof PartTimeEmployee) {
+					Object[] info = {
+						selectedEmployee.getEmployeeNumber(),
+						selectedEmployee.getFirstName(),
+						selectedEmployee.getLastName(),
+						selectedEmployee.getWorkLocation(),
+						selectedEmployee.getClass(),
+						((PartTimeEmployee) selectedEmployee).getHourlyWage(),
+						((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
+						((PartTimeEmployee) selectedEmployee).getWeeksPerYear()
+					};
+					attributeTableModel.addColumn("information", info);
+				}
+				else if (selectedEmployee instanceof FullTimeEmployee) {
+					Object[] info = {
+						selectedEmployee.getEmployeeNumber(),
+						selectedEmployee.getFirstName(),
+						selectedEmployee.getLastName(),
+						selectedEmployee.getWorkLocation(),
+						selectedEmployee.getClass(),
+						((FullTimeEmployee) selectedEmployee).getYearlySalary()
+					};
+					attributeTableModel.addColumn("information", info	);
+				}
 			
 			// int colIndex = jTable1.getSelectedColumn();
 		}
     }//GEN-LAST:event_jTable1MouseClicked
+
 	
 	private static void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
