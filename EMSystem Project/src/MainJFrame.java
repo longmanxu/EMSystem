@@ -16,53 +16,52 @@ public class MainJFrame extends javax.swing.JFrame {
 	// initizlize a bunch of IO stuff
 	private BufferedWriter saveWriter;  // io for employee info
 	private BufferedReader saveReader;
-	private static BufferedWriter settingsWriter;  // io for setting info
-	private static BufferedReader settingsReader;
+//	private static BufferedWriter settingsWriter;  // io for setting info
+//	private static BufferedReader settingsReader;
 	
 	// settings stuffs
-	private static Properties defSettings = new Properties();
-	private static Properties settings;
+//	private static Properties defSettings = new Properties();
+//	private static Properties settings;
+	private static Settings settings;
 	
 	/**
 	 * Creates new form MainJFrame
 	 */
 	public MainJFrame() {
 		initComponents();
-		jComboBox1.setSelectedItem(settings.getProperty("Look and Feel"));
+		jComboBox1.setSelectedItem(settings.getLookAndFeel());
 		initEmployeeJTable(employeeTable, jTable1);
 		
 	}
 	
 	/**
+	 * The entry point into the program.
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
 		
 		// set the settings properties
 		try {
-			try {
-				employeeTable = EmployeeHashTable.open("saved_employees");
-			} catch (Exception e) {
-				System.err.println("xD: " + e.toString());
-				System.err.println("creating new table");
-				employeeTable = new EmployeeHashTable(10);
-			}
-			
-			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg", true));
-			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
-			
-			defSettings.setProperty("Look and Feel", "Windows");
-		
-			settings = new Properties(defSettings);
-			settings.load(settingsReader);
-			
-			// close the settings reader, since it is unneeded
-			if (settingsReader != null) {
-				settingsReader.close();
-			}
-		} catch (IOException e) {
-			System.err.println(e);
+			employeeTable = EmployeeHashTable.open("saved_employees");
+		} catch (Exception e) {
+			System.err.println("xD: " + e.toString());
+			System.err.println("creating new table");
+			employeeTable = new EmployeeHashTable(10);
 		}
+		
+		settings = Settings.open("settings.cfg");
+//		settingsWriter = new BufferedWriter(new FileWriter("settings.cfg", true));
+//		settingsReader = new BufferedReader(new FileReader("settings.cfg"));
+
+//		defSettings.setProperty("Look and Feel", "Windows");
+
+//		settings = new Properties(defSettings);
+//		settings.load(settingsReader);
+
+		// close the settings reader, since it is unneeded
+//		if (settingsReader != null) {
+//			settingsReader.close();
+//		}
 		
 		/* Set the look and feel from the settings*/
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -71,7 +70,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		 */
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if (settings.getProperty("Look and Feel").equals(info.getName())) {
+				if (settings.getLookAndFeel().equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
 					break;
 				}
@@ -157,6 +156,24 @@ public class MainJFrame extends javax.swing.JFrame {
 		else{
 			errorMsgLabel.setText(msg);
 		}
+	}
+	
+	// clears all the text in the "add" popup menu
+	private void clearFields() {
+		// clear all text fields
+		fieldNumber.setText("");
+		fieldFName.setText("");
+		fieldLName.setText("");
+		fieldDedRate.setText("");
+		fieldHourWage.setText("");
+		fieldHourWeek.setText("");
+		fieldWeekYear.setText("");
+		fieldSalary.setText("");
+		// reset all drop down menus
+		dropDownLocation.setSelectedIndex(0);
+		dropDownSexes.setSelectedIndex(0);
+		dropDownLocation.setSelectedIndex(0);
+		
 	}
 	
 	/**
@@ -690,11 +707,12 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 		// change the default theme on next startup
 		JComboBox cb = (JComboBox) evt.getSource();
-		settings.setProperty("Look and Feel", (String)cb.getSelectedItem());
+		settings.setLookAndFeel((String) cb.getSelectedItem());
 		try{
-			settings.store(settingsWriter, "");
+			settings.save();
 		} catch (IOException e){
-			System.err.println(e);
+			System.err.println("Error while saving settings:");
+			e.printStackTrace(System.err);
 		}
 		
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -706,8 +724,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			
 			if (saveWriter != null) saveWriter.close();
 			if (saveReader != null) saveReader.close();
-			if (settingsWriter != null) settingsWriter.close();
-			if (settingsReader != null) settingsReader.close();
 			System.out.println("Closed all IO");
 		} catch (IOException e){
 			System.err.println(e);
@@ -769,23 +785,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			
         }
     }//GEN-LAST:event_addTheEmployeeActionPerformed
-	// clears all the text in the "add" popup menu
-	private void clearFields() {
-		// clear all text fields
-		fieldNumber.setText("");
-		fieldFName.setText("");
-		fieldLName.setText("");
-		fieldDedRate.setText("");
-		fieldHourWage.setText("");
-		fieldHourWeek.setText("");
-		fieldWeekYear.setText("");
-		fieldSalary.setText("");
-		// reset all drop down menus
-		dropDownLocation.setSelectedIndex(0);
-		dropDownSexes.setSelectedIndex(0);
-		dropDownLocation.setSelectedIndex(0);
-		
-	}
 	
     private void dropDownTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownTypeActionPerformed
         // TODO add your handling code here:
@@ -854,6 +853,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		jDialog1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 	
+	// <editor-fold defaultstate="collapsed" desc="Generated Variables Declarations">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ManagerPanel;
     private javax.swing.JButton addButton;
@@ -904,4 +904,5 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelRate;
     private javax.swing.JPanel settingsPanel;
     // End of variables declaration//GEN-END:variables
+	// </editor-fold>
 }

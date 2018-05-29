@@ -30,10 +30,8 @@ public class Settings implements Serializable {
 	 * Create a new Settings object from a file saved using save()
 	 * @param filePath the file path of the file to be opened.
 	 * @return a new Settings object from the saved file.
-	 * @throws IOException if an IOException is encountered.
-	 * @throws ClassNotFoundException If a ClassNotFoundException is encountered.
 	 */
-	public static Settings open(String filePath) throws IOException, ClassNotFoundException {
+	public static Settings open(String filePath) {
 		Settings newSettings;
 		File saveFile = new File(filePath);
 		if (saveFile.isFile()) {
@@ -41,7 +39,9 @@ public class Settings implements Serializable {
 				newSettings = (Settings) inputStream.readObject();
 				return newSettings;
 			} catch (IOException | ClassNotFoundException e) {
-				throw e;
+				System.err.println("Error encountered when opening settings. Overwriting with default settings.");
+				e.printStackTrace(System.err);
+				return getDefaultSettings(filePath);
 			}
 		}
 		return getDefaultSettings(filePath);
