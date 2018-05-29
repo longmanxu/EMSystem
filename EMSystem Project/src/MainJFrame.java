@@ -1,16 +1,9 @@
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
-import java.awt.Toolkit;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -44,6 +37,132 @@ public class MainJFrame extends javax.swing.JFrame {
 		jComboBox1.setSelectedItem(settings.getProperty("Look and Feel"));
 		initEmployeeJTable(employeeTable, jTable1);
 		
+	}
+	
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String args[]) {
+		
+		// set the settings properties
+		try {
+			try {
+				employeeTable = EmployeeHashTable.open("saved_employees");
+			} catch (Exception e) {
+				System.err.println("xD: " + e.toString());
+				System.err.println("creating new table");
+				employeeTable = new EmployeeHashTable(10);
+			}
+			
+			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg", true));
+			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
+			
+			defSettings.setProperty("Look and Feel", "Windows");
+		
+			settings = new Properties(defSettings);
+			settings.load(settingsReader);
+			
+			// close the settings reader, since it is unneeded
+			if (settingsReader != null) {
+				settingsReader.close();
+			}
+		} catch (IOException e) {
+			System.err.println(e);
+		}
+		
+		/* Set the look and feel from the settings*/
+		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+		 */
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if (settings.getProperty("Look and Feel").equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException ex) {
+			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		}
+		//</editor-fold>
+
+		/* Create and display the form */
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new MainJFrame().setVisible(true);
+			}
+		});
+	}
+	
+	private static void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
+		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
+		ArrayList<EmployeeInfo> employeeList = hashTable.returnAllEmployees();
+		for (EmployeeInfo employee : employeeList) {
+			Object[] rowData = {
+				employee.getEmployeeNumber(),
+				employee.getFirstName(),
+				employee.getLastName(),
+				employee.getWorkLocation(),
+				employee.getClass()
+			};
+			employeeTableModel.addRow(rowData);
+		}
+		table.setModel(employeeTableModel);
+	}
+	
+	private static void addToEmployeeJTable(EmployeeInfo newEmployee, javax.swing.JTable table) {
+		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
+		Object[] rowData = {
+			newEmployee.getEmployeeNumber(),
+			newEmployee.getFirstName(),
+			newEmployee.getLastName(),
+			newEmployee.getWorkLocation(),
+			newEmployee.getClass()
+		};
+		employeeTableModel.addRow(rowData);
+		table.setModel(employeeTableModel);
+	}
+	
+	private void changeSelection(int type) {
+		if (type == 0) { // full time
+			labelFull0.setVisible(true);
+			fieldSalary.setVisible(true);
+			
+			labelPart0.setVisible(false);
+			fieldHourWage.setVisible(false);
+			labelPart1.setVisible(false);
+			fieldHourWeek.setVisible(false);
+			labelPart2.setVisible(false);
+			fieldWeekYear.setVisible(false);
+		}
+		else if (type == 1) { // part time
+			labelFull0.setVisible(false);
+			fieldSalary.setVisible(false);
+			
+			labelPart0.setVisible(true);
+			fieldHourWage.setVisible(true);
+			labelPart1.setVisible(true);
+			fieldHourWeek.setVisible(true);
+			labelPart2.setVisible(true);
+			fieldWeekYear.setVisible(true);
+		}
+	}
+	
+	public void getAngryAtUser(String msg) {
+		errorPopup.setVisible(true);
+		if(msg.isEmpty()) {
+			errorMsgLabel.setText("Error");
+		}
+		else{
+			errorMsgLabel.setText(msg);
+		}
 	}
 	
 	/**
@@ -688,16 +807,6 @@ public class MainJFrame extends javax.swing.JFrame {
 		
     }//GEN-LAST:event_addButtonActionPerformed
 	
-	public void getAngryAtUser(String msg) {
-		errorPopup.setVisible(true);
-		if(msg.isEmpty()) {
-			errorMsgLabel.setText("Error");
-		}
-		else{
-			errorMsgLabel.setText(msg);
-		}
-	}
-	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
         // TODO add your handling code here:
         // check to make sure none of the text fields are empty
@@ -765,31 +874,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			changeSelection(1);
 		}
     }//GEN-LAST:event_dropDownTypeActionPerformed
-	
-	private void changeSelection(int type) {
-		if (type == 0) { // full time
-			labelFull0.setVisible(true);
-			fieldSalary.setVisible(true);
-			
-			labelPart0.setVisible(false);
-			fieldHourWage.setVisible(false);
-			labelPart1.setVisible(false);
-			fieldHourWeek.setVisible(false);
-			labelPart2.setVisible(false);
-			fieldWeekYear.setVisible(false);
-		}
-		else if (type == 1) { // part time
-			labelFull0.setVisible(false);
-			fieldSalary.setVisible(false);
-			
-			labelPart0.setVisible(true);
-			fieldHourWage.setVisible(true);
-			labelPart1.setVisible(true);
-			fieldHourWeek.setVisible(true);
-			labelPart2.setVisible(true);
-			fieldWeekYear.setVisible(true);
-		}
-	}
 	
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -871,99 +955,7 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 		jDialog1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-
 	
-	private static void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
-		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
-		ArrayList<EmployeeInfo> employeeList = hashTable.returnAllEmployees();
-		for (EmployeeInfo employee : employeeList) {
-			Object[] rowData = {
-				employee.getEmployeeNumber(),
-				employee.getFirstName(),
-				employee.getLastName(),
-				employee.getWorkLocation(),
-				employee.getClass()
-			};
-			employeeTableModel.addRow(rowData);
-		}
-		table.setModel(employeeTableModel);
-	}
-	
-	private static void addToEmployeeJTable(EmployeeInfo newEmployee, javax.swing.JTable table) {
-		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
-		Object[] rowData = {
-			newEmployee.getEmployeeNumber(),
-			newEmployee.getFirstName(),
-			newEmployee.getLastName(),
-			newEmployee.getWorkLocation(),
-			newEmployee.getClass()
-		};
-		employeeTableModel.addRow(rowData);
-		table.setModel(employeeTableModel);
-	}
-	
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[]) {
-		
-		// set the settings properties
-		try {
-			try {
-				employeeTable = EmployeeHashTable.open("saved_employees");
-			} catch (Exception e) {
-				System.err.println("xD: " + e.toString());
-				System.err.println("creating new table");
-				employeeTable = new EmployeeHashTable(10);
-			}
-			
-			settingsWriter = new BufferedWriter(new FileWriter("settings.cfg", true));
-			settingsReader = new BufferedReader(new FileReader("settings.cfg"));
-			
-			defSettings.setProperty("Look and Feel", "Windows");
-		
-			settings = new Properties(defSettings);
-			settings.load(settingsReader);
-			
-			// close the settings reader, since it is unneeded
-			if (settingsReader != null) {
-				settingsReader.close();
-			}
-		} catch (IOException e) {
-			System.err.println(e);
-		}
-		
-		/* Set the look and feel from the settings*/
-		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if (settings.getProperty("Look and Feel").equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		//</editor-fold>
-
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new MainJFrame().setVisible(true);
-			}
-		});
-	}
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ManagerPanel;
     private javax.swing.JButton addButton;
