@@ -216,8 +216,8 @@ public class EmployeeHashTable {
 	}
 	
 	/**
-	 * Converts an ArrayList<EmployeeInfo> into an EmployeeHashTable.
-	 * @param sourceList the ArrayList<EmployeeInfo> to be converted.
+	 * Converts an ArrayList&lt;EmployeeInfo&gt; into an EmployeeHashTable.
+	 * @param sourceList the ArrayList&lt;EmployeeInfo&gt; to be converted.
 	 * @return the EmployeeHashTable created from the sourceList.
 	 */
 	public static EmployeeHashTable arrayListToHashTable (ArrayList<EmployeeInfo> sourceList) {
