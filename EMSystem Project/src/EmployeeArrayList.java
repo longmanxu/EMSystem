@@ -1,8 +1,6 @@
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A subclass of ArrayList&lt;EmployeeInfo&gt; which provides sorting algorithms for the EmployeeInfo elements.
@@ -43,7 +41,7 @@ public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
 	/**
 	 * Create a new EmployeeArrayList from a file saved using save();
 	 * @param filePath the file path of the file to be opened.
-	 * @return a new EmployeeArrayList.
+	 * @return a new EmployeeArrayList from the saved file.
 	 * @throws IOException if an IOException is encountered.
 	 * @throws java.lang.ClassNotFoundException if a ClassNotFoundException is encountered.
 	 */
