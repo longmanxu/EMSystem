@@ -687,18 +687,13 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       // close the readers and writers
-		try {
-			employeeTable.save("saved_employees");
-			System.out.println("Closed all IO");
-		} catch (IOException e){
-			System.err.println(e);
-		}
 		// save the employees
 		try {
 			employeeTable.save("saved_employees");
+			System.out.println("Saved all employees");
 		} catch (IOException e) {
-			System.err.println(e);
+			System.err.println("Error encountered when saving employees:");
+			e.printStackTrace(System.err);
 		}
     }//GEN-LAST:event_formWindowClosing
 
