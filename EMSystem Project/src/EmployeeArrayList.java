@@ -1,6 +1,8 @@
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A subclass of ArrayList&lt;EmployeeInfo&gt; which provides sorting algorithms for the EmployeeInfo elements.
@@ -30,39 +32,9 @@ public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
 	 * @throws IOException if an IOException is encountered.
 	 */
 	public void save(String filePath) throws IOException {
-		// wrapped in try-with-resources to ensure writer will be closed.
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-			// first line of file is number of employees
-			writer.write(Integer.toString(this.size()));
-			writer.newLine();
-			
-			// each employee is on a new line
-			// each piece of data is seperated by a '~'
-			for (EmployeeInfo employee : this) {
-					// F' for full time, 'P' for part time, '?' for neither
-					if (employee instanceof FullTimeEmployee) {
-						writer.write(String.format("F~%f~",((FullTimeEmployee) employee).getYearlySalary()));
-					}
-					else if (employee instanceof PartTimeEmployee) {
-						PartTimeEmployee fullEmployee = (PartTimeEmployee) employee;
-						writer.write(String.format("P~%f~%f~%f~",
-								fullEmployee.getHourlyWage(),
-								fullEmployee.getHoursPerWeek(),
-								fullEmployee.getWeeksPerYear()
-						));
-					}
-					
-					// employee num, name, sex, loc, deductions
-					writer.write(String.format("%d~%s~%s~%s~%s~%f",
-							employee.getEmployeeNumber(),
-							employee.getFirstName(),
-							employee.getLastName(),
-							employee.getSex(),
-							employee.getWorkLocation(),
-							employee.getDeductionsRate()
-					));
-					writer.newLine();
-			}
+		// wrapped in try-with-resources to ensure output stream will be closed.
+		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+			outputStream.writeObject(this);
 		} catch (IOException e) {
 			throw e;
 		}
@@ -73,40 +45,12 @@ public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
 	 * @param filePath the file path of the file to be opened.
 	 * @return a new EmployeeArrayList.
 	 * @throws IOException if an IOException is encountered.
+	 * @throws java.lang.ClassNotFoundException if a ClassNotFoundException is encountered.
 	 */
-	public static EmployeeArrayList open(String filePath) throws IOException{
-		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-			EmployeeArrayList newList = new EmployeeArrayList();
-			int listSize = Integer.parseInt(reader.readLine());
-			for (int i = 0; i < listSize; i++) {
-				String[] data = reader.readLine().split("~");
-				if (data[0].equals("F")) {
-					newList.add(new FullTimeEmployee(
-							Integer.parseInt(data[2]),
-							data[3],
-							data[4],
-							Integer.parseInt(data[5]),
-							Integer.parseInt(data[6]),
-							Double.parseDouble(data[7]),
-							Double.parseDouble(data[1])
-					));
-				}
-				else if (data[0].equals("P")) {
-					newList.add(new PartTimeEmployee(
-							Integer.parseInt(data[4]),
-							data[5],
-							data[6],
-							Integer.parseInt(data[7]),
-							Integer.parseInt(data[8]),
-							Double.parseDouble(data[9]),
-							Double.parseDouble(data[1]),
-							Double.parseDouble(data[2]),
-							Double.parseDouble(data[3])
-					));
-				}
-			}
-			return newList;
-		} catch (IOException e) {
+	public static EmployeeArrayList open(String filePath) throws IOException, ClassNotFoundException {
+		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+			return (EmployeeArrayList) inputStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
 			throw e;
 		}
 	}
@@ -180,12 +124,13 @@ public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
 		a.add(new FullTimeEmployee(99, "what", "aa", 0, 0, 0, 0));
 		a.add(new PartTimeEmployee(52, "lad", "ayy", 2, 8, 0.6, 33, 20, 30));
 		a.add(new FullTimeEmployee(1, "WHAT", "BB", 0, 0, 0, 0));
+		a.display();
 		EmployeeArrayList b;
 		try {
 			a.save("hello.txt");
 			b = EmployeeArrayList.open("hello.txt");
 			b.display();
-		} catch (IOException ex) {
+		} catch (IOException | ClassNotFoundException ex) {
 			ex.printStackTrace(System.err);
 		}
 	}

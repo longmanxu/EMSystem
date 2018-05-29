@@ -4,7 +4,7 @@
  * @version 2018-04-04
  *
  */
-public class FullTimeEmployee extends EmployeeInfo{
+public class FullTimeEmployee extends EmployeeInfo {
 	
 	// the FullTimeEmployee's annual salary
 	protected double yearlySalary;

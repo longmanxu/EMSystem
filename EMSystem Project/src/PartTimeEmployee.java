@@ -5,7 +5,7 @@
  * @version 2018-04-04
  *
  */
-public class PartTimeEmployee extends EmployeeInfo{
+public class PartTimeEmployee extends EmployeeInfo {
 	
 	// added contents of the PartTimeEmployee object for calculating income
 	private double hourlyWage;

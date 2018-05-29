@@ -1,10 +1,13 @@
+
+import java.io.Serializable;
+
 /**
  * An object for storing an employee's first name, last name, employee number, sex, work location, and deductions rate.
  * @author Longman Xu and Tommy Huang
  * @version Date: 2018-04-04
  * 
  */
-abstract public class EmployeeInfo {
+abstract public class EmployeeInfo implements Serializable {
 	
 	// the contents of the EmployeeInfo object
 	private int employeeNumber;
