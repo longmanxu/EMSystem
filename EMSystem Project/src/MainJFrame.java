@@ -812,6 +812,8 @@ public class MainJFrame extends javax.swing.JFrame {
 			
 			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
 			ArrayList<EmployeeInfo> employeeList = employeeTable.returnAllEmployees();
+			
+			attributeTableModel.setColumnCount(1);
 			// run through every employee in employeeList
 				// add the part time employee info as a column
 				if (selectedEmployee instanceof PartTimeEmployee) {
