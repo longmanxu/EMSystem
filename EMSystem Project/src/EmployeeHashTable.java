@@ -8,11 +8,11 @@ import java.util.ArrayList;
  * @version 2018-05-15
  * 
  */
-public class EmployeeHashTable {
+public class EmployeeHashTable implements Serializable {
 	
 	private final int k;  // the k value (number of buckets, length of hashTable)
 	private int num;  // keep track of total number of employees, for re-optimizing 
-	private final ArrayList<EmployeeInfo>[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
+	private final EmployeeArrayList[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
 	
 	
 	/**
@@ -22,11 +22,11 @@ public class EmployeeHashTable {
 	public EmployeeHashTable(int k) {
 		this.k = k; // set the k value
 		num = 0;
-		this.hashTable = new ArrayList[k]; // initialize the hashTable array to contain k number of buckets
+		this.hashTable = new EmployeeArrayList[k]; // initialize the hashTable array to contain k number of buckets
 		
 		// initialize the ArrayLists (buckets) within the hashTable array
 		for (int i = 0; i < k; i++) {
-			this.hashTable[i] = new ArrayList<>();
+			this.hashTable[i] = new EmployeeArrayList();
 		}
 	}
 	
@@ -35,47 +35,12 @@ public class EmployeeHashTable {
 	 * @param filePath the file's path name.
 	 * @throws IOException if an I/O error occurs.
 	 */
-	public void store(String filePath) throws IOException {
-		// use try-with-resources to automatically close writer
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-			writer.write(Integer.toString(k));	// first line is num of buckets
-			writer.newLine();
-			for (int i = 0; i < k; i++) {	// iterate through every bucket
-				ArrayList<EmployeeInfo> bucket = hashTable[i % k];
-				writer.write(Integer.toString(bucket.size()));	// second line is num of employees in bucket
-				writer.newLine();
-				for (int j = 0; j < bucket.size(); j++) {	// iterate through every employee in bucket
-					EmployeeInfo employee = bucket.get(j);
-					// third line is data of employee
-					// 'F' for full time, 'P' for part time, '?' for neither
-					if (employee instanceof FullTimeEmployee) {
-						writer.write(String.format("F~%f~",
-								((FullTimeEmployee) employee).getYearlySalary())
-						);
-					}
-					else if (employee instanceof PartTimeEmployee) {
-						PartTimeEmployee fullEmployee = (PartTimeEmployee) employee;
-						writer.write(String.format("P~%f~%f~%f~",
-								fullEmployee.getHourlyWage(),
-								fullEmployee.getHoursPerWeek(),
-								fullEmployee.getWeeksPerYear()
-						));
-					}
-					else {
-						writer.write("?~");
-					}
-					// on same line, print employee num, name, sex, loc, etc.
-					writer.write(String.format("%d~%s~%s~%s~%s~%f",
-							employee.getEmployeeNumber(),
-							employee.getFirstName(),
-							employee.getLastName(),
-							employee.getSex(),
-							employee.getWorkLocation(),
-							employee.getDeductionsRate()
-					));
-					writer.newLine();
-				}
-			}
+	public void save(String filePath) throws IOException {
+		// wrapped in try-with-resources to ensure output stream will be closed.
+		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+			outputStream.writeObject(this);
+		} catch (IOException e) {
+			throw e;
 		}
 	}
 	
@@ -84,44 +49,14 @@ public class EmployeeHashTable {
 	 * @param filePath the file path name of the saved EmployeeHashTable.
 	 * @return the EmployeeHashTable.
 	 * @throws IOException if an I/O exception occurs.
+	 * @throws ClassNotFoundException if a ClassNotFoundException occurs.
 	 */
-	public static EmployeeHashTable open(String filePath) throws IOException {
+	public static EmployeeHashTable open(String filePath) throws IOException, ClassNotFoundException {
 		// use try-with-resources to automatically close reader
-		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-			// initialize a new EmployeeHashTable using # of buckets from 1st line
-			int numBuckets = Integer.parseInt(reader.readLine());
-			EmployeeHashTable newTable = new EmployeeHashTable(numBuckets);
-			for (int i = 0; i < numBuckets; i++) {
-				int numEmployeesInBucket = Integer.parseInt(reader.readLine());
-				for (int j = 0; j < numEmployeesInBucket; j++) {
-					String[] data = reader.readLine().split("~");
-					if (data[0].equals("F")) {
-						newTable.add(new FullTimeEmployee(
-								Integer.parseInt(data[2]),
-								data[3],
-								data[4],
-								Integer.parseInt(data[5]),
-								Integer.parseInt(data[6]),
-								Double.parseDouble(data[7]),
-								Double.parseDouble(data[1])
-						));
-					}
-					else if (data[0].equals("P")) {
-						newTable.add(new PartTimeEmployee(
-								Integer.parseInt(data[4]),
-								data[5],
-								data[6],
-								Integer.parseInt(data[7]),
-								Integer.parseInt(data[8]),
-								Double.parseDouble(data[9]),
-								Double.parseDouble(data[1]),
-								Double.parseDouble(data[2]),
-								Double.parseDouble(data[3])
-						));
-					}
-				}
-			}
-			return newTable;
+		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+			return (EmployeeHashTable) inputStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			throw e;
 		}
 	}
 	
@@ -206,8 +141,8 @@ public class EmployeeHashTable {
 	}
 	
 	// returns an array off all the employees
-	public ArrayList<EmployeeInfo> returnAllEmployees() {
-		final ArrayList<EmployeeInfo> resultList = new ArrayList<>();
+	public EmployeeArrayList returnAllEmployees() {
+		EmployeeArrayList resultList = new EmployeeArrayList();
 		for (int i = 0; i < k; i++) {
 			resultList.addAll(hashTable[i]);
 		}

@@ -631,7 +631,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
        // close the readers and writers
 		try {
-			employeeTable.store("saved_employees");
+			employeeTable.save("saved_employees");
 			
 			if (saveWriter != null) saveWriter.close();
 			if (saveReader != null) saveReader.close();
@@ -643,7 +643,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		}
 		// save the employees
 		try {
-			employeeTable.store("saved_employees");
+			employeeTable.save("saved_employees");
 		} catch (IOException e) {
 			System.err.println(e);
 		}

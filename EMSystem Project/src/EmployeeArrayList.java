@@ -46,6 +46,7 @@ public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
 	 * @throws java.lang.ClassNotFoundException if a ClassNotFoundException is encountered.
 	 */
 	public static EmployeeArrayList open(String filePath) throws IOException, ClassNotFoundException {
+		// wrapped in a try-with-resources to ensure input stream will be closed.
 		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
 			return (EmployeeArrayList) inputStream.readObject();
 		} catch (IOException | ClassNotFoundException e) {
