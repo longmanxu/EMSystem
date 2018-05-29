@@ -1,23 +1,17 @@
 
 import java.io.*;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author longm
+ * The main class of the Employee Management System Project.
+ * @author Longman Xu and Tommy Huang
  */
 public class MainJFrame extends javax.swing.JFrame {
-	// declares tables and employees
-	private static EmployeeHashTable employeeTable;
 	
-	// declare a bunch of IO stuff
-	private BufferedWriter saveWriter;  // io for employee info
-	private BufferedReader saveReader;
-	
-	// declare settings
-	private static Settings settings;
+	// useful global variable declarations
+	private static EmployeeHashTable employeeTable;	// the employee hash table
+	private static Settings settings;	// the object for managing settings
 	
 	/**
 	 * Creates new form MainJFrame
@@ -682,8 +676,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 		// change the default theme on next startup
-		JComboBox cb = (JComboBox) evt.getSource();
-		settings.setLookAndFeel((String) cb.getSelectedItem());
+		settings.setLookAndFeel((String) jComboBox1.getSelectedItem());
 		try{
 			settings.save();
 		} catch (IOException e){
@@ -697,9 +690,6 @@ public class MainJFrame extends javax.swing.JFrame {
        // close the readers and writers
 		try {
 			employeeTable.save("saved_employees");
-			
-			if (saveWriter != null) saveWriter.close();
-			if (saveReader != null) saveReader.close();
 			System.out.println("Closed all IO");
 		} catch (IOException e){
 			System.err.println(e);
