@@ -5,12 +5,6 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author longm
@@ -255,12 +249,6 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        fieldNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldNumberActionPerformed(evt);
-            }
-        });
-
         jLabel8.setText("Sex");
 
         dropDownSexes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
@@ -280,48 +268,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         labelRate.setText("Deductions rate");
 
-        fieldSalary.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldSalaryActionPerformed(evt);
-            }
-        });
-
-        fieldDedRate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldDedRateActionPerformed(evt);
-            }
-        });
-
         labelPart0.setText("Hourly Wage");
 
         labelPart1.setText("Hours per week");
 
         labelPart2.setText("Weeks per year");
 
-        fieldHourWage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldHourWageActionPerformed(evt);
-            }
-        });
-
-        fieldHourWeek.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldHourWeekActionPerformed(evt);
-            }
-        });
-
-        fieldWeekYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldWeekYearActionPerformed(evt);
-            }
-        });
-
         dropDownLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "loc a", "loc b", "loc c" }));
-        dropDownLocation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dropDownLocationActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout addPopupLayout = new javax.swing.GroupLayout(addPopup.getContentPane());
         addPopup.getContentPane().setLayout(addPopupLayout);
@@ -551,11 +504,6 @@ public class MainJFrame extends javax.swing.JFrame {
         delButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/trash.png"))); // NOI18N
         delButton.setText("remove");
         delButton.setActionCommand("delButton");
-        delButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                delButtonActionPerformed(evt);
-            }
-        });
 
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/add.png"))); // NOI18N
         addButton.setText("add");
@@ -604,11 +552,6 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton1.setMaximumSize(new java.awt.Dimension(187, 92));
         jButton1.setMinimumSize(new java.awt.Dimension(187, 92));
         jButton1.setName(""); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/open.png"))); // NOI18N
         jButton2.setText("buttonOpen");
@@ -699,11 +642,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/clippy.jpg"))); // NOI18N
         jButton5.setToolTipText("Clippy will solve all your problems!");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         jLabel6.setText("Made by Longman Xu and Tommy Huang");
 
@@ -749,14 +687,6 @@ public class MainJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 		// change the default theme on next startup
 		JComboBox cb = (JComboBox) evt.getSource();
@@ -789,10 +719,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			System.err.println(e);
 		}
     }//GEN-LAST:event_formWindowClosing
-
-    private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_delButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:this.setVisible(false);
@@ -861,10 +787,6 @@ public class MainJFrame extends javax.swing.JFrame {
 		
 	}
 	
-    private void fieldNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldNumberActionPerformed
-
     private void dropDownTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownTypeActionPerformed
         // TODO add your handling code here:
         if (dropDownType.getSelectedItem().equals("Full time")) {
@@ -881,30 +803,6 @@ public class MainJFrame extends javax.swing.JFrame {
         addPopup.setVisible(false);
 
     }//GEN-LAST:event_backButtonActionPerformed
-
-    private void fieldSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldSalaryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldSalaryActionPerformed
-
-    private void fieldDedRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldDedRateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldDedRateActionPerformed
-
-    private void fieldHourWageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldHourWageActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldHourWageActionPerformed
-
-    private void fieldHourWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldHourWeekActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldHourWeekActionPerformed
-
-    private void fieldWeekYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldWeekYearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldWeekYearActionPerformed
-
-    private void dropDownLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownLocationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dropDownLocationActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
