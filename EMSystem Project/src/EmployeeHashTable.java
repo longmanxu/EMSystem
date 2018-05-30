@@ -63,18 +63,18 @@ public class EmployeeHashTable implements Serializable {
 	/**
 	 * Adds the specified EmployeeInfo object to the hash table.
 	 * @param newItem the new EmployeeInfo to be added.
-	 * @return true if the new EmployeeInfo was successfully added.
 	 */
-	public boolean add(EmployeeInfo newItem) {
-		// adds the new EmployeeInfo object to the bucket with index employee number % k
-		if (find(newItem.getEmployeeNumber()) == null){
-			hashTable[newItem.getEmployeeNumber() % k].add(newItem);
-			num++;
-			return true;
+	public void add(EmployeeInfo newItem) {
+		// for every employee within the correct bucket, check if its SN == the given SN
+		for (EmployeeInfo employee : hashTable[newItem.getEmployeeNumber() % k]) {
+			// return false if a duplicate employee number is found
+			if (employee.getEmployeeNumber() == newItem.getEmployeeNumber()) {
+				throw new IllegalArgumentException("Duplicate employee numbers are not allowed.");
+			}
 		}
-		else {
-			return false;
-		}
+		// if duplicate not found, add the new employee
+		hashTable[newItem.getEmployeeNumber() % k].add(newItem);
+		num++;
 	}
 	
 	/**

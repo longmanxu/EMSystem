@@ -719,31 +719,31 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         else if(dropDownType.getSelectedItem().equals("Full time") && fieldNumber.getText().isEmpty() == false) {
             // do full time stuff
-			FullTimeEmployee temp = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
-					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
-			if (employeeTable.add(temp)) {
+			try {
+				FullTimeEmployee temp = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
+						dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
+				employeeTable.add(temp);
 				addToEmployeeJTable(temp, jTable1);
+				addPopup.setVisible(false);
+				clearFields();
 			}
-			else {
-				getAngryAtUser("Duplicate employee number!");
+			catch (IllegalArgumentException e) {
+				getAngryAtUser(e.getMessage());
 			}
-			addPopup.setVisible(false);
-			clearFields();
-			
         }
         else if (dropDownType.getSelectedItem().equals("Part time") && fieldHourWage.getText().isEmpty() == false && fieldHourWeek.getText().isEmpty() == false && fieldWeekYear.getText().isEmpty() == false) {
             // do part time stuff
-			PartTimeEmployee temp = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
+			try {
+				PartTimeEmployee temp = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
 					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
-			if (employeeTable.add(temp)) {
+				employeeTable.add(temp);
 				addToEmployeeJTable(temp, jTable1);
+				addPopup.setVisible(false);
+				clearFields();
 			}
-			else {
-				getAngryAtUser("Duplicate employee number!");
+			catch (IllegalArgumentException e) {
+				getAngryAtUser(e.getMessage());
 			}
-			addPopup.setVisible(false);
-			clearFields();
-			
         }
     }//GEN-LAST:event_addTheEmployeeActionPerformed
 	
