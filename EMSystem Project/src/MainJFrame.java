@@ -33,11 +33,12 @@ public class MainJFrame extends javax.swing.JFrame {
 		try {
 			employeeTable = EmployeeHashTable.open("saved_employees");
 		} catch (IOException | ClassNotFoundException e) {
-			System.err.println("xD: " + e.toString());
-			System.err.println("creating new table");
+			System.err.println("Error when opening table. Creating new table instead.");
+			e.printStackTrace(System.err);
 			employeeTable = new EmployeeHashTable(10);
 		}
 		
+		// open the saved settings
 		settings = Settings.open("settings.cfg");
 		
 		/* Set the look and feel from the settings*/
@@ -64,7 +65,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		});
 	}
 	
-	private static void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
+	private void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
 		ArrayList<EmployeeInfo> employeeList = hashTable.returnAllEmployees();
 		for (EmployeeInfo employee : employeeList) {
@@ -80,7 +81,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		table.setModel(employeeTableModel);
 	}
 	
-	private static void addToEmployeeJTable(EmployeeInfo newEmployee, javax.swing.JTable table) {
+	private void addToEmployeeJTable(EmployeeInfo newEmployee, javax.swing.JTable table) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
 		Object[] rowData = {
 			newEmployee.getEmployeeNumber(),
@@ -680,12 +681,11 @@ public class MainJFrame extends javax.swing.JFrame {
 		try{
 			settings.save();
 		} catch (IOException e){
-			System.err.println("Error while saving settings:");
+			getAngryAtUser("Error while saving settings.");
 			e.printStackTrace(System.err);
 		}
-		
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+	
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 		// save the employees
 		try {
@@ -698,8 +698,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:this.setVisible(false);
-		// TODO: Toolkit.getDefaultToolkit().beep();
+        // this.setVisible(false);
+		// Toolkit.getDefaultToolkit().beep();
 		addPopup.setVisible(true);
 		if (dropDownType.getSelectedItem().equals("Full time")) {
 			changeSelection(0);
@@ -711,7 +711,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
-        // TODO add your handling code here:
         // check to make sure none of the text fields are empty
         // Update this if everytime we add/del a field
         if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty()){
@@ -748,7 +747,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addTheEmployeeActionPerformed
 	
     private void dropDownTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownTypeActionPerformed
-        // TODO add your handling code here:
         if (dropDownType.getSelectedItem().equals("Full time")) {
 			changeSelection(0);
         }
@@ -758,59 +756,55 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_dropDownTypeActionPerformed
 	
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         this.setFocusableWindowState(true);
         addPopup.setVisible(false);
 
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
 		if (jTable1.getRowSelectionAllowed()) {
 			int selRow = jTable1.getSelectedRow();
 			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
-			int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0)
-			;
+			int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0);
 			EmployeeInfo selectedEmployee = employeeTable.find(selectedEmpNumber);
 			System.out.println(selectedEmployee.getFirstName());
 			
 			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
-			ArrayList<EmployeeInfo> employeeList = employeeTable.returnAllEmployees();
+			EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
 			
 			attributeTableModel.setColumnCount(1);
 			// run through every employee in employeeList
-				// add the part time employee info as a column
-				if (selectedEmployee instanceof PartTimeEmployee) {
-					Object[] info = {
-						selectedEmployee.getEmployeeNumber(),
-						selectedEmployee.getFirstName(),
-						selectedEmployee.getLastName(),
-						selectedEmployee.getWorkLocation(),
-						selectedEmployee.getClass(),
-						((PartTimeEmployee) selectedEmployee).getHourlyWage(),
-						((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
-						((PartTimeEmployee) selectedEmployee).getWeeksPerYear()
-					};
-					attributeTableModel.addColumn("information", info);
-				}
-				else if (selectedEmployee instanceof FullTimeEmployee) {
-					Object[] info = {
-						selectedEmployee.getEmployeeNumber(),
-						selectedEmployee.getFirstName(),
-						selectedEmployee.getLastName(),
-						selectedEmployee.getWorkLocation(),
-						selectedEmployee.getClass(),
-						((FullTimeEmployee) selectedEmployee).getYearlySalary()
-					};
-					attributeTableModel.addColumn("information", info	);
-				}
+			// add the part time employee info as a column
+			if (selectedEmployee instanceof PartTimeEmployee) {
+				Object[] info = {
+					selectedEmployee.getEmployeeNumber(),
+					selectedEmployee.getFirstName(),
+					selectedEmployee.getLastName(),
+					selectedEmployee.getWorkLocation(),
+					selectedEmployee.getClass(),
+					((PartTimeEmployee) selectedEmployee).getHourlyWage(),
+					((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
+					((PartTimeEmployee) selectedEmployee).getWeeksPerYear()
+				};
+				attributeTableModel.addColumn("information", info);
+			}
+			else if (selectedEmployee instanceof FullTimeEmployee) {
+				Object[] info = {
+					selectedEmployee.getEmployeeNumber(),
+					selectedEmployee.getFirstName(),
+					selectedEmployee.getLastName(),
+					selectedEmployee.getWorkLocation(),
+					selectedEmployee.getClass(),
+					((FullTimeEmployee) selectedEmployee).getYearlySalary()
+				};
+				attributeTableModel.addColumn("information", info	);
+			}
 			
 			// int colIndex = jTable1.getSelectedColumn();
 		}
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
 		jDialog1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 	

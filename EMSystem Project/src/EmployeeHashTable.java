@@ -143,8 +143,8 @@ public class EmployeeHashTable implements Serializable {
 	// returns an array off all the employees
 	public EmployeeArrayList returnAllEmployees() {
 		EmployeeArrayList resultList = new EmployeeArrayList();
-		for (int i = 0; i < k; i++) {
-			resultList.addAll(hashTable[i]);
+		for (EmployeeArrayList bucket : hashTable) {
+			resultList.addAll(bucket);
 		}
 		
 		return resultList;
@@ -177,6 +177,14 @@ public class EmployeeHashTable implements Serializable {
 	 */
 	public int getK() {
 		return this.k;
+	}
+	
+	/**
+	 * Get the hash table.
+	 * @return the hash table.
+	 */
+	public EmployeeArrayList[] getHashTable() {
+		return this.hashTable;
 	}
 	
 }
