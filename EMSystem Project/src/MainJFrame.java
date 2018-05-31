@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.util.ArrayList;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -12,15 +13,18 @@ public class MainJFrame extends javax.swing.JFrame {
 	// useful global variable declarations
 	private static EmployeeHashTable employeeTable;	// the employee hash table
 	private static Settings settings;	// the object for managing settings
+	private static boolean fileSavedBefore = false;
 	
 	/**
-	 * Creates new form MainJFrame
+	 * Creates new form MainJFrame 
 	 */
 	public MainJFrame() {
 		initComponents();
 		jComboBox1.setSelectedItem(settings.getLookAndFeel());
 		initEmployeeJTable(employeeTable, jTable1);
 		
+		saveFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
+		openFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
 	}
 	
 	/**
@@ -31,7 +35,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		
 		// open the saved employee hash table
 		try {
-			employeeTable = EmployeeHashTable.open("saved_employees");
+			employeeTable = EmployeeHashTable.open("saved_employees.em");
 		} catch (IOException | ClassNotFoundException e) {
 			System.err.println("Error when opening table. Creating new table instead.");
 			e.printStackTrace(System.err);
@@ -183,8 +187,10 @@ public class MainJFrame extends javax.swing.JFrame {
         dropDownLocation = new javax.swing.JComboBox<>();
         errorPopup = new javax.swing.JDialog();
         errorMsgLabel = new javax.swing.JLabel();
-        jDialog1 = new javax.swing.JDialog();
-        jFileChooser1 = new javax.swing.JFileChooser();
+        openDialog = new javax.swing.JDialog();
+        openFileChooser = new javax.swing.JFileChooser();
+        saveDialog = new javax.swing.JDialog();
+        saveFileChooser = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ManagerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -194,10 +200,10 @@ public class MainJFrame extends javax.swing.JFrame {
         delButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         filePanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        newButton = new javax.swing.JButton();
+        openButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        saveAsButton = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -207,6 +213,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         addPopup.setTitle("Add an employee");
         addPopup.setMinimumSize(new java.awt.Dimension(600, 400));
+        addPopup.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         addPopup.setResizable(false);
 
         backButton.setText("cancel");
@@ -372,6 +379,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         errorPopup.setTitle("ERROR");
         errorPopup.setMinimumSize(new java.awt.Dimension(300, 150));
+        errorPopup.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         errorPopup.setSize(new java.awt.Dimension(300, 150));
 
         errorMsgLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -399,19 +407,56 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        openDialog.setMinimumSize(new java.awt.Dimension(710, 450));
+        openDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        openDialog.setPreferredSize(new java.awt.Dimension(710, 450));
+        openDialog.setResizable(false);
+
+        openFileChooser.setMinimumSize(new java.awt.Dimension(710, 410));
+        openFileChooser.setPreferredSize(new java.awt.Dimension(710, 410));
+        openFileChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFileChooserActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout openDialogLayout = new javax.swing.GroupLayout(openDialog.getContentPane());
+        openDialog.getContentPane().setLayout(openDialogLayout);
+        openDialogLayout.setHorizontalGroup(
+            openDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(openDialogLayout.createSequentialGroup()
+                .addComponent(openFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 698, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        openDialogLayout.setVerticalGroup(
+            openDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(openFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+        );
+
+        saveDialog.setMinimumSize(new java.awt.Dimension(710, 410));
+        saveDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        saveDialog.setPreferredSize(new java.awt.Dimension(710, 450));
+        saveDialog.setResizable(false);
+
+        saveFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        saveFileChooser.setFileHidingEnabled(false);
+        saveFileChooser.setMinimumSize(new java.awt.Dimension(710, 410));
+        saveFileChooser.setPreferredSize(new java.awt.Dimension(710, 410));
+        saveFileChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveFileChooserActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout saveDialogLayout = new javax.swing.GroupLayout(saveDialog.getContentPane());
+        saveDialog.getContentPane().setLayout(saveDialogLayout);
+        saveDialogLayout.setHorizontalGroup(
+            saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(saveFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 698, Short.MAX_VALUE)
+        );
+        saveDialogLayout.setVerticalGroup(
+            saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(saveFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -535,29 +580,39 @@ public class MainJFrame extends javax.swing.JFrame {
 
         filePanel.setPreferredSize(new java.awt.Dimension(700, 600));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/newfolder.png"))); // NOI18N
-        jButton1.setText("buttonNew");
-        jButton1.setMaximumSize(new java.awt.Dimension(187, 92));
-        jButton1.setMinimumSize(new java.awt.Dimension(187, 92));
-        jButton1.setName(""); // NOI18N
+        newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/newfolder.png"))); // NOI18N
+        newButton.setText("buttonNew");
+        newButton.setMaximumSize(new java.awt.Dimension(187, 92));
+        newButton.setMinimumSize(new java.awt.Dimension(187, 92));
+        newButton.setName(""); // NOI18N
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/open.png"))); // NOI18N
-        jButton2.setText("buttonOpen");
-        jButton2.setMaximumSize(new java.awt.Dimension(187, 92));
-        jButton2.setMinimumSize(new java.awt.Dimension(187, 92));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        openButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/open.png"))); // NOI18N
+        openButton.setText("buttonOpen");
+        openButton.setMaximumSize(new java.awt.Dimension(187, 92));
+        openButton.setMinimumSize(new java.awt.Dimension(187, 92));
+        openButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                openButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/save.png"))); // NOI18N
-        jButton3.setText("buttonSave");
-        jButton3.setMaximumSize(new java.awt.Dimension(187, 92));
-        jButton3.setMinimumSize(new java.awt.Dimension(187, 92));
+        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/save.png"))); // NOI18N
+        saveButton.setText("buttonSave");
+        saveButton.setMaximumSize(new java.awt.Dimension(187, 92));
+        saveButton.setMinimumSize(new java.awt.Dimension(187, 92));
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/saveAs.png"))); // NOI18N
-        jButton4.setText("buttonSaveAs");
+        saveAsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/saveAs.png"))); // NOI18N
+        saveAsButton.setText("buttonSaveAs");
+        saveAsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout filePanelLayout = new javax.swing.GroupLayout(filePanel);
         filePanel.setLayout(filePanelLayout);
@@ -566,12 +621,12 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filePanelLayout.createSequentialGroup()
                 .addContainerGap(67, Short.MAX_VALUE)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(saveAsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(openButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(138, 138, 138))
         );
         filePanelLayout.setVerticalGroup(
@@ -579,12 +634,12 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(filePanelLayout.createSequentialGroup()
                 .addGap(138, 138, 138)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(openButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveAsButton)
+                    .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(200, Short.MAX_VALUE))
         );
 
@@ -687,9 +742,9 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 	
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-		// save the employees
+		// save the employees 
 		try {
-			employeeTable.save("saved_employees");
+			employeeTable.save("saved_employees.em");
 			System.out.println("Saved all employees");
 		} catch (IOException e) {
 			System.err.println("Error encountered when saving employees:");
@@ -699,7 +754,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // this.setVisible(false);
-		// Toolkit.getDefaultToolkit().beep();
+		// Toolkit.getDefaultToolkit().beep(); 
 		addPopup.setVisible(true);
 		if (dropDownType.getSelectedItem().equals("Full time")) {
 			changeSelection(0);
@@ -804,9 +859,28 @@ public class MainJFrame extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-		jDialog1.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
+		openDialog.setVisible(true);
+    }//GEN-LAST:event_openButtonActionPerformed
+
+    private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openFileChooserActionPerformed
+
+    private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
+        // TODO add your handling code here:
+		saveDialog.setVisible(true);
+    }//GEN-LAST:event_saveAsButtonActionPerformed
+
+    private void saveFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileChooserActionPerformed
+        // TODO add your handling code here:
+		
+    }//GEN-LAST:event_saveFileChooserActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+		
+    }//GEN-LAST:event_saveButtonActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -831,14 +905,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField fieldWeekYear;
     private javax.swing.JPanel filePanel;
     private javax.swing.JPanel helpPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -857,6 +925,14 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelPart1;
     private javax.swing.JLabel labelPart2;
     private javax.swing.JLabel labelRate;
+    private javax.swing.JButton newButton;
+    private javax.swing.JButton openButton;
+    private javax.swing.JDialog openDialog;
+    private javax.swing.JFileChooser openFileChooser;
+    private javax.swing.JButton saveAsButton;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JDialog saveDialog;
+    private javax.swing.JFileChooser saveFileChooser;
     private javax.swing.JPanel settingsPanel;
     // End of variables declaration//GEN-END:variables
 	// </editor-fold>
