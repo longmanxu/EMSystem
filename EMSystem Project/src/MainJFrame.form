@@ -410,7 +410,7 @@
     <Container class="javax.swing.JDialog" name="saveDialog">
       <Properties>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[710, 410]"/>
+          <Dimension value="[710, 450]"/>
         </Property>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="APPLICATION_MODAL"/>
@@ -437,7 +437,6 @@
         <Component class="javax.swing.JFileChooser" name="saveFileChooser">
           <Properties>
             <Property name="dialogType" type="int" value="1"/>
-            <Property name="fileHidingEnabled" type="boolean" value="false"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[710, 410]"/>
             </Property>
@@ -678,6 +677,9 @@
                 <Property name="text" type="java.lang.String" value="remove"/>
                 <Property name="actionCommand" type="java.lang.String" value="delButton"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="delButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="addButton">
               <Properties>

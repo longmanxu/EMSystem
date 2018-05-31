@@ -124,13 +124,13 @@ public class MainJFrame extends javax.swing.JFrame {
 	}
 	
 	public void getAngryAtUser(String msg) {
-		errorPopup.setVisible(true);
 		if(msg.isEmpty()) {
 			errorMsgLabel.setText("Error");
 		}
 		else{
 			errorMsgLabel.setText(msg);
 		}
+		errorPopup.setVisible(true);
 	}
 	
 	// clears all the text in the "add" popup menu
@@ -433,13 +433,12 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(openFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
         );
 
-        saveDialog.setMinimumSize(new java.awt.Dimension(710, 410));
+        saveDialog.setMinimumSize(new java.awt.Dimension(710, 450));
         saveDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         saveDialog.setPreferredSize(new java.awt.Dimension(710, 450));
         saveDialog.setResizable(false);
 
         saveFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        saveFileChooser.setFileHidingEnabled(false);
         saveFileChooser.setMinimumSize(new java.awt.Dimension(710, 410));
         saveFileChooser.setPreferredSize(new java.awt.Dimension(710, 410));
         saveFileChooser.addActionListener(new java.awt.event.ActionListener() {
@@ -537,6 +536,11 @@ public class MainJFrame extends javax.swing.JFrame {
         delButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/trash.png"))); // NOI18N
         delButton.setText("remove");
         delButton.setActionCommand("delButton");
+        delButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delButtonActionPerformed(evt);
+            }
+        });
 
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/add.png"))); // NOI18N
         addButton.setText("add");
@@ -755,13 +759,16 @@ public class MainJFrame extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // this.setVisible(false);
 		// Toolkit.getDefaultToolkit().beep(); 
-		addPopup.setVisible(true);
 		if (dropDownType.getSelectedItem().equals("Full time")) {
 			changeSelection(0);
         }
 		else if (dropDownType.getSelectedItem().equals("Part time")) {
 			changeSelection(1);
 		}
+		
+		addPopup.setVisible(true);
+		
+		
 		
     }//GEN-LAST:event_addButtonActionPerformed
 	
@@ -881,6 +888,19 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 		
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
+		if (jTable1.getSelectedRow() == -1) {
+			getAngryAtUser("no selected employee to remove!");
+		}
+		else {
+			int selRow = jTable1.getSelectedRow();
+			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();		
+			employeeTable.remove((int) employeeTableModel.getValueAt(selRow, 0));
+		}
+
+		// TODO: update table
+    }//GEN-LAST:event_delButtonActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
     // Variables declaration - do not modify//GEN-BEGIN:variables
