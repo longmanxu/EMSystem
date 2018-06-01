@@ -1,6 +1,5 @@
 
 import java.io.*;
-import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -71,7 +70,7 @@ public class MainJFrame extends javax.swing.JFrame {
 	
 	private void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
-		ArrayList<EmployeeInfo> employeeList = hashTable.returnAllEmployees();
+		EmployeeArrayList employeeList = hashTable.returnAllEmployees();
 		for (EmployeeInfo employee : employeeList) {
 			Object[] rowData = {
 				employee.getEmployeeNumber(),
@@ -97,7 +96,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		employeeTableModel.addRow(rowData);
 		table.setModel(employeeTableModel);
 	}
-	
+		
 	private void changeSelection(int type) {
 		if (type == 0) { // full time
 			labelFull0.setVisible(true);
@@ -897,6 +896,8 @@ public class MainJFrame extends javax.swing.JFrame {
 			int selRow = jTable1.getSelectedRow();
 			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();		
 			employeeTable.remove((int) employeeTableModel.getValueAt(selRow, 0));
+			employeeTableModel.removeRow(selRow);
+			jTable1.setModel(employeeTableModel);
 		}
 
 		// TODO: update table
