@@ -31,13 +31,13 @@ public class EmployeeHashTable implements Serializable {
 	}
 	
 	/**
-	 * Stores the EmployeeHashTable at the specified file path name.
-	 * @param filePath the file's path name.
+	 * Saves the EmployeeHashTable at the specified file.
+	 * @param file the file to be saved to.
 	 * @throws IOException if an I/O error occurs.
 	 */
-	public void save(String filePath) throws IOException {
+	public void save(File file) throws IOException {
 		// wrapped in try-with-resources to ensure output stream will be closed.
-		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
 			outputStream.writeObject(this);
 		} catch (IOException e) {
 			throw e;
@@ -45,19 +45,39 @@ public class EmployeeHashTable implements Serializable {
 	}
 	
 	/**
+	 * Saves the EmployeeHashTable at the specified file path.
+	 * @param filePath the file path to be saved to.
+	 * @throws IOException if an IOException occurs.
+	 */
+	public void save(String filePath) throws IOException {
+		save(new File(filePath));
+	}
+	
+	/**
+	 * Open and return a new EmployeeHashTable saved at the given file.
+	 * @param file the file of the EmployeeHashTable to be opened.
+	 * @return the EmployeeHashTable.
+	 * @throws IOException if an I/O exception occurs.
+	 * @throws ClassNotFoundException if a ClassNotFoundException occurs.
+	 */
+	public static EmployeeHashTable open(File file) throws IOException, ClassNotFoundException {
+		// use try-with-resources to automatically close reader
+		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
+			return (EmployeeHashTable) inputStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			throw e;
+		}
+	}
+	
+	/**
 	 * Open and return a new EmployeeHashTable saved at the given file path name.
-	 * @param filePath the file path name of the saved EmployeeHashTable.
+	 * @param filePath the file path of the EmployeeHashTable to be opened.
 	 * @return the EmployeeHashTable.
 	 * @throws IOException if an I/O exception occurs.
 	 * @throws ClassNotFoundException if a ClassNotFoundException occurs.
 	 */
 	public static EmployeeHashTable open(String filePath) throws IOException, ClassNotFoundException {
-		// use try-with-resources to automatically close reader
-		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-			return (EmployeeHashTable) inputStream.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			throw e;
-		}
+		return open(new File(filePath));
 	}
 	
 	/**
