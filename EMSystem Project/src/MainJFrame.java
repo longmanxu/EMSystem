@@ -893,7 +893,7 @@ public class MainJFrame extends javax.swing.JFrame {
 			getAngryAtUser("no selected employee to remove!");
 		}
 		else {
-			int selRow = jTable1.getSelectedRow();
+			int selRow = jTable1.convertRowIndexToModel(jTable1.getSelectedRow());
 			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();		
 			employeeTable.remove((int) employeeTableModel.getValueAt(selRow, 0));
 			employeeTableModel.removeRow(selRow);
