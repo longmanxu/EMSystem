@@ -434,7 +434,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
         saveDialog.setMinimumSize(new java.awt.Dimension(710, 450));
         saveDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        saveDialog.setPreferredSize(new java.awt.Dimension(710, 450));
         saveDialog.setResizable(false);
 
         saveFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
@@ -506,25 +505,15 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {""},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Attribute"
+
             }
         ));
         jTable2.setColumnSelectionAllowed(true);
@@ -833,7 +822,8 @@ public class MainJFrame extends javax.swing.JFrame {
 			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
 			EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
 			
-			attributeTableModel.setColumnCount(1);
+			attributeTableModel.setColumnCount(0);
+			attributeTableModel.setRowCount(6);
 			// run through every employee in employeeList
 			// add the part time employee info as a column
 			if (selectedEmployee instanceof PartTimeEmployee) {
@@ -843,10 +833,23 @@ public class MainJFrame extends javax.swing.JFrame {
 					selectedEmployee.getLastName(),
 					selectedEmployee.getWorkLocation(),
 					selectedEmployee.getClass(),
+					selectedEmployee.getDeductionsRate(),
 					((PartTimeEmployee) selectedEmployee).getHourlyWage(),
 					((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
 					((PartTimeEmployee) selectedEmployee).getWeeksPerYear()
 				};
+				Object[] firstColInfo = {
+					"employee number",
+					"first name",
+					"last name",
+					"sex",
+					"work location",
+					"deducations rate",
+					"hourly wage",
+					"hours per week",
+					"weeks per year"
+				};
+				attributeTableModel.addColumn("attributes", firstColInfo);
 				attributeTableModel.addColumn("information", info);
 			}
 			else if (selectedEmployee instanceof FullTimeEmployee) {
@@ -856,9 +859,20 @@ public class MainJFrame extends javax.swing.JFrame {
 					selectedEmployee.getLastName(),
 					selectedEmployee.getWorkLocation(),
 					selectedEmployee.getClass(),
+					selectedEmployee.getDeductionsRate(),
 					((FullTimeEmployee) selectedEmployee).getYearlySalary()
 				};
-				attributeTableModel.addColumn("information", info	);
+				Object[] firstColInfo = {
+					"employee number",
+					"first name",
+					"last name",
+					"sex",
+					"work location",
+					"deducations rate",
+					"salary"
+				};
+				attributeTableModel.addColumn("attributes", firstColInfo);
+				attributeTableModel.addColumn("information", info);
 			}
 			
 			// int colIndex = jTable1.getSelectedColumn();
@@ -908,6 +922,8 @@ public class MainJFrame extends javax.swing.JFrame {
 			employeeTable.remove((int) employeeTableModel.getValueAt(selRow, 0));
 			employeeTableModel.removeRow(selRow);
 			jTable1.setModel(employeeTableModel);
+			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+			attributeTableModel.setColumnCount(0);
 		}
 
 		// TODO: update table
