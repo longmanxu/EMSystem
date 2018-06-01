@@ -1,5 +1,6 @@
 
 import java.io.*;
+import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -408,7 +409,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
         openDialog.setMinimumSize(new java.awt.Dimension(710, 450));
         openDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        openDialog.setPreferredSize(new java.awt.Dimension(710, 450));
         openDialog.setResizable(false);
 
         openFileChooser.setMinimumSize(new java.awt.Dimension(710, 410));
@@ -450,7 +450,7 @@ public class MainJFrame extends javax.swing.JFrame {
         saveDialog.getContentPane().setLayout(saveDialogLayout);
         saveDialogLayout.setHorizontalGroup(
             saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(saveFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 698, Short.MAX_VALUE)
+            .addComponent(saveFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         saveDialogLayout.setVerticalGroup(
             saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -866,7 +866,13 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
-		openDialog.setVisible(true);
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+		}
     }//GEN-LAST:event_openButtonActionPerformed
 
     private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
@@ -874,13 +880,17 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_openFileChooserActionPerformed
 
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
-        // TODO add your handling code here:
-		saveDialog.setVisible(true);
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showSaveDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			System.out.println("You chose to save this file as: " + chooser.getSelectedFile().getName());
+		}
     }//GEN-LAST:event_saveAsButtonActionPerformed
 
     private void saveFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileChooserActionPerformed
         // TODO add your handling code here:
-		
     }//GEN-LAST:event_saveFileChooserActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
