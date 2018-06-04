@@ -22,7 +22,6 @@ public class MainJFrame extends javax.swing.JFrame {
 		initComponents();
 		jComboBox1.setSelectedItem(settings.getLookAndFeel());
 		initEmployeeJTable(employeeTable, jTable1);
-		
 		saveFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
 		openFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
 	}
@@ -505,17 +504,20 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "attributes", "information"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable2.setColumnSelectionAllowed(true);
         jTable2.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(jTable2);
