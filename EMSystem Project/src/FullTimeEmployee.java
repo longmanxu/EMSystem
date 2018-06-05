@@ -61,5 +61,4 @@ public class FullTimeEmployee extends EmployeeInfo {
 		double result = this.yearlySalary * (1 - this.deductionsRate);
 		return ((double) Math.round(result * 100))/100.0;
 	}
-
 }

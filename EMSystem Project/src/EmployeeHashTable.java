@@ -13,7 +13,7 @@ public class EmployeeHashTable implements Serializable {
 	private final int k;  // the k value (number of buckets, length of hashTable)
 	private int num;  // keep track of total number of employees, for re-optimizing 
 	private final EmployeeArrayList[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
-	
+	private final ArrayList<String> locationList;
 	
 	/**
 	 * Constructs a new open hashing/closed addressing hash table with the specified k value.
@@ -21,8 +21,9 @@ public class EmployeeHashTable implements Serializable {
 	 */
 	public EmployeeHashTable(int k) {
 		this.k = k; // set the k value
-		num = 0;
+		this.num = 0;
 		this.hashTable = new EmployeeArrayList[k]; // initialize the hashTable array to contain k number of buckets
+		this.locationList = new ArrayList<>();
 		
 		// initialize the ArrayLists (buckets) within the hashTable array
 		for (int i = 0; i < k; i++) {
@@ -181,6 +182,23 @@ public class EmployeeHashTable implements Serializable {
 			newTable.add(newEmployee);
 		}
 		return newTable;
+	}
+	
+	/**
+	 * Add a new location.
+	 * @param locationName the new location.
+	 */
+	public void addLocation(String locationName) {
+		this.locationList.add(locationName);
+	}
+	
+	/**
+	 * Converts a location number to a location name.
+	 * @param locationNumber the location number.
+	 * @return the location name.
+	 */
+	public String getLocationName(int locationNumber) {
+		return this.locationList.get(locationNumber);
 	}
 	
 	/**
