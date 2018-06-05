@@ -198,6 +198,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         delButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         filePanel = new javax.swing.JPanel();
         newButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
@@ -541,6 +542,8 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setText("double click on a value to edit it");
+
         javax.swing.GroupLayout ManagerPanelLayout = new javax.swing.GroupLayout(ManagerPanel);
         ManagerPanel.setLayout(ManagerPanelLayout);
         ManagerPanelLayout.setHorizontalGroup(
@@ -552,22 +555,31 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ManagerPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ManagerPanelLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel9)))
                 .addContainerGap())
         );
         ManagerPanelLayout.setVerticalGroup(
             ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ManagerPanelLayout.createSequentialGroup()
+                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ManagerPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addButton)
-                            .addComponent(delButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(delButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 3, Short.MAX_VALUE))
+                    .addGroup(ManagerPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("<html>Manage<br />& Add</html>", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/employee.png")), ManagerPanel, "cats"); // NOI18N
@@ -838,7 +850,8 @@ public class MainJFrame extends javax.swing.JFrame {
 					selectedEmployee.getDeductionsRate(),
 					((PartTimeEmployee) selectedEmployee).getHourlyWage(),
 					((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
-					((PartTimeEmployee) selectedEmployee).getWeeksPerYear()
+					((PartTimeEmployee) selectedEmployee).getWeeksPerYear(),
+					selectedEmployee.calcAnnualNetIncome()
 				};
 				Object[] firstColInfo = {
 					"employee number",
@@ -849,7 +862,8 @@ public class MainJFrame extends javax.swing.JFrame {
 					"deducations rate",
 					"hourly wage",
 					"hours per week",
-					"weeks per year"
+					"weeks per year",
+					"net income"
 				};
 				attributeTableModel.addColumn("attributes", firstColInfo);
 				attributeTableModel.addColumn("information", info);
@@ -862,7 +876,9 @@ public class MainJFrame extends javax.swing.JFrame {
 					selectedEmployee.getWorkLocation(),
 					selectedEmployee.getClass(),
 					selectedEmployee.getDeductionsRate(),
-					((FullTimeEmployee) selectedEmployee).getYearlySalary()
+					((FullTimeEmployee) selectedEmployee).getYearlySalary(),
+					selectedEmployee.calcAnnualNetIncome()
+					
 				};
 				Object[] firstColInfo = {
 					"employee number",
@@ -871,7 +887,8 @@ public class MainJFrame extends javax.swing.JFrame {
 					"sex",
 					"work location",
 					"deducations rate",
-					"salary"
+					"salary",
+					"net income"
 				};
 				attributeTableModel.addColumn("attributes", firstColInfo);
 				attributeTableModel.addColumn("information", info);
@@ -964,6 +981,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
