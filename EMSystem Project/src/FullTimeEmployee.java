@@ -7,7 +7,7 @@
 public class FullTimeEmployee extends EmployeeInfo {
 	
 	// the FullTimeEmployee's annual salary
-	protected double yearlySalary;
+	private double yearlySalary;
 	
 	
 	/**
@@ -47,6 +47,7 @@ public class FullTimeEmployee extends EmployeeInfo {
 	 * Calculate the part time employee's annual gross income.
 	 * @return the employee's annual gross income.
 	 */
+	@Override
 	public double calcAnnualGrossIncome() {
 		return(this.yearlySalary);
 	}
@@ -55,8 +56,9 @@ public class FullTimeEmployee extends EmployeeInfo {
 	 * Calculate the part time employee's annual net income.
 	 * @return the employee's annual net income.
 	 */
+	@Override
 	public double calcAnnualNetIncome() {
-		return(this.yearlySalary * (1 - this.deductionsRate));
+		double result = this.yearlySalary * (1 - this.deductionsRate);
+		return ((double) Math.round(result * 100))/100.0;
 	}
-
 }
