@@ -8,6 +8,13 @@ import java.util.ArrayList;
  * @version 2018-05-15
  * 
  */
+
+/*
+TODO: 
+- save and open to files
+- edit employees
+- change locations
+*/
 public class EmployeeHashTable implements Serializable {
 	
 	private final int k;  // the k value (number of buckets, length of hashTable)

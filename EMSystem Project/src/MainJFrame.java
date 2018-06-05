@@ -199,6 +199,7 @@ public class MainJFrame extends javax.swing.JFrame {
         delButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        addButton1 = new javax.swing.JButton();
         filePanel = new javax.swing.JPanel();
         newButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
@@ -524,6 +525,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTable2);
         jTable2.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        delButton.setBackground(new java.awt.Color(255, 102, 102));
         delButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/trash.png"))); // NOI18N
         delButton.setText("remove");
         delButton.setActionCommand("delButton");
@@ -533,6 +535,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        addButton.setBackground(new java.awt.Color(102, 255, 102));
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/add.png"))); // NOI18N
         addButton.setText("add");
         addButton.setActionCommand("addButton");
@@ -544,14 +547,26 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel9.setText("double click on a value to edit it");
 
+        addButton1.setBackground(new java.awt.Color(102, 102, 255));
+        addButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/add.png"))); // NOI18N
+        addButton1.setText("add");
+        addButton1.setActionCommand("addButton");
+        addButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ManagerPanelLayout = new javax.swing.GroupLayout(ManagerPanel);
         ManagerPanel.setLayout(ManagerPanelLayout);
         ManagerPanelLayout.setHorizontalGroup(
             ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ManagerPanelLayout.createSequentialGroup()
-                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(ManagerPanelLayout.createSequentialGroup()
                         .addComponent(delButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -575,7 +590,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(ManagerPanelLayout.createSequentialGroup()
                         .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addButton)
-                            .addComponent(delButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(delButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addButton1))
                         .addGap(0, 3, Short.MAX_VALUE))
                     .addGroup(ManagerPanelLayout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -757,22 +773,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			e.printStackTrace(System.err);
 		}
     }//GEN-LAST:event_formWindowClosing
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // this.setVisible(false);
-		// Toolkit.getDefaultToolkit().beep(); 
-		if (dropDownType.getSelectedItem().equals("Full time")) {
-			changeSelection(0);
-        }
-		else if (dropDownType.getSelectedItem().equals("Part time")) {
-			changeSelection(1);
-		}
-		
-		addPopup.setVisible(true);
-		
-		
-		
-    }//GEN-LAST:event_addButtonActionPerformed
 	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
         // check to make sure none of the text fields are empty
@@ -825,79 +825,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-		if (jTable1.getRowSelectionAllowed()) {
-			int selRow = jTable1.getSelectedRow();
-			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
-			int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0);
-			EmployeeInfo selectedEmployee = employeeTable.find(selectedEmpNumber);
-			System.out.println(selectedEmployee.getFirstName());
-			
-			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
-			EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
-			
-			attributeTableModel.setColumnCount(0);
-			attributeTableModel.setRowCount(6);
-			// run through every employee in employeeList
-			// add the part time employee info as a column
-			if (selectedEmployee instanceof PartTimeEmployee) {
-				Object[] info = {
-					selectedEmployee.getEmployeeNumber(),
-					selectedEmployee.getFirstName(),
-					selectedEmployee.getLastName(),
-					selectedEmployee.getWorkLocation(),
-					selectedEmployee.getClass(),
-					selectedEmployee.getDeductionsRate(),
-					((PartTimeEmployee) selectedEmployee).getHourlyWage(),
-					((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
-					((PartTimeEmployee) selectedEmployee).getWeeksPerYear(),
-					selectedEmployee.calcAnnualNetIncome()
-				};
-				Object[] firstColInfo = {
-					"employee number",
-					"first name",
-					"last name",
-					"sex",
-					"work location",
-					"deducations rate",
-					"hourly wage",
-					"hours per week",
-					"weeks per year",
-					"net income"
-				};
-				attributeTableModel.addColumn("attributes", firstColInfo);
-				attributeTableModel.addColumn("information", info);
-			}
-			else if (selectedEmployee instanceof FullTimeEmployee) {
-				Object[] info = {
-					selectedEmployee.getEmployeeNumber(),
-					selectedEmployee.getFirstName(),
-					selectedEmployee.getLastName(),
-					selectedEmployee.getWorkLocation(),
-					selectedEmployee.getClass(),
-					selectedEmployee.getDeductionsRate(),
-					((FullTimeEmployee) selectedEmployee).getYearlySalary(),
-					selectedEmployee.calcAnnualNetIncome()
-					
-				};
-				Object[] firstColInfo = {
-					"employee number",
-					"first name",
-					"last name",
-					"sex",
-					"work location",
-					"deducations rate",
-					"salary",
-					"net income"
-				};
-				attributeTableModel.addColumn("attributes", firstColInfo);
-				attributeTableModel.addColumn("information", info);
-			}
-			
-			// int colIndex = jTable1.getSelectedColumn();
-		}
-    }//GEN-LAST:event_jTable1MouseClicked
-
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
@@ -931,27 +858,119 @@ public class MainJFrame extends javax.swing.JFrame {
 		
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
-		if (jTable1.getSelectedRow() == -1) {
-			getAngryAtUser("no selected employee to remove!");
-		}
-		else {
-			int selRow = jTable1.convertRowIndexToModel(jTable1.getSelectedRow());
-			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();		
-			employeeTable.remove((int) employeeTableModel.getValueAt(selRow, 0));
-			employeeTableModel.removeRow(selRow);
-			jTable1.setModel(employeeTableModel);
-			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
-			attributeTableModel.setColumnCount(0);
-		}
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // this.setVisible(false);
+        // Toolkit.getDefaultToolkit().beep();
+        if (dropDownType.getSelectedItem().equals("Full time")) {
+            changeSelection(0);
+        }
+        else if (dropDownType.getSelectedItem().equals("Part time")) {
+            changeSelection(1);
+        }
 
-		// TODO: update table
+        addPopup.setVisible(true);
+
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
+        if (jTable1.getSelectedRow() == -1) {
+            getAngryAtUser("no selected employee to remove!");
+        }
+        else {
+            int selRow = jTable1.convertRowIndexToModel(jTable1.getSelectedRow());
+            DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
+            employeeTable.remove((int) employeeTableModel.getValueAt(selRow, 0));
+            employeeTableModel.removeRow(selRow);
+            jTable1.setModel(employeeTableModel);
+            DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+            attributeTableModel.setColumnCount(0);
+        }
+
+        // TODO: update table
     }//GEN-LAST:event_delButtonActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (jTable1.getRowSelectionAllowed()) {
+            int selRow = jTable1.getSelectedRow();
+            DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
+            int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0);
+            EmployeeInfo selectedEmployee = employeeTable.find(selectedEmpNumber);
+            System.out.println(selectedEmployee.getFirstName());
+
+            DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+            EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
+
+            attributeTableModel.setColumnCount(0);
+            attributeTableModel.setRowCount(6);
+            // run through every employee in employeeList
+            // add the part time employee info as a column
+            if (selectedEmployee instanceof PartTimeEmployee) {
+                Object[] info = {
+                    selectedEmployee.getEmployeeNumber(),
+                    selectedEmployee.getFirstName(),
+                    selectedEmployee.getLastName(),
+                    selectedEmployee.getWorkLocation(),
+                    selectedEmployee.getClass(),
+                    selectedEmployee.getDeductionsRate(),
+                    ((PartTimeEmployee) selectedEmployee).getHourlyWage(),
+                    ((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
+                    ((PartTimeEmployee) selectedEmployee).getWeeksPerYear(),
+                    selectedEmployee.calcAnnualNetIncome()
+                };
+                Object[] firstColInfo = {
+                    "employee number",
+                    "first name",
+                    "last name",
+                    "sex",
+                    "work location",
+                    "deducations rate",
+                    "hourly wage",
+                    "hours per week",
+                    "weeks per year",
+                    "net income"
+                };
+                attributeTableModel.addColumn("attributes", firstColInfo);
+                attributeTableModel.addColumn("information", info);
+            }
+            else if (selectedEmployee instanceof FullTimeEmployee) {
+                Object[] info = {
+                    selectedEmployee.getEmployeeNumber(),
+                    selectedEmployee.getFirstName(),
+                    selectedEmployee.getLastName(),
+                    selectedEmployee.getWorkLocation(),
+                    selectedEmployee.getClass(),
+                    selectedEmployee.getDeductionsRate(),
+                    ((FullTimeEmployee) selectedEmployee).getYearlySalary(),
+                    selectedEmployee.calcAnnualNetIncome()
+
+                };
+                Object[] firstColInfo = {
+                    "employee number",
+                    "first name",
+                    "last name",
+                    "sex",
+                    "work location",
+                    "deducations rate",
+                    "salary",
+                    "net income"
+                };
+                attributeTableModel.addColumn("attributes", firstColInfo);
+                attributeTableModel.addColumn("information", info);
+            }
+
+            // int colIndex = jTable1.getSelectedColumn();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void addButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addButton1ActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ManagerPanel;
     private javax.swing.JButton addButton;
+    private javax.swing.JButton addButton1;
     private javax.swing.JDialog addPopup;
     private javax.swing.JButton addTheEmployee;
     private javax.swing.JButton backButton;
