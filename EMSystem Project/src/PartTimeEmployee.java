@@ -70,16 +70,20 @@ public class PartTimeEmployee extends EmployeeInfo {
 	 * Calculate the part time employee's annual gross income.
 	 * @return the employee's annual gross income.
 	 */
+	@Override
 	public double calcAnnualGrossIncome() {
-		return(this.hourlyWage * this.hoursPerWeek * this.weeksPerYear);
+		double result = this.hourlyWage * this.hoursPerWeek * this.weeksPerYear;
+		return ((double) Math.round(result * 100))/100.0;
 	}
 	
 	/**
 	 * Calculate the part time employee's annual net income.
 	 * @return the employee's annual net income.
 	 */
+	@Override
 	public double calcAnnualNetIncome() {
-		return(calcAnnualGrossIncome() * (1 - this.deductionsRate));
+		double result = calcAnnualGrossIncome() * (1 - this.deductionsRate);
+		return ((double) Math.round(result * 100))/100.0;
 	}
 
 }
