@@ -1004,10 +1004,16 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addLocationsButtonActionPerformed
 
     private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
-        // TODO add your handling code here:
-		System.out.println(evt.getNewValue());
-		
-		
+		if (evt.getNewValue() == null) {
+			DefaultTableModel a = (DefaultTableModel) jTable2.getModel();
+			int employeeNumber = (int) a.getValueAt(0, 1);
+			int parameterRow = jTable2.getSelectedRow();
+			Object newValue = a.getValueAt(parameterRow, 1);
+			switch (parameterRow) {
+				case 1: employeeTable.find(employeeNumber).setFirstName((String) newValue);
+						return;
+			}
+		}
     }//GEN-LAST:event_jTable2PropertyChange
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
