@@ -108,7 +108,6 @@ public class MainJFrame extends javax.swing.JFrame {
 				break;
 			}
 		}
-		System.out.printf("Row: %d", row);
 		employeeTableModel.removeRow(row);
 		EmployeeInfo modifiedEmployee = employeeTable.returnAllEmployees().get(row);
 		Object[] rowData = {
@@ -1050,43 +1049,55 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
 		if (evt.getNewValue() == null) {
 			DefaultTableModel a = (DefaultTableModel) jTable2.getModel();
+			Object hwat = a.getValueAt(0, 1);
 			int employeeNumber = (int) a.getValueAt(0, 1);
 			int parameterRow = jTable2.getSelectedRow();
 			String newValue = (String) a.getValueAt(parameterRow, 1);
 			EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
+			boolean validChange = false;
 			switch (parameterRow) {
 				case 1:
 					targetEmployee.setFirstName((String) newValue);
+					validChange = true;
 					break;
 				case 2:
 					targetEmployee.setLastName((String) newValue);
+					validChange = true;
 					break;
 				case 3:
 					targetEmployee.setSex(Integer.parseInt(newValue));
+					validChange = true;
 					break;
 				case 6:
 					targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
+					validChange = true;
 					break;
 				case 7:
 					if (targetEmployee instanceof FullTimeEmployee) {
 						((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					else if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					break;
 				case 8:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					break;
 				case 9:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					break;
 			}
-			updateEmployeeJtable(jTable1, employeeNumber);
+			if (validChange) {
+				updateEmployeeJtable(jTable1, employeeNumber);
+			}
 		}
     }//GEN-LAST:event_jTable2PropertyChange
 
