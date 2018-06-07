@@ -300,7 +300,6 @@ public class MainJFrame extends javax.swing.JFrame {
         labelPart2.setText("Weeks per year");
 
         dropDownLocation.setMaximumRowCount(15);
-        dropDownLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "loc a", "loc b", "loc c" }));
 
         javax.swing.GroupLayout addPopupLayout = new javax.swing.GroupLayout(addPopup.getContentPane());
         addPopup.getContentPane().setLayout(addPopupLayout);
@@ -734,7 +733,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveAsButton)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("File", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/file.png")), filePanel); // NOI18N
@@ -770,7 +769,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(431, Short.MAX_VALUE))
+                .addContainerGap(433, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Settings", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/settings.png")), settingsPanel); // NOI18N
@@ -803,7 +802,7 @@ public class MainJFrame extends javax.swing.JFrame {
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
+                .addContainerGap(118, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel6)
@@ -937,11 +936,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // this.setVisible(false);
-		
-		// set the list of available locations
-        DefaultListModel<String> model = new DefaultListModel<>();
-		model.add(0, "asdf");
-		dropDownLocation.setModel(model);
+		int numItems = dropDownLocation.getItemCount();
+		if (numItems == 0) {
+			getAngryAtUser("No locations have been added yet!");
+			return;
+		}
 		
         if (dropDownType.getSelectedItem().equals("Full time")) {
             changeSelection(0);
@@ -1116,6 +1115,7 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 		// add the location
 		employeeTable.addLocation(locationTextField.getText());
+		dropDownLocation.addItem(locationTextField.getText());
 		// hide the dialog and clear text
 		locationTextField.setText("");
 		locationDialog.setVisible(false);
