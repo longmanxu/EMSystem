@@ -98,6 +98,29 @@ public class MainJFrame extends javax.swing.JFrame {
 		employeeTableModel.addRow(rowData);
 		table.setModel(employeeTableModel);
 	}
+	
+	private void updateEmployeeJtable(javax.swing.JTable table, int empNumber) {
+		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
+		EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
+		int row = -1;
+		for (int i = 0; i < employeeList.size(); i++) {
+			if (employeeList.get(i).getEmployeeNumber() == empNumber) {
+				row = i;
+				break;
+			}
+		}
+		employeeTableModel.removeRow(row);
+		EmployeeInfo modifiedEmployee = employeeTable.returnAllEmployees().get(row);
+		Object[] rowData = {
+			modifiedEmployee.getEmployeeNumber(),
+			modifiedEmployee.getFirstName(),
+			modifiedEmployee.getLastName(),
+			modifiedEmployee.getWorkLocation(),
+			modifiedEmployee.getClass()
+		};
+		employeeTableModel.insertRow(row, rowData);
+		table.setModel(employeeTableModel);
+	}
 		
 	private void changeSelection(int type) {
 		if (type == 0) { // full time
@@ -1033,41 +1056,54 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
 		if (evt.getNewValue() == null) {
 			DefaultTableModel a = (DefaultTableModel) jTable2.getModel();
+			Object hwat = a.getValueAt(0, 1);
 			int employeeNumber = (int) a.getValueAt(0, 1);
 			int parameterRow = jTable2.getSelectedRow();
 			String newValue = (String) a.getValueAt(parameterRow, 1);
 			EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
+			boolean validChange = false;
 			switch (parameterRow) {
 				case 1:
 					targetEmployee.setFirstName((String) newValue);
+					validChange = true;
 					break;
 				case 2:
 					targetEmployee.setLastName((String) newValue);
+					validChange = true;
 					break;
 				case 3:
 					targetEmployee.setSex(Integer.parseInt(newValue));
+					validChange = true;
 					break;
 				case 6:
 					targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
+					validChange = true;
 					break;
 				case 7:
 					if (targetEmployee instanceof FullTimeEmployee) {
 						((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					else if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					break;
 				case 8:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					break;
 				case 9:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
+						validChange = true;
 					}
 					break;
+			}
+			if (validChange) {
+				updateEmployeeJtable(jTable1, employeeNumber);
 			}
 		}
     }//GEN-LAST:event_jTable2PropertyChange
