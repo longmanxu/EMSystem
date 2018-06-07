@@ -1008,10 +1008,39 @@ public class MainJFrame extends javax.swing.JFrame {
 			DefaultTableModel a = (DefaultTableModel) jTable2.getModel();
 			int employeeNumber = (int) a.getValueAt(0, 1);
 			int parameterRow = jTable2.getSelectedRow();
-			Object newValue = a.getValueAt(parameterRow, 1);
+			String newValue = (String) a.getValueAt(parameterRow, 1);
+			EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
 			switch (parameterRow) {
-				case 1: employeeTable.find(employeeNumber).setFirstName((String) newValue);
-						return;
+				case 1:
+					targetEmployee.setFirstName((String) newValue);
+					break;
+				case 2:
+					targetEmployee.setLastName((String) newValue);
+					break;
+				case 3:
+					targetEmployee.setSex(Integer.parseInt(newValue));
+					break;
+				case 5:
+					targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
+					break;
+				case 6:
+					if (targetEmployee instanceof FullTimeEmployee) {
+						((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
+					}
+					else if (targetEmployee instanceof PartTimeEmployee) {
+						((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
+					}
+					break;
+				case 7:
+					if (targetEmployee instanceof PartTimeEmployee) {
+						((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
+					}
+					break;
+				case 8:
+					if (targetEmployee instanceof PartTimeEmployee) {
+						((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
+					}
+					break;
 			}
 		}
     }//GEN-LAST:event_jTable2PropertyChange
