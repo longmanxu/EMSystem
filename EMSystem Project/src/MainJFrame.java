@@ -96,6 +96,30 @@ public class MainJFrame extends javax.swing.JFrame {
 		employeeTableModel.addRow(rowData);
 		table.setModel(employeeTableModel);
 	}
+	
+	private void updateEmployeeJtable(javax.swing.JTable table, int empNumber) {
+		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
+		EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
+		int row = -1;
+		for (int i = 0; i < employeeList.size(); i++) {
+			if (employeeList.get(i).getEmployeeNumber() == empNumber) {
+				row = i;
+				break;
+			}
+		}
+		System.out.printf("Row: %d", row);
+		employeeTableModel.removeRow(row);
+		EmployeeInfo modifiedEmployee = employeeTable.returnAllEmployees().get(row);
+		Object[] rowData = {
+			modifiedEmployee.getEmployeeNumber(),
+			modifiedEmployee.getFirstName(),
+			modifiedEmployee.getLastName(),
+			modifiedEmployee.getWorkLocation(),
+			modifiedEmployee.getClass()
+		};
+		employeeTableModel.insertRow(row, rowData);
+		table.setModel(employeeTableModel);
+	}
 		
 	private void changeSelection(int type) {
 		if (type == 0) { // full time
@@ -1046,6 +1070,7 @@ public class MainJFrame extends javax.swing.JFrame {
 					}
 					break;
 			}
+			updateEmployeeJtable(jTable1, employeeNumber);
 		}
     }//GEN-LAST:event_jTable2PropertyChange
 	
