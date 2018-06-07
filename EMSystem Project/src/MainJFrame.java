@@ -1055,6 +1055,7 @@ public class MainJFrame extends javax.swing.JFrame {
 			String newValue = (String) a.getValueAt(parameterRow, 1);
 			EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
 			boolean validChange = false;
+			System.out.println(parameterRow);
 			switch (parameterRow) {
 				case 1:
 					targetEmployee.setFirstName((String) newValue);
@@ -1076,23 +1077,27 @@ public class MainJFrame extends javax.swing.JFrame {
 					if (targetEmployee instanceof FullTimeEmployee) {
 						((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
 						validChange = true;
+						break;
 					}
 					else if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
 						validChange = true;
+						break;
 					}
-					break;
 				case 8:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
 						validChange = true;
+						break;
 					}
-					break;
 				case 9:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
 						validChange = true;
+						break;
 					}
+				default:
+					getAngryAtUser("Cannot modify this parameter!");
 					break;
 			}
 			if (validChange) {
