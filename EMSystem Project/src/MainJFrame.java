@@ -1,5 +1,6 @@
 
 import java.io.*;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -275,6 +276,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         labelPart2.setText("Weeks per year");
 
+        dropDownLocation.setMaximumRowCount(15);
         dropDownLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "loc a", "loc b", "loc c" }));
 
         javax.swing.GroupLayout addPopupLayout = new javax.swing.GroupLayout(addPopup.getContentPane());
@@ -912,7 +914,12 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // this.setVisible(false);
-        // Toolkit.getDefaultToolkit().beep();
+		
+		// set the list of available locations
+        DefaultListModel<String> model = new DefaultListModel<>();
+		model.add(0, "asdf");
+		dropDownLocation.setModel(model);
+		
         if (dropDownType.getSelectedItem().equals("Full time")) {
             changeSelection(0);
         }
