@@ -1024,10 +1024,10 @@ public class MainJFrame extends javax.swing.JFrame {
 				case 3:
 					targetEmployee.setSex(Integer.parseInt(newValue));
 					break;
-				case 5:
+				case 6:
 					targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
 					break;
-				case 6:
+				case 7:
 					if (targetEmployee instanceof FullTimeEmployee) {
 						((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
 					}
@@ -1035,12 +1035,12 @@ public class MainJFrame extends javax.swing.JFrame {
 						((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
 					}
 					break;
-				case 7:
+				case 8:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
 					}
 					break;
-				case 8:
+				case 9:
 					if (targetEmployee instanceof PartTimeEmployee) {
 						((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
 					}

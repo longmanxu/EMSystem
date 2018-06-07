@@ -209,6 +209,14 @@ public class EmployeeHashTable implements Serializable {
 	}
 	
 	/**
+	 * Return the list of locations.
+	 * @return the list of locations.
+	 */
+	public ArrayList<String> getLocationList() {
+		return this.locationList;
+	}
+	
+	/**
 	 * Get the number of employees.
 	 * @return the number of employees.
 	 */
