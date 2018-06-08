@@ -192,17 +192,32 @@ public class EmployeeHashTable implements Serializable {
 	}
 	
 	/**
-	 * Add a new location.
-	 * @param locationName the new location.
+	 * Add a new locationIndex.
+	 * @param locationName the new locationIndex.
 	 */
 	public void addLocation(String locationName) {
+		if (this.locationList.contains(locationName)) {
+			throw new IllegalArgumentException("This location already exists.");
+		}
 		this.locationList.add(locationName);
 	}
 	
+	public void removeLocation(String locationName) {
+		int locationIndex = this.locationList.indexOf(locationName);
+		for (EmployeeArrayList bucket : this.hashTable) {
+			for (EmployeeInfo employee : bucket) {
+				if (employee.getWorkLocation() == locationIndex) {
+					throw new IllegalArgumentException("Cannot remove this location.");
+				}
+			}
+		}
+		this.locationList.remove(locationIndex);
+	}
+	
 	/**
-	 * Converts a location number to a location name.
-	 * @param locationNumber the location number.
-	 * @return the location name.
+	 * Converts a locationIndex number to a locationIndex name.
+	 * @param locationNumber the locationIndex number.
+	 * @return the locationIndex name.
 	 */
 	public String getLocationName(int locationNumber) {
 		return this.locationList.get(locationNumber);
