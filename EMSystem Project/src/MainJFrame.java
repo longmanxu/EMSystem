@@ -466,7 +466,7 @@ public class MainJFrame extends javax.swing.JFrame {
         );
         openDialogLayout.setVerticalGroup(
             openDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(openFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+            .addComponent(openFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         saveDialog.setMinimumSize(new java.awt.Dimension(710, 450));
@@ -680,14 +680,21 @@ public class MainJFrame extends javax.swing.JFrame {
 
         filePanel.setPreferredSize(new java.awt.Dimension(700, 600));
 
+        newButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/newfolder.png"))); // NOI18N
-        newButton.setText("buttonNew");
+        newButton.setText("new");
         newButton.setMaximumSize(new java.awt.Dimension(187, 92));
         newButton.setMinimumSize(new java.awt.Dimension(187, 92));
         newButton.setName(""); // NOI18N
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
 
+        openButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         openButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/open.png"))); // NOI18N
-        openButton.setText("buttonOpen");
+        openButton.setText("open");
         openButton.setMaximumSize(new java.awt.Dimension(187, 92));
         openButton.setMinimumSize(new java.awt.Dimension(187, 92));
         openButton.addActionListener(new java.awt.event.ActionListener() {
@@ -696,8 +703,9 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        saveButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/save.png"))); // NOI18N
-        saveButton.setText("buttonSave");
+        saveButton.setText("save");
         saveButton.setMaximumSize(new java.awt.Dimension(187, 92));
         saveButton.setMinimumSize(new java.awt.Dimension(187, 92));
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -706,8 +714,9 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        saveAsButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         saveAsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/saveAs.png"))); // NOI18N
-        saveAsButton.setText("buttonSaveAs");
+        saveAsButton.setText("save as");
         saveAsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAsButtonActionPerformed(evt);
@@ -719,13 +728,13 @@ public class MainJFrame extends javax.swing.JFrame {
         filePanelLayout.setHorizontalGroup(
             filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filePanelLayout.createSequentialGroup()
-                .addContainerGap(67, Short.MAX_VALUE)
+                .addContainerGap(75, Short.MAX_VALUE)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(saveAsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saveAsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                     .addComponent(openButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(138, 138, 138))
         );
@@ -740,7 +749,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveAsButton)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("File", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/file.png")), filePanel); // NOI18N
@@ -849,7 +858,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 		// save the employees 
 		try {
-			employeeTable.save("saved_employees.em");
+			employeeTable.save();
 			System.out.println("Saved all employees");
 		} catch (IOException e) {
 			System.err.println("Error encountered when saving employees:");
@@ -938,6 +947,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
+		employeeTable.save()
 		
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -1133,6 +1143,11 @@ public class MainJFrame extends javax.swing.JFrame {
 		locationDialog.setVisible(false);
 		
     }//GEN-LAST:event_confirmLocationButtonActionPerformed
+
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        // TODO add your handling code here:
+		
+    }//GEN-LAST:event_newButtonActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
     // Variables declaration - do not modify//GEN-BEGIN:variables
