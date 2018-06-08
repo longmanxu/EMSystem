@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -26,6 +27,12 @@ public class MainJFrame extends javax.swing.JFrame {
 		jTable1.setAutoCreateRowSorter(true);
 		saveFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
 		openFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
+		
+		// set the list of location
+		ArrayList<String> locList = employeeTable.getLocationList();
+		for(String i : locList){
+			dropDownLocation.addItem(i);
+		}
 	}
 	
 	/**
