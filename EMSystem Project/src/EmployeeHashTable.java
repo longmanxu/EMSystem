@@ -21,6 +21,7 @@ public class EmployeeHashTable implements Serializable {
 	private int num;  // keep track of total number of employees, for re-optimizing 
 	private final EmployeeArrayList[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
 	private final ArrayList<String> locationList;
+	private File prevSaveLoc = null;
 	
 	/**
 	 * Constructs a new open hashing/closed addressing hash table with the specified k value.
@@ -47,6 +48,7 @@ public class EmployeeHashTable implements Serializable {
 		// wrapped in try-with-resources to ensure output stream will be closed.
 		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
 			outputStream.writeObject(this);
+			this.prevSaveLoc = file;
 		} catch (IOException e) {
 			throw e;
 		}
@@ -59,6 +61,17 @@ public class EmployeeHashTable implements Serializable {
 	 */
 	public void save(String filePath) throws IOException {
 		save(new File(filePath));
+	}
+	
+	/**
+	 * Saves the EmployeeHashTable at the previous save location.
+	 * @throws IOException if an IOException occurs.
+	 */
+	public void save() throws IOException {
+		if (prevSaveLoc == null) {
+			throw new IllegalArgumentException("File has not been saved before");
+		}
+		save(this.prevSaveLoc);
 	}
 	
 	/**
