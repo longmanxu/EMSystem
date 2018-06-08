@@ -1,6 +1,8 @@
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,9 +27,6 @@ public class MainJFrame extends javax.swing.JFrame {
 		jComboBox1.setSelectedItem(settings.getLookAndFeel());
 		initEmployeeJTable(employeeTable, jTable1);
 		jTable1.setAutoCreateRowSorter(true);
-		saveFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
-		openFileChooser.setFileFilter(new FileNameExtensionFilter(".em files", "em"));
-		
 		// set the list of location
 		ArrayList<String> locList = employeeTable.getLocationList();
 		for(String i : locList){
@@ -218,10 +217,6 @@ public class MainJFrame extends javax.swing.JFrame {
         dropDownLocation = new javax.swing.JComboBox<>();
         errorPopup = new javax.swing.JDialog();
         errorMsgLabel = new javax.swing.JLabel();
-        openDialog = new javax.swing.JDialog();
-        openFileChooser = new javax.swing.JFileChooser();
-        saveDialog = new javax.swing.JDialog();
-        saveFileChooser = new javax.swing.JFileChooser();
         locationDialog = new javax.swing.JDialog();
         locationTextField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -415,11 +410,12 @@ public class MainJFrame extends javax.swing.JFrame {
         );
 
         errorPopup.setTitle("ERROR");
-        errorPopup.setMinimumSize(new java.awt.Dimension(300, 150));
+        errorPopup.setMinimumSize(new java.awt.Dimension(375, 150));
         errorPopup.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        errorPopup.setSize(new java.awt.Dimension(300, 150));
+        errorPopup.setPreferredSize(new java.awt.Dimension(375, 150));
+        errorPopup.setSize(new java.awt.Dimension(375, 150));
 
-        errorMsgLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        errorMsgLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         errorMsgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/error.png"))); // NOI18N
         errorMsgLabel.setText("Enter ur error msg here");
         errorMsgLabel.setMaximumSize(new java.awt.Dimension(300, 150));
@@ -433,7 +429,7 @@ public class MainJFrame extends javax.swing.JFrame {
             errorPopupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, errorPopupLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(errorMsgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                 .addContainerGap())
         );
         errorPopupLayout.setVerticalGroup(
@@ -442,55 +438,6 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addComponent(errorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
-        );
-
-        openDialog.setMinimumSize(new java.awt.Dimension(710, 450));
-        openDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        openDialog.setResizable(false);
-
-        openFileChooser.setMinimumSize(new java.awt.Dimension(710, 410));
-        openFileChooser.setPreferredSize(new java.awt.Dimension(710, 410));
-        openFileChooser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openFileChooserActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout openDialogLayout = new javax.swing.GroupLayout(openDialog.getContentPane());
-        openDialog.getContentPane().setLayout(openDialogLayout);
-        openDialogLayout.setHorizontalGroup(
-            openDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(openDialogLayout.createSequentialGroup()
-                .addComponent(openFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 698, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        openDialogLayout.setVerticalGroup(
-            openDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(openFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        saveDialog.setMinimumSize(new java.awt.Dimension(710, 450));
-        saveDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        saveDialog.setResizable(false);
-
-        saveFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        saveFileChooser.setMinimumSize(new java.awt.Dimension(710, 410));
-        saveFileChooser.setPreferredSize(new java.awt.Dimension(710, 410));
-        saveFileChooser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveFileChooserActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout saveDialogLayout = new javax.swing.GroupLayout(saveDialog.getContentPane());
-        saveDialog.getContentPane().setLayout(saveDialogLayout);
-        saveDialogLayout.setHorizontalGroup(
-            saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(saveFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        saveDialogLayout.setVerticalGroup(
-            saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(saveFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         locationDialog.setTitle("Add a location");
@@ -785,7 +732,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addContainerGap(431, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Settings", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/settings.png")), settingsPanel); // NOI18N
@@ -818,7 +765,7 @@ public class MainJFrame extends javax.swing.JFrame {
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
-                .addContainerGap(118, Short.MAX_VALUE)
+                .addContainerGap(116, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel6)
@@ -927,27 +874,28 @@ public class MainJFrame extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_openButtonActionPerformed
 
-    private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_openFileChooserActionPerformed
-
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
 		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("employee management system files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			try {
+				employeeTable.save(chooser.getSelectedFile());
+			} catch (IOException ex) {
+				getAngryAtUser(ex.getMessage());
+			}
 			System.out.println("You chose to save this file as: " + chooser.getSelectedFile().getName());
 		}
     }//GEN-LAST:event_saveAsButtonActionPerformed
 
-    private void saveFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileChooserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveFileChooserActionPerformed
-
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-		employeeTable.save()
+		try {
+			// TODO add your handling code here:
+			employeeTable.save();
+		} catch (IOException ex) {
+			getAngryAtUser(ex.getMessage());
+		}
 		
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -1073,59 +1021,65 @@ public class MainJFrame extends javax.swing.JFrame {
 		if (evt.getNewValue() == null) {
 			DefaultTableModel a = (DefaultTableModel) jTable2.getModel();
 			Object hwat = a.getValueAt(0, 1);
-			int employeeNumber = (int) a.getValueAt(0, 1);
-			int parameterRow = jTable2.getSelectedRow();
-			String newValue = (String) a.getValueAt(parameterRow, 1);
-			EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
-			boolean validChange = false;
-			System.out.println(parameterRow);
-			switch (parameterRow) {
-				case 1:
-					targetEmployee.setFirstName((String) newValue);
-					validChange = true;
-					break;
-				case 2:
-					targetEmployee.setLastName((String) newValue);
-					validChange = true;
-					break;
-				case 3:
-					targetEmployee.setSex(Integer.parseInt(newValue));
-					validChange = true;
-					break;
-				case 6:
-					targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
-					validChange = true;
-					break;
-				case 7:
-					if (targetEmployee instanceof FullTimeEmployee) {
-						((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
-						validChange = true;
-						break;
-					}
-					else if (targetEmployee instanceof PartTimeEmployee) {
-						((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
-						validChange = true;
-						break;
-					}
-				case 8:
-					if (targetEmployee instanceof PartTimeEmployee) {
-						((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
-						validChange = true;
-						break;
-					}
-				case 9:
-					if (targetEmployee instanceof PartTimeEmployee) {
-						((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
-						validChange = true;
-						break;
-					}
-				default:
-					getAngryAtUser("Cannot modify this parameter!");
-					break;
+			if (a.getValueAt(0, 1) instanceof String) {
+				getAngryAtUser("cannot change employee numbers!");
 			}
-			if (validChange) {
-				updateEmployeeJtable(jTable1, employeeNumber);
+			else {
+				int employeeNumber = (int) a.getValueAt(0, 1);
+				int parameterRow = jTable2.getSelectedRow();
+				String newValue = (String) a.getValueAt(parameterRow, 1);
+				EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
+				boolean validChange = false;
+				System.out.println(parameterRow);
+				switch (parameterRow) {
+					case 1:
+						targetEmployee.setFirstName((String) newValue);
+						validChange = true;
+						break;
+					case 2:
+						targetEmployee.setLastName((String) newValue);
+						validChange = true;
+						break;
+					case 3:
+						targetEmployee.setSex(Integer.parseInt(newValue));
+						validChange = true;
+						break;
+					case 6:
+						targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
+						validChange = true;
+						break;
+					case 7:
+						if (targetEmployee instanceof FullTimeEmployee) {
+							((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
+							validChange = true;
+							break;
+						}
+						else if (targetEmployee instanceof PartTimeEmployee) {
+							((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
+							validChange = true;
+							break;
+						}
+					case 8:
+						if (targetEmployee instanceof PartTimeEmployee) {
+							((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
+							validChange = true;
+							break;
+						}
+					case 9:
+						if (targetEmployee instanceof PartTimeEmployee) {
+							((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
+							validChange = true;
+							break;
+						}
+					default:
+						getAngryAtUser("Cannot modify this parameter!");
+						break;
+				}
+				if (validChange) {
+					updateEmployeeJtable(jTable1, employeeNumber);
+				}
 			}
+			
 		}
     }//GEN-LAST:event_jTable2PropertyChange
 
@@ -1200,12 +1154,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField locationTextField;
     private javax.swing.JButton newButton;
     private javax.swing.JButton openButton;
-    private javax.swing.JDialog openDialog;
-    private javax.swing.JFileChooser openFileChooser;
     private javax.swing.JButton saveAsButton;
     private javax.swing.JButton saveButton;
-    private javax.swing.JDialog saveDialog;
-    private javax.swing.JFileChooser saveFileChooser;
     private javax.swing.JPanel settingsPanel;
     // End of variables declaration//GEN-END:variables
 	// </editor-fold>
