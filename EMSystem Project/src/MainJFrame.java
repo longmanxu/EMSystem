@@ -275,6 +275,8 @@ public class MainJFrame extends javax.swing.JFrame {
         helpPanel = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         addPopup.setTitle("Add an employee");
         addPopup.setMinimumSize(new java.awt.Dimension(600, 400));
@@ -445,7 +447,6 @@ public class MainJFrame extends javax.swing.JFrame {
         errorPopup.setTitle("ERROR");
         errorPopup.setMinimumSize(new java.awt.Dimension(375, 150));
         errorPopup.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        errorPopup.setPreferredSize(new java.awt.Dimension(375, 150));
         errorPopup.setSize(new java.awt.Dimension(375, 150));
 
         errorMsgLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -782,23 +783,41 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Made by Longman Xu and Tommy Huang");
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setText("To look at the user guide go to: ");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setText("INSERT URL HERE");
+
         javax.swing.GroupLayout helpPanelLayout = new javax.swing.GroupLayout(helpPanel);
         helpPanel.setLayout(helpPanelLayout);
         helpPanelLayout.setHorizontalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(helpPanelLayout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(jButton5)
-                .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(25, 25, 25))
+            .addGroup(helpPanelLayout.createSequentialGroup()
+                .addGroup(helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(helpPanelLayout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jButton5))
+                    .addGroup(helpPanelLayout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addComponent(jLabel11))
+                    .addGroup(helpPanelLayout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(jLabel12)))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel6)
@@ -1196,6 +1215,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
