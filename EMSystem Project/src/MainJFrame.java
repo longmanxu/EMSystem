@@ -1,9 +1,6 @@
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -41,13 +38,14 @@ public class MainJFrame extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		
 		// open the saved employee hash table
-		try {
-			employeeTable = EmployeeHashTable.open("saved_employees.em");
-		} catch (IOException | ClassNotFoundException e) {
-			System.err.println("Error when opening table. Creating new table instead.");
-			e.printStackTrace(System.err);
-			employeeTable = new EmployeeHashTable(10);
-		}
+//		try {
+//			employeeTable = EmployeeHashTable.open("saved_employees.em");
+//		} catch (IOException | ClassNotFoundException e) {
+//			System.err.println("Error when opening table. Creating new table instead.");
+//			e.printStackTrace(System.err);
+//			employeeTable = new EmployeeHashTable(10);
+//		}
+		employeeTable = new EmployeeHashTable((10));
 		
 		// open the saved settings
 		settings = Settings.open("settings.cfg");
@@ -78,14 +76,22 @@ public class MainJFrame extends javax.swing.JFrame {
 	
 	private void initEmployeeJTable(EmployeeHashTable hashTable, javax.swing.JTable table) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
+		employeeTableModel.setRowCount(0);
 		EmployeeArrayList employeeList = hashTable.returnAllEmployees();
 		for (EmployeeInfo employee : employeeList) {
+			String empType = null;
+			if (employee instanceof FullTimeEmployee) {
+				empType = "Full Time";
+			}
+			else if (employee instanceof PartTimeEmployee) {
+				empType = "Part Time";
+			}
 			Object[] rowData = {
 				employee.getEmployeeNumber(),
 				employee.getFirstName(),
 				employee.getLastName(),
-				employee.getWorkLocation(),
-				employee.getClass()
+				hashTable.getLocationName(employee.getWorkLocation()),
+				empType
 			};
 			employeeTableModel.addRow(rowData);
 		}
@@ -94,12 +100,19 @@ public class MainJFrame extends javax.swing.JFrame {
 	
 	private void addToEmployeeJTable(EmployeeInfo newEmployee, javax.swing.JTable table) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) table.getModel();
+		String empType = null;
+		if (newEmployee instanceof FullTimeEmployee) {
+			empType = "Full Time";
+		}
+		else if (newEmployee instanceof PartTimeEmployee) {
+			empType = "Part Time";
+		}
 		Object[] rowData = {
 			newEmployee.getEmployeeNumber(),
 			newEmployee.getFirstName(),
 			newEmployee.getLastName(),
-			newEmployee.getWorkLocation(),
-			newEmployee.getClass()
+			employeeTable.getLocationName(newEmployee.getWorkLocation()),
+			empType
 		};
 		employeeTableModel.addRow(rowData);
 		table.setModel(employeeTableModel);
@@ -117,12 +130,19 @@ public class MainJFrame extends javax.swing.JFrame {
 		}
 		employeeTableModel.removeRow(row);
 		EmployeeInfo modifiedEmployee = employeeTable.returnAllEmployees().get(row);
+		String empType = null;
+		if (modifiedEmployee instanceof FullTimeEmployee) {
+			empType = "Full Time";
+		}
+		else if (modifiedEmployee instanceof PartTimeEmployee) {
+			empType = "Part Time";
+		}
 		Object[] rowData = {
 			modifiedEmployee.getEmployeeNumber(),
 			modifiedEmployee.getFirstName(),
 			modifiedEmployee.getLastName(),
-			modifiedEmployee.getWorkLocation(),
-			modifiedEmployee.getClass()
+			employeeTable.getLocationName(modifiedEmployee.getWorkLocation()),
+			empType
 		};
 		employeeTableModel.insertRow(row, rowData);
 		table.setModel(employeeTableModel);
@@ -179,6 +199,17 @@ public class MainJFrame extends javax.swing.JFrame {
 		dropDownSexes.setSelectedIndex(0);
 		dropDownLocation.setSelectedIndex(0);
 		
+	}
+	
+	private String sexIntToString(int sexInt){
+		switch (sexInt){
+			case 0:
+				return "Male";
+			case 1:
+				return "Female";
+			default:
+				return "Other";
+		}
 	}
 	
 	/**
@@ -806,11 +837,12 @@ public class MainJFrame extends javax.swing.JFrame {
 		// save the employees 
 		try {
 			employeeTable.save();
-			System.out.println("Saved all employees");
+		} catch(IllegalArgumentException e) {
+			saveAsButtonActionPerformed(null);
 		} catch (IOException e) {
-			System.err.println("Error encountered when saving employees:");
-			e.printStackTrace(System.err);
+			getAngryAtUser("Error encountered while saving employees:\n" + e.getStackTrace());
 		}
+		System.out.println("Saved all employees");
     }//GEN-LAST:event_formWindowClosing
 	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
@@ -866,22 +898,35 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
 		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+			try {
+				employeeTable = EmployeeHashTable.open(chooser.getSelectedFile());
+				DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+				attributeTableModel.setColumnCount(0);
+				initEmployeeJTable(employeeTable, jTable1);
+			} catch (IOException | ClassNotFoundException ex) {
+				getAngryAtUser(ex.toString());
+			}
 		}
     }//GEN-LAST:event_openButtonActionPerformed
 
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
 		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("employee management system files", "em");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
-				employeeTable.save(chooser.getSelectedFile());
+				File f = chooser.getSelectedFile();
+				String filePath = f.getAbsolutePath();
+				if(!filePath.endsWith(".em")) {
+					f = new File(filePath + ".em");
+				}
+				employeeTable.save(f);
 			} catch (IOException ex) {
 				getAngryAtUser(ex.getMessage());
 			}
@@ -893,10 +938,11 @@ public class MainJFrame extends javax.swing.JFrame {
 		try {
 			// TODO add your handling code here:
 			employeeTable.save();
+		} catch (IllegalArgumentException ex) {
+			saveAsButtonActionPerformed(null);
 		} catch (IOException ex) {
-			getAngryAtUser(ex.getMessage());
+			getAngryAtUser("Error encountered while saving employees:\n" + ex.getStackTrace());
 		}
-		
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -955,9 +1001,9 @@ public class MainJFrame extends javax.swing.JFrame {
                     selectedEmployee.getEmployeeNumber(),
                     selectedEmployee.getFirstName(),
                     selectedEmployee.getLastName(),
-					selectedEmployee.getSex(),
-                    selectedEmployee.getWorkLocation(),
-                    selectedEmployee.getClass(),
+					sexIntToString(selectedEmployee.getSex()),
+                    employeeTable.getLocationName(selectedEmployee.getWorkLocation()),
+                    "Part Time",
                     selectedEmployee.getDeductionsRate(),
                     ((PartTimeEmployee) selectedEmployee).getHourlyWage(),
                     ((PartTimeEmployee) selectedEmployee).getHoursPerWeek(),
@@ -985,9 +1031,9 @@ public class MainJFrame extends javax.swing.JFrame {
                     selectedEmployee.getEmployeeNumber(),
                     selectedEmployee.getFirstName(),
                     selectedEmployee.getLastName(),
-					selectedEmployee.getSex(),
-                    selectedEmployee.getWorkLocation(),
-                    selectedEmployee.getClass(),
+					sexIntToString(selectedEmployee.getSex()),
+                    employeeTable.getLocationName(selectedEmployee.getWorkLocation()),
+                    "Full Time",
                     selectedEmployee.getDeductionsRate(),
                     ((FullTimeEmployee) selectedEmployee).getYearlySalary(),
                     selectedEmployee.calcAnnualNetIncome()
