@@ -876,7 +876,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
 		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("employee management system files", "em");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
