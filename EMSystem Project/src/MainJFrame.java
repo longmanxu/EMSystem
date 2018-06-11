@@ -917,6 +917,10 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_openButtonActionPerformed
 
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
+		if (employeeTable.getNum() == 0) {
+			getAngryAtUser("Table is empty!!");
+			return;
+		}
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
@@ -939,7 +943,12 @@ public class MainJFrame extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
 		try {
 			// TODO add your handling code here:
-			employeeTable.save();
+			if (employeeTable.getNum() == 0) {
+				getAngryAtUser("Table is empty!!");
+			}
+			else {
+				employeeTable.save();
+			}
 		} catch (IllegalArgumentException ex) {
 			saveAsButtonActionPerformed(null);
 		} catch (IOException ex) {
@@ -1145,16 +1154,17 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
 		try {
-			// TODO add your handling code here:
 			employeeTable.save();
+			
+			employeeTable = new EmployeeHashTable(10);
+			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+			attributeTableModel.setColumnCount(0);
+			initEmployeeJTable(employeeTable, jTable1);
+		} catch (IllegalArgumentException e) {
+			saveAsButtonActionPerformed(null);
 		} catch (IOException e) {
 			getAngryAtUser(e.toString());
 		}
-		DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
-		attributeTableModel.setColumnCount(0);
-		initEmployeeJTable(employeeTable, jTable1);
-		
-		
     }//GEN-LAST:event_newButtonActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
