@@ -1,6 +1,8 @@
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -1145,7 +1147,16 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmLocationButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        // TODO add your handling code here:
+		try {
+			// TODO add your handling code here:
+			employeeTable.save();
+		} catch (IOException e) {
+			getAngryAtUser(e.toString());
+		}
+		DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+		attributeTableModel.setColumnCount(0);
+		initEmployeeJTable(employeeTable, jTable1);
+		
 		
     }//GEN-LAST:event_newButtonActionPerformed
 	

@@ -84,7 +84,9 @@ public class EmployeeHashTable implements Serializable {
 	public static EmployeeHashTable open(File file) throws IOException, ClassNotFoundException {
 		// use try-with-resources to automatically close reader
 		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-			return (EmployeeHashTable) inputStream.readObject();
+			EmployeeHashTable newTable = (EmployeeHashTable) inputStream.readObject();
+			newTable.prevSaveLoc = file;
+			return newTable;
 		} catch (IOException | ClassNotFoundException e) {
 			throw e;
 		}
