@@ -1055,13 +1055,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 attributeTableModel.addColumn("attributes", firstColInfo);
                 attributeTableModel.addColumn("information", info);
             }
-
-            // int colIndex = jTable1.getSelectedColumn();
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void addLocationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLocationsButtonActionPerformed
-        // TODO add your handling code here:
 		locationDialog.setVisible(true);
     }//GEN-LAST:event_addLocationsButtonActionPerformed
 
