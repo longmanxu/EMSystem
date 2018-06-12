@@ -1,11 +1,11 @@
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Desktop;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * The main class of the Employee Management System Project.
@@ -280,7 +280,6 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
 
         addPopup.setTitle("Add an employee");
         addPopup.setMinimumSize(new java.awt.Dimension(600, 400));
@@ -788,10 +787,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel6.setText("Made by Longman Xu and Tommy Huang");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel11.setText("To look at the user guide go to: ");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel12.setText("INSERT URL HERE");
+        jLabel11.setText("Click Clippy below to open the user guide (online):");
 
         javax.swing.GroupLayout helpPanelLayout = new javax.swing.GroupLayout(helpPanel);
         helpPanel.setLayout(helpPanelLayout);
@@ -807,21 +803,16 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addGap(84, 84, 84)
                         .addComponent(jButton5))
                     .addGroup(helpPanelLayout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addComponent(jLabel11))
-                    .addGroup(helpPanelLayout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(jLabel12)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addGap(121, 121, 121)
+                        .addComponent(jLabel11)))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap(89, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel6)
@@ -924,7 +915,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
-		JFileChooser chooser = new JFileChooser();
+		JFileChooser chooser = new JFileChooser("../EMSystem Project");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showOpenDialog(this);
@@ -948,7 +939,7 @@ public class MainJFrame extends javax.swing.JFrame {
 			getAngryAtUser("Table is empty!!");
 			return;
 		}
-		JFileChooser chooser = new JFileChooser();
+		JFileChooser chooser = new JFileChooser("../EMSystem Project");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this);
@@ -1165,7 +1156,13 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2PropertyChange
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(new URI("https://docs.google.com/document/d/1j-EYGJYj2r_L7vqgbuF4M-QEH421lp-X64hznpZ35vk/edit?usp=sharing"));
+			} catch (URISyntaxException | IOException ex) {
+				ex.printStackTrace(System.err);
+			}
+		}
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void confirmLocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmLocationButtonActionPerformed
@@ -1184,17 +1181,17 @@ public class MainJFrame extends javax.swing.JFrame {
 			if (saveable) {
 				try {
 					employeeTable.save();
-					saveable = false;
 				} catch (IllegalArgumentException e) {
 					saveAsButtonActionPerformed(null);
 				}
 			}
 			// reset the two jTables
 			employeeTable = new EmployeeHashTable(10);
+			saveable = false;
 			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
 			attributeTableModel.setColumnCount(0);
 			initEmployeeJTable(employeeTable, jTable1);
-			resetLocList()	;
+			resetLocList();
 			jTabbedPane1.setSelectedIndex(0);
 		} catch (IOException e) {
 			getAngryAtUser(e.toString());
@@ -1231,7 +1228,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
