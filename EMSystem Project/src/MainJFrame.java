@@ -16,7 +16,7 @@ public class MainJFrame extends javax.swing.JFrame {
 	// useful global variable declarations
 	private static EmployeeHashTable employeeTable;	// the employee hash table
 	private static Settings settings;	// the object for managing settings
-	private static boolean fileSavedBefore = false;
+	private static boolean saveable = false;
 	
 	/**
 	 * Creates new form MainJFrame 
@@ -27,9 +27,13 @@ public class MainJFrame extends javax.swing.JFrame {
 		initEmployeeJTable(employeeTable, jTable1);
 		jTable1.setAutoCreateRowSorter(true);
 		// set the list of location
-		ArrayList<String> locList = employeeTable.getLocationList();
-		for(String i : locList){
-			dropDownLocation.addItem(i);
+		resetLocList();
+	}
+	
+	private void resetLocList() {
+		dropDownLocation.removeAllItems();
+		for (String locationName : employeeTable.getLocationList()) {
+			dropDownLocation.addItem(locationName);
 		}
 	}
 	
@@ -47,7 +51,7 @@ public class MainJFrame extends javax.swing.JFrame {
 //			e.printStackTrace(System.err);
 //			employeeTable = new EmployeeHashTable(10);
 //		}
-		employeeTable = new EmployeeHashTable((10));
+		employeeTable = new EmployeeHashTable(10);
 		
 		// open the saved settings
 		settings = Settings.open("settings.cfg");
@@ -856,14 +860,16 @@ public class MainJFrame extends javax.swing.JFrame {
 	
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 		// save the employees 
-		try {
-			employeeTable.save();
-		} catch(IllegalArgumentException e) {
-			saveAsButtonActionPerformed(null);
-		} catch (IOException e) {
-			getAngryAtUser("Error encountered while saving employees:\n" + e.getStackTrace());
+		if (saveable) {
+			try {
+				employeeTable.save();
+			} catch(IllegalArgumentException e) {
+				saveAsButtonActionPerformed(null);
+			} catch (IOException e) {
+				getAngryAtUser("Error encountered while saving employees:\n" + e.toString());
+			}
+			System.out.println("Saved all employees");
 		}
-		System.out.println("Saved all employees");
     }//GEN-LAST:event_formWindowClosing
 	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
@@ -923,16 +929,18 @@ public class MainJFrame extends javax.swing.JFrame {
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
 			try {
 				employeeTable = EmployeeHashTable.open(chooser.getSelectedFile());
 				DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
 				attributeTableModel.setColumnCount(0);
 				initEmployeeJTable(employeeTable, jTable1);
+				resetLocList();
+				jTabbedPane1.setSelectedIndex(0);
 			} catch (IOException | ClassNotFoundException ex) {
 				getAngryAtUser(ex.toString());
 			}
 		}
+		saveable = true;
     }//GEN-LAST:event_openButtonActionPerformed
 
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
@@ -952,6 +960,7 @@ public class MainJFrame extends javax.swing.JFrame {
 					f = new File(filePath + ".em");
 				}
 				employeeTable.save(f);
+				jTabbedPane1.setSelectedIndex(0);
 			} catch (IOException ex) {
 				getAngryAtUser(ex.getMessage());
 			}
@@ -967,11 +976,12 @@ public class MainJFrame extends javax.swing.JFrame {
 			}
 			else {
 				employeeTable.save();
+				jTabbedPane1.setSelectedIndex(0);
 			}
 		} catch (IllegalArgumentException ex) {
 			saveAsButtonActionPerformed(null);
 		} catch (IOException ex) {
-			getAngryAtUser("Error encountered while saving employees:\n" + ex.getStackTrace());
+			getAngryAtUser("Error encountered while saving employees:\n" + ex.toString());
 		}
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -1017,7 +1027,6 @@ public class MainJFrame extends javax.swing.JFrame {
             DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
             int selectedEmpNumber = (int) employeeTableModel.getValueAt(selRow, 0);
             EmployeeInfo selectedEmployee = employeeTable.find(selectedEmpNumber);
-            // System.out.println(selectedEmployee.getFirstName());
 
             DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
             EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
@@ -1103,7 +1112,6 @@ public class MainJFrame extends javax.swing.JFrame {
 				String newValue = (String) a.getValueAt(parameterRow, 1);
 				EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
 				boolean validChange = false;
-				System.out.println(parameterRow);
 				switch (parameterRow) {
 					case 1:
 						targetEmployee.setFirstName((String) newValue);
@@ -1168,19 +1176,26 @@ public class MainJFrame extends javax.swing.JFrame {
 		// hide the dialog and clear text
 		locationTextField.setText("");
 		locationDialog.setVisible(false);
-		
     }//GEN-LAST:event_confirmLocationButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
 		try {
-			employeeTable.save();
-			
+			// save the employee table, if saveable
+			if (saveable) {
+				try {
+					employeeTable.save();
+					saveable = false;
+				} catch (IllegalArgumentException e) {
+					saveAsButtonActionPerformed(null);
+				}
+			}
+			// reset the two jTables
 			employeeTable = new EmployeeHashTable(10);
 			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
 			attributeTableModel.setColumnCount(0);
 			initEmployeeJTable(employeeTable, jTable1);
-		} catch (IllegalArgumentException e) {
-			saveAsButtonActionPerformed(null);
+			resetLocList()	;
+			jTabbedPane1.setSelectedIndex(0);
 		} catch (IOException e) {
 			getAngryAtUser(e.toString());
 		}
