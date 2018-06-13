@@ -1257,7 +1257,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void dropDownEditLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownEditLocationActionPerformed
-		
+		System.out.println("IT HAS BEEN CALLED");
 		if (jTable1.getRowSelectionAllowed()) {
 			int selRow = jTable1.convertRowIndexToModel(jTable1.getSelectedRow());
 			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
