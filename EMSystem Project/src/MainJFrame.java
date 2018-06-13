@@ -961,7 +961,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
 		try {
-			// TODO add your handling code here:
 			if (employeeTable.getNum() == 0) {
 				getAngryAtUser("Table is empty!!");
 			}
@@ -1008,8 +1007,6 @@ public class MainJFrame extends javax.swing.JFrame {
             DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
             attributeTableModel.setColumnCount(0);
         }
-
-        // TODO: update table
     }//GEN-LAST:event_delButtonActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -1166,7 +1163,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void confirmLocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmLocationButtonActionPerformed
-        // TODO add your handling code here:
 		// add the location
 		employeeTable.addLocation(locationTextField.getText());
 		dropDownLocation.addItem(locationTextField.getText());
