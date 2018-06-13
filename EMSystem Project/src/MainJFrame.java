@@ -878,8 +878,9 @@ public class MainJFrame extends javax.swing.JFrame {
 				addToEmployeeJTable(temp, jTable1);
 				addPopup.setVisible(false);
 				clearFields();
-			}
-			catch (IllegalArgumentException e) {
+			} catch (NumberFormatException e) {
+				getAngryAtUser("One or more fields contain incorrect information.");
+			} catch (IllegalArgumentException e) {
 				getAngryAtUser(e.getMessage());
 			}
         }
