@@ -1071,7 +1071,7 @@ public class MainJFrame extends javax.swing.JFrame {
 				resetLocList();
 				jTabbedPane1.setSelectedIndex(0);
 			} catch (IOException | ClassNotFoundException ex) {
-				getAngryAtUser(ex.toString());
+				getAngryAtUser("Error encountered while opening");
 			}
 		}
 		saveable = true;
