@@ -346,12 +346,14 @@ public class MainJFrame extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         delButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         addLocationsButton = new javax.swing.JButton();
         jPanelEdit = new javax.swing.JPanel();
         dropDownEditType = new javax.swing.JComboBox<>();
         dropDownEditSex = new javax.swing.JComboBox<>();
         dropDownEditLocation = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        searchEmployeeField = new javax.swing.JTextField();
+        changeEmployeeButton = new javax.swing.JButton();
         filePanel = new javax.swing.JPanel();
         newButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
@@ -694,8 +696,6 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("double click on a value above to edit");
-
         addLocationsButton.setBackground(new java.awt.Color(102, 102, 255));
         addLocationsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/marker.png"))); // NOI18N
         addLocationsButton.setText("<html>Add<br />locations</html>");
@@ -736,7 +736,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanelEditLayout.setVerticalGroup(
             jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEditLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(5, 5, 5)
                 .addComponent(dropDownEditType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(dropDownEditSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -744,6 +744,16 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(dropDownEditLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setText("View and Edit Information:");
+
+        changeEmployeeButton.setText("search emp #");
+        changeEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeEmployeeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ManagerPanelLayout = new javax.swing.GroupLayout(ManagerPanel);
         ManagerPanel.setLayout(ManagerPanelLayout);
@@ -759,23 +769,21 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel9)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(jPanelEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(5, 5, 5))
+                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(jPanelEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(ManagerPanelLayout.createSequentialGroup()
+                        .addComponent(searchEmployeeField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(changeEmployeeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
         ManagerPanelLayout.setVerticalGroup(
             ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ManagerPanelLayout.createSequentialGroup()
-                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(ManagerPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -783,6 +791,18 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addComponent(delButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(addLocationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
+            .addGroup(ManagerPanelLayout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchEmployeeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(changeEmployeeButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("<html>Manage<br />& Add</html>", new javax.swing.ImageIcon(getClass().getResource("/iconsPackage/employee.png")), ManagerPanel, "cats"); // NOI18N
@@ -837,7 +857,7 @@ public class MainJFrame extends javax.swing.JFrame {
         filePanelLayout.setHorizontalGroup(
             filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filePanelLayout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+                .addContainerGap(85, Short.MAX_VALUE)
                 .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -885,7 +905,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -930,7 +950,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(helpPanelLayout.createSequentialGroup()
                         .addGap(121, 121, 121)
                         .addComponent(jLabel11)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1282,6 +1302,88 @@ public class MainJFrame extends javax.swing.JFrame {
     private void dropDownEditSexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownEditSexActionPerformed
         
     }//GEN-LAST:event_dropDownEditSexActionPerformed
+
+    private void changeEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmployeeButtonActionPerformed
+        // TODO add your handling code here:
+		EmployeeInfo tempEmployee;
+		try {
+			tempEmployee = employeeTable.find(Integer.parseInt(searchEmployeeField.getText()));
+			jPanelEdit.setVisible(true);
+			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+			if (tempEmployee == null) {
+				getAngryAtUser("An employee with that employee number was not found!");
+				searchEmployeeField.setText("");
+			}
+			
+			else {
+				attributeTableModel.setColumnCount(0);
+				attributeTableModel.setRowCount(6);
+				selectedEmployeeNumber = tempEmployee.getEmployeeNumber();
+				setEditPanels();
+				// run through every employee in employeeList
+				// add the part time employee info as a column
+				if (tempEmployee instanceof PartTimeEmployee) {
+					Object[] info = {
+						tempEmployee.getEmployeeNumber(),
+						tempEmployee.getFirstName(),
+						tempEmployee.getLastName(),
+						sexIntToString(tempEmployee.getSex()),
+						employeeTable.getLocationName(tempEmployee.getWorkLocation()),
+						"Part Time",
+						tempEmployee.getDeductionsRate(),
+						((PartTimeEmployee) tempEmployee).getHourlyWage(),
+						((PartTimeEmployee) tempEmployee).getHoursPerWeek(),
+						((PartTimeEmployee) tempEmployee).getWeeksPerYear(),
+						tempEmployee.calcAnnualNetIncome()
+					};
+					Object[] firstColInfo = {
+						"employee number",
+						"first name",
+						"last name",
+						"sex",
+						"work location",
+						"type",
+						"deducations rate",
+						"hourly wage",
+						"hours per week",
+						"weeks per year",
+						"net income"
+					};
+					attributeTableModel.addColumn("attributes", firstColInfo);
+					attributeTableModel.addColumn("information", info);
+				} else if (tempEmployee instanceof FullTimeEmployee) {
+					Object[] info = {
+						tempEmployee.getEmployeeNumber(),
+						tempEmployee.getFirstName(),
+						tempEmployee.getLastName(),
+						sexIntToString(tempEmployee.getSex()),
+						employeeTable.getLocationName(tempEmployee.getWorkLocation()),
+						"Full Time",
+						tempEmployee.getDeductionsRate(),
+						((FullTimeEmployee) tempEmployee).getYearlySalary(),
+						tempEmployee.calcAnnualNetIncome()
+
+					};
+					Object[] firstColInfo = {
+						"employee number",
+						"first name",
+						"last name",
+						"sex",
+						"work location",
+						"type",
+						"deducations rate",
+						"salary",
+						"net income"
+					};
+					attributeTableModel.addColumn("attributes", firstColInfo);
+					attributeTableModel.addColumn("information", info);
+				}
+			}
+		} catch (NumberFormatException e) {
+			getAngryAtUser("You did not type in a valid number!");
+			searchEmployeeField.setText("");
+		}
+    }//GEN-LAST:event_changeEmployeeButtonActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1291,6 +1393,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JDialog addPopup;
     private javax.swing.JButton addTheEmployee;
     private javax.swing.JButton backButton;
+    private javax.swing.JButton changeEmployeeButton;
     private javax.swing.JButton confirmLocationButton;
     private javax.swing.JButton delButton;
     private javax.swing.JComboBox<String> dropDownEditLocation;
@@ -1316,6 +1419,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1323,7 +1427,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelEdit;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1341,6 +1444,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton openButton;
     private javax.swing.JButton saveAsButton;
     private javax.swing.JButton saveButton;
+    private javax.swing.JTextField searchEmployeeField;
     private javax.swing.JPanel settingsPanel;
     // End of variables declaration//GEN-END:variables
 	// </editor-fold>
