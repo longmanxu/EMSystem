@@ -1070,11 +1070,11 @@ public class MainJFrame extends javax.swing.JFrame {
 				initEmployeeJTable(employeeTable);
 				resetLocList();
 				jTabbedPane1.setSelectedIndex(0);
+				saveable = true;
 			} catch (IOException | ClassNotFoundException ex) {
 				getAngryAtUser("Error encountered while opening");
 			}
 		}
-		saveable = true;
     }//GEN-LAST:event_openButtonActionPerformed
 
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
@@ -1124,6 +1124,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void confirmLocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmLocationButtonActionPerformed
+		locIsOK = false;
 		// add the location
 		employeeTable.addLocation(locationTextField.getText());
 		dropDownLocation.addItem(locationTextField.getText());
@@ -1131,6 +1132,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		// hide the dialog and clear text
 		locationTextField.setText("");
 		locationDialog.setVisible(false);
+		locIsOK = true;
     }//GEN-LAST:event_confirmLocationButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
@@ -1198,64 +1200,63 @@ public class MainJFrame extends javax.swing.JFrame {
 		// for some reason, the property change occurs when evt.getNewValue() is null
 		if (evt.getNewValue() == null) {
             DefaultTableModel a = (DefaultTableModel) jTable2.getModel();
-			// employee number may not be changed
-            if (a.getValueAt(0, 1) instanceof String) {
-                getAngryAtUser("cannot change employee numbers!");
-            }
-            else {
+			try {
                 int employeeNumber = (int) a.getValueAt(0, 1);
                 int parameterRow = jTable2.getSelectedRow();
                 String newValue = (String) a.getValueAt(parameterRow, 1);
                 EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
                 boolean validChange = false;
-                switch (parameterRow) {
-                    case 1:
-                    targetEmployee.setFirstName((String) newValue);
-                    validChange = true;
-                    break;
-                    case 2:
-                    targetEmployee.setLastName((String) newValue);
-                    validChange = true;
-                    break;
-                    case 3:
-                    targetEmployee.setSex(Integer.parseInt(newValue));
-                    validChange = true;
-                    break;
-                    case 6:
-                    targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
-                    validChange = true;
-                    break;
-                    case 7:
-                    if (targetEmployee instanceof FullTimeEmployee) {
-                        ((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
-                        validChange = true;
-                        break;
-                    }
-                    else if (targetEmployee instanceof PartTimeEmployee) {
-                        ((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
-                        validChange = true;
-                        break;
-                    }
-                    case 8:
-                    if (targetEmployee instanceof PartTimeEmployee) {
-                        ((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
-                        validChange = true;
-                        break;
-                    }
-                    case 9:
-                    if (targetEmployee instanceof PartTimeEmployee) {
-                        ((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
-                        validChange = true;
-                        break;
-                    }
-                    default:
-                    getAngryAtUser("Cannot modify this parameter!");
-                    break;
-                }
-                if (validChange) {
-                    updateEmployeeJtable(employeeNumber);
-                }
-            }
+				switch (parameterRow) {
+					case 1:
+					targetEmployee.setFirstName((String) newValue);
+					validChange = true;
+					break;
+					case 2:
+					targetEmployee.setLastName((String) newValue);
+					validChange = true;
+					break;
+					case 3:
+					targetEmployee.setSex(Integer.parseInt(newValue));
+					validChange = true;
+					break;
+					case 6:
+					targetEmployee.setDeductionsRate(Double.parseDouble(newValue));
+					validChange = true;
+					break;
+					case 7:
+					if (targetEmployee instanceof FullTimeEmployee) {
+						((FullTimeEmployee) targetEmployee).setYearlySalary(Double.parseDouble(newValue));
+						validChange = true;
+						break;
+					}
+					else if (targetEmployee instanceof PartTimeEmployee) {
+						((PartTimeEmployee) targetEmployee).setHourlyWage(Double.parseDouble(newValue));
+						validChange = true;
+						break;
+					}
+					case 8:
+					if (targetEmployee instanceof PartTimeEmployee) {
+						((PartTimeEmployee) targetEmployee).setHoursPerWeek(Double.parseDouble(newValue));
+						validChange = true;
+						break;
+					}
+					case 9:
+					if (targetEmployee instanceof PartTimeEmployee) {
+						((PartTimeEmployee) targetEmployee).setWeeksPerYear(Double.parseDouble(newValue));
+						validChange = true;
+						break;
+					}
+					default:
+					getAngryAtUser("Cannot modify this parameter!");
+					break;
+				}
+				if (validChange) {
+					updateEmployeeJtable(employeeNumber);
+				}
+			} catch (NumberFormatException | ClassCastException e) {
+				getAngryAtUser("Invalid change.");
+			}
+			setEditPanels();
 
         }
     }//GEN-LAST:event_jTable2PropertyChange

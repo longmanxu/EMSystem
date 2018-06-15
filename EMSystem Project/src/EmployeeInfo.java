@@ -127,6 +127,20 @@ abstract public class EmployeeInfo implements Serializable {
 	public int getSex() {
 		return sex;
 	}
+	
+	/**
+	 * Gets the sex as a string.
+	 * @return the sex.
+	 */
+	public String getSexString() {
+		switch (sex) {
+			case 0:
+				return "Male";
+			case 1:
+				return "Female";
+			default: return "Other";
+		}
+	}
 
 	/**
 	 * Sets the sex (0 is male, 1 is female, 2 is other).
