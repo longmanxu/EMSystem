@@ -74,16 +74,4 @@ public class Settings implements Serializable {
 	public void setLookAndFeel(String lookAndFeel) {
 		this.lookAndFeel = lookAndFeel;
 	}
-	
-	/**
-	 * A class for testing.
-	 * @param args
-	 * @throws ClassNotFoundException
-	 * @throws IOException 
-	 */
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		Settings a = Settings.open("hwat.txt");
-		System.out.println(a.getLookAndFeel());
-		a.save();
-	}
 }

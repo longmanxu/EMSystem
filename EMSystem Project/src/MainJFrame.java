@@ -251,18 +251,19 @@ public class MainJFrame extends javax.swing.JFrame {
 		EmployeeInfo selectedEmployee = employeeTable.find(empNumber);
 		jPanelEdit.setVisible(true);
 		DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
-		EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
 		
 		// reset the lower edit panel
 		resetLocEditList();
 		sexIsOK = false;
 		dropDownEditSex.setSelectedIndex(selectedEmployee.getSex());
 		sexIsOK = true;
-
+		
+		// reset the rows and columns
 		attributeTableModel.setColumnCount(0);
 		attributeTableModel.setRowCount(6);
-		// run through every employee in employeeList
-		// add the part time employee info as a column
+		jTable2.clearSelection();
+		
+		// set the text for the table (both attribute names and values)
 		if (selectedEmployee instanceof PartTimeEmployee) {
 			Object[] info = {
 				selectedEmployee.getEmployeeNumber(),
@@ -341,6 +342,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		for (String locationName : employeeTable.getLocationList()) {
 			dropDownEditLocation.addItem(locationName);
 		}
+		// set the selected location to the employee's location
 		dropDownEditLocation.setSelectedIndex(employeeTable.find(selectedEmployeeNumber).getWorkLocation());
 		locIsOK = true;		// re-enable the listener
 	}
@@ -1392,15 +1394,19 @@ public class MainJFrame extends javax.swing.JFrame {
 	 * @param evt 
 	 */
     private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
-		// for some reason, the property change occurs when evt.getNewValue() is null
+		// the correct property change occurs when evt.getNewValue() is null (idk why)
 		if (evt.getNewValue() == null) {
-            DefaultTableModel a = (DefaultTableModel) jTable2.getModel();
 			try {
-                int employeeNumber = (int) a.getValueAt(0, 1);
-                int parameterRow = jTable2.getSelectedRow();
-                String newValue = (String) a.getValueAt(parameterRow, 1);
-                EmployeeInfo targetEmployee = employeeTable.find(employeeNumber);
-                boolean validChange = false;
+				// get the property table model
+				DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+				// get the selected row and new value
+				int parameterRow = jTable2.getSelectedRow();
+				String newValue = (String) tableModel.getValueAt(parameterRow, 1);
+				// get the modified EmployeeInfo
+				EmployeeInfo targetEmployee = employeeTable.find(selectedEmployeeNumber);
+				
+				// modify the parameter of the target employee
+				boolean validChange = false;
 				switch (parameterRow) {
 					case 1:
 					targetEmployee.setFirstName((String) newValue);
@@ -1446,11 +1452,12 @@ public class MainJFrame extends javax.swing.JFrame {
 					break;
 				}
 				if (validChange) {
-					updateEmployeeJtable(employeeNumber);
+					updateEmployeeJtable(selectedEmployeeNumber);
 				}
 			} catch (NumberFormatException | ClassCastException e) {
 				getAngryAtUser("Invalid change.");
 			}
+			// reset the parameters table
 			setEditPanels(selectedEmployeeNumber);
         }
     }//GEN-LAST:event_jTable2PropertyChange
@@ -1536,13 +1543,14 @@ public class MainJFrame extends javax.swing.JFrame {
 		dropDownSexes.setSelectedIndex(selectedEmployee.getSex());
 		dropDownLocation.setSelectedIndex(0);
 		if (selectedEmployee instanceof FullTimeEmployee){
-			dropDownType.setSelectedIndex(0);
-		}
-		else if (selectedEmployee instanceof PartTimeEmployee) {
 			dropDownType.setSelectedIndex(1);
 		}
+		else if (selectedEmployee instanceof PartTimeEmployee) {
+			dropDownType.setSelectedIndex(0);
+		}
 		
-		changeType = true;	// set the changeType flag to true for addButtonActionPerformed(), so it would know to delete the old employee
+		// set the changeType flag to true for addButtonActionPerformed(), to delete the old employee
+		changeType = true;	
 		addButtonActionPerformed(null);	// call the method for adding employee
     }//GEN-LAST:event_changeTypeButtonActionPerformed
 	
