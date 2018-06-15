@@ -21,7 +21,12 @@ public class MainJFrame extends javax.swing.JFrame {
 	private static boolean saveable = false;
 	private static int selectedEmployeeNumber = -1;	// the currently selected employee
 	
-	private static boolean locIsOK = true;	// flag for when the dropDownEditLocation listener should be active
+	// flags for when the listeners should be active
+	private static boolean locIsOK = true;
+	private static boolean sexIsOK = true;
+	private static boolean typeIsOK = true;
+	
+	private static boolean changeType = false;
 	
 	/**
 	 * Creates new form MainJFrame 
@@ -33,7 +38,6 @@ public class MainJFrame extends javax.swing.JFrame {
 		jTable1.setAutoCreateRowSorter(true);
 		// set the list of location
 		resetLocList();
-		// resetLocEditList();
 		jPanelEdit.setVisible(false);
 		jTable1.getTableHeader().setReorderingAllowed(false);
 		jTable2.getTableHeader().setReorderingAllowed(false);
@@ -212,9 +216,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		fieldSalary.setText("");
 		// reset all drop down menus
 		dropDownLocation.setSelectedIndex(0);
-		dropDownSexes.setSelectedIndex(0);
-		dropDownLocation.setSelectedIndex(0);
-		
+		dropDownSexes.setSelectedIndex(0);		
 	}
 	
 	private String sexIntToString(int sexInt){
@@ -233,7 +235,14 @@ public class MainJFrame extends javax.swing.JFrame {
 		jPanelEdit.setVisible(true);
 		DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
 		EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
+		
+		// reset the lower edit panel
 		resetLocEditList();
+		sexIsOK = false;
+		dropDownEditSex.setSelectedIndex(selectedEmployee.getSex());
+		sexIsOK = true;
+		typeIsOK = false;
+		typeIsOK = true;
 
 		attributeTableModel.setColumnCount(0);
 		attributeTableModel.setRowCount(6);
@@ -348,12 +357,12 @@ public class MainJFrame extends javax.swing.JFrame {
         addButton = new javax.swing.JButton();
         addLocationsButton = new javax.swing.JButton();
         jPanelEdit = new javax.swing.JPanel();
-        dropDownEditType = new javax.swing.JComboBox<>();
         dropDownEditSex = new javax.swing.JComboBox<>();
         dropDownEditLocation = new javax.swing.JComboBox<>();
+        changeTypeButton = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         searchEmployeeField = new javax.swing.JTextField();
-        changeEmployeeButton = new javax.swing.JButton();
+        searchEmployeeButton = new javax.swing.JButton();
         filePanel = new javax.swing.JPanel();
         newButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
@@ -706,8 +715,6 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        dropDownEditType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Time", "Part Time" }));
-
         dropDownEditSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
         dropDownEditSex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -721,24 +728,30 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        changeTypeButton.setText("Change Employee Type");
+        changeTypeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeTypeButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelEditLayout = new javax.swing.GroupLayout(jPanelEdit);
         jPanelEdit.setLayout(jPanelEditLayout);
         jPanelEditLayout.setHorizontalGroup(
             jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditLayout.createSequentialGroup()
+            .addGroup(jPanelEditLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dropDownEditLocation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dropDownEditSex, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dropDownEditType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dropDownEditLocation, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dropDownEditSex, javax.swing.GroupLayout.Alignment.TRAILING, 0, 195, Short.MAX_VALUE)
+                    .addComponent(changeTypeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelEditLayout.setVerticalGroup(
             jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEditLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(dropDownEditType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(changeTypeButton)
+                .addGap(22, 22, 22)
                 .addComponent(dropDownEditSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(dropDownEditLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -748,10 +761,10 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setText("View and Edit Information:");
 
-        changeEmployeeButton.setText("search emp #");
-        changeEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+        searchEmployeeButton.setText("search emp #");
+        searchEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeEmployeeButtonActionPerformed(evt);
+                searchEmployeeButtonActionPerformed(evt);
             }
         });
 
@@ -777,7 +790,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(ManagerPanelLayout.createSequentialGroup()
                         .addComponent(searchEmployeeField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(changeEmployeeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(searchEmployeeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         ManagerPanelLayout.setVerticalGroup(
@@ -795,7 +808,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(ManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchEmployeeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(changeEmployeeButton))
+                    .addComponent(searchEmployeeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1030,35 +1043,42 @@ public class MainJFrame extends javax.swing.JFrame {
         if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty()){
 			getAngryAtUser("Some of the fields are empty!!! :(");
         }
-        else if(dropDownType.getSelectedItem().equals("Full time") && fieldNumber.getText().isEmpty() == false) {
-            // do full time stuff
+		else {
 			try {
-				FullTimeEmployee temp = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
-						dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
-				employeeTable.add(temp);
-				addToEmployeeJTable(temp);
-				addPopup.setVisible(false);
-				clearFields();
+				EmployeeInfo temp = null;
+				if (dropDownType.getSelectedItem().equals("Full time")) {
+					// do full time stuff
+					temp = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
+							dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
+				}
+				else if (dropDownType.getSelectedItem().equals("Part time") && fieldHourWage.getText().isEmpty() == false && fieldHourWeek.getText().isEmpty() == false && fieldWeekYear.getText().isEmpty() == false) {
+					// do part time stuff
+					temp = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
+						dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
+				}
+				if (temp != null) {
+					if (changeType) {
+						if (temp.getEmployeeNumber() != selectedEmployeeNumber && employeeTable.find(temp.getEmployeeNumber()) != null) {
+							getAngryAtUser("Duplicate employee number not allowed");
+						}
+						else {
+							changeType = false;
+							delButtonActionPerformed(null);
+						}
+					}
+					saveable = true;
+					employeeTable.add(temp);
+					addToEmployeeJTable(temp);
+					addPopup.setVisible(false);
+					clearFields();
+					jPanelEdit.setVisible(false);
+				}
 			} catch (NumberFormatException e) {
 				getAngryAtUser("One or more fields contain incorrect information.");
 			} catch (IllegalArgumentException e) {
 				getAngryAtUser(e.getMessage());
 			}
-        }
-        else if (dropDownType.getSelectedItem().equals("Part time") && fieldHourWage.getText().isEmpty() == false && fieldHourWeek.getText().isEmpty() == false && fieldWeekYear.getText().isEmpty() == false) {
-            // do part time stuff
-			try {
-				PartTimeEmployee temp = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
-					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
-				employeeTable.add(temp);
-				addToEmployeeJTable(temp);
-				addPopup.setVisible(false);
-				clearFields();
-			}
-			catch (IllegalArgumentException e) {
-				getAngryAtUser(e.getMessage());
-			}
-        }
+		}
     }//GEN-LAST:event_addTheEmployeeActionPerformed
 	
     private void dropDownTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownTypeActionPerformed
@@ -1071,9 +1091,12 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_dropDownTypeActionPerformed
 	
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        this.setFocusableWindowState(true);
+        if (changeType) {
+			clearFields();
+			changeType = false;
+		}
+		this.setFocusableWindowState(true);
         addPopup.setVisible(false);
-
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
@@ -1171,7 +1194,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			attributeTableModel.setColumnCount(0);
 			initEmployeeJTable(employeeTable);
 			resetLocList();
-			// resetLocEditList();
 			jTabbedPane1.setSelectedIndex(0);
 		} catch (IOException e) {
 			getAngryAtUser(e.toString());
@@ -1183,7 +1205,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addLocationsButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // this.setVisible(false);
         int numItems = dropDownLocation.getItemCount();
         if (numItems == 0) {
             getAngryAtUser("No locations have been added yet!");
@@ -1213,6 +1234,7 @@ public class MainJFrame extends javax.swing.JFrame {
             jTable1.setModel(employeeTableModel);
             DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
             attributeTableModel.setColumnCount(0);
+			jPanelEdit.setVisible(false);
         }
     }//GEN-LAST:event_delButtonActionPerformed
 
@@ -1290,101 +1312,67 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 	
-    private void dropDownEditLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownEditLocationActionPerformed
-		// only modify employee location if the locIsOK flag is true
-		if (locIsOK) {
+    private void dropDownEditSexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownEditSexActionPerformed
+        if (sexIsOK) {
 			EmployeeInfo selectedEmployee = employeeTable.find(selectedEmployeeNumber);
-			selectedEmployee.setWorkLocation(dropDownEditLocation.getSelectedIndex());
+			selectedEmployee.setSex(dropDownEditSex.getSelectedIndex());
 			updateEmployeeJtable(selectedEmployeeNumber);
 			setEditPanels();
 		}
-    }//GEN-LAST:event_dropDownEditLocationActionPerformed
-
-    private void dropDownEditSexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownEditSexActionPerformed
-        
     }//GEN-LAST:event_dropDownEditSexActionPerformed
 
-    private void changeEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmployeeButtonActionPerformed
-        // TODO add your handling code here:
+    private void searchEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchEmployeeButtonActionPerformed
 		EmployeeInfo tempEmployee;
 		try {
-			tempEmployee = employeeTable.find(Integer.parseInt(searchEmployeeField.getText()));
-			jPanelEdit.setVisible(true);
-			DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+			selectedEmployeeNumber = Integer.parseInt(searchEmployeeField.getText());
+			tempEmployee = employeeTable.find(selectedEmployeeNumber);
 			if (tempEmployee == null) {
 				getAngryAtUser("An employee with that employee number was not found!");
-				searchEmployeeField.setText("");
 			}
-			
 			else {
-				attributeTableModel.setColumnCount(0);
-				attributeTableModel.setRowCount(6);
-				selectedEmployeeNumber = tempEmployee.getEmployeeNumber();
 				setEditPanels();
-				// run through every employee in employeeList
-				// add the part time employee info as a column
-				if (tempEmployee instanceof PartTimeEmployee) {
-					Object[] info = {
-						tempEmployee.getEmployeeNumber(),
-						tempEmployee.getFirstName(),
-						tempEmployee.getLastName(),
-						sexIntToString(tempEmployee.getSex()),
-						employeeTable.getLocationName(tempEmployee.getWorkLocation()),
-						"Part Time",
-						tempEmployee.getDeductionsRate(),
-						((PartTimeEmployee) tempEmployee).getHourlyWage(),
-						((PartTimeEmployee) tempEmployee).getHoursPerWeek(),
-						((PartTimeEmployee) tempEmployee).getWeeksPerYear(),
-						tempEmployee.calcAnnualNetIncome()
-					};
-					Object[] firstColInfo = {
-						"employee number",
-						"first name",
-						"last name",
-						"sex",
-						"work location",
-						"type",
-						"deducations rate",
-						"hourly wage",
-						"hours per week",
-						"weeks per year",
-						"net income"
-					};
-					attributeTableModel.addColumn("attributes", firstColInfo);
-					attributeTableModel.addColumn("information", info);
-				} else if (tempEmployee instanceof FullTimeEmployee) {
-					Object[] info = {
-						tempEmployee.getEmployeeNumber(),
-						tempEmployee.getFirstName(),
-						tempEmployee.getLastName(),
-						sexIntToString(tempEmployee.getSex()),
-						employeeTable.getLocationName(tempEmployee.getWorkLocation()),
-						"Full Time",
-						tempEmployee.getDeductionsRate(),
-						((FullTimeEmployee) tempEmployee).getYearlySalary(),
-						tempEmployee.calcAnnualNetIncome()
-
-					};
-					Object[] firstColInfo = {
-						"employee number",
-						"first name",
-						"last name",
-						"sex",
-						"work location",
-						"type",
-						"deducations rate",
-						"salary",
-						"net income"
-					};
-					attributeTableModel.addColumn("attributes", firstColInfo);
-					attributeTableModel.addColumn("information", info);
-				}
+				jPanelEdit.setVisible(true);
 			}
+			searchEmployeeField.setText("");
 		} catch (NumberFormatException e) {
 			getAngryAtUser("You did not type in a valid number!");
 			searchEmployeeField.setText("");
 		}
-    }//GEN-LAST:event_changeEmployeeButtonActionPerformed
+    }//GEN-LAST:event_searchEmployeeButtonActionPerformed
+	
+    private void dropDownEditLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropDownEditLocationActionPerformed
+        // only modify employee location if the locIsOK flag is true
+        if (locIsOK) {
+            EmployeeInfo selectedEmployee = employeeTable.find(selectedEmployeeNumber);
+            selectedEmployee.setWorkLocation(dropDownEditLocation.getSelectedIndex());
+            updateEmployeeJtable(selectedEmployeeNumber);
+            setEditPanels();
+        }
+    }//GEN-LAST:event_dropDownEditLocationActionPerformed
+
+    private void changeTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTypeButtonActionPerformed
+        if (typeIsOK) {
+			EmployeeInfo selectedEmployee = employeeTable.find(selectedEmployeeNumber);
+			clearFields();
+			fieldNumber.setText(Integer.toString(selectedEmployeeNumber));
+			fieldFName.setText(selectedEmployee.getFirstName());
+			fieldLName.setText(selectedEmployee.getLastName());
+			fieldDedRate.setText(Double.toString(selectedEmployee.getDeductionsRate()));
+			// reset all drop down menus
+			dropDownLocation.setSelectedIndex(selectedEmployee.getWorkLocation());
+			dropDownSexes.setSelectedIndex(selectedEmployee.getSex());
+			dropDownLocation.setSelectedIndex(0);
+			if (selectedEmployee instanceof FullTimeEmployee){
+				dropDownType.setSelectedIndex(1);
+			}
+			else if (selectedEmployee instanceof PartTimeEmployee) {
+				dropDownType.setSelectedIndex(0);
+			}
+			
+			changeType = true;
+			addButtonActionPerformed(null);
+		}
+    }//GEN-LAST:event_changeTypeButtonActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1394,12 +1382,11 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JDialog addPopup;
     private javax.swing.JButton addTheEmployee;
     private javax.swing.JButton backButton;
-    private javax.swing.JButton changeEmployeeButton;
+    private javax.swing.JButton changeTypeButton;
     private javax.swing.JButton confirmLocationButton;
     private javax.swing.JButton delButton;
     private javax.swing.JComboBox<String> dropDownEditLocation;
     private javax.swing.JComboBox<String> dropDownEditSex;
-    private javax.swing.JComboBox<String> dropDownEditType;
     private javax.swing.JComboBox<String> dropDownLocation;
     private javax.swing.JComboBox<String> dropDownSexes;
     private javax.swing.JComboBox<String> dropDownType;
@@ -1445,6 +1432,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton openButton;
     private javax.swing.JButton saveAsButton;
     private javax.swing.JButton saveButton;
+    private javax.swing.JButton searchEmployeeButton;
     private javax.swing.JTextField searchEmployeeField;
     private javax.swing.JPanel settingsPanel;
     // End of variables declaration//GEN-END:variables
