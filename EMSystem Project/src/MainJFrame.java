@@ -1,12 +1,12 @@
 
-import java.io.*;
+import java.io.IOException;
+import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Desktop;
 import java.net.URI;
 import java.net.URISyntaxException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -1021,7 +1021,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		}
 		
 		// close the application (default close operation is do nothing)
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_formWindowClosing
 	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
@@ -1091,7 +1091,7 @@ public class MainJFrame extends javax.swing.JFrame {
 				resetLocList();
 				jTabbedPane1.setSelectedIndex(0);
 			} catch (IOException | ClassNotFoundException ex) {
-				getAngryAtUser(ex.toString());
+				getAngryAtUser("Error encountered while opening");
 			}
 		}
 		saveable = true;
