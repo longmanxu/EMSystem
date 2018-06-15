@@ -8,6 +8,7 @@ import java.awt.Desktop;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  * The main class of the Employee Management System Project.
@@ -22,11 +23,15 @@ public class MainJFrame extends javax.swing.JFrame {
 	private static int selectedEmployeeNumber = -1;	// the currently selected employee
 	
 	// flags for when the listeners should be active
+	// flags set to false when program is changing the contents of the menu
 	private static boolean locIsOK = true;
 	private static boolean sexIsOK = true;
-	private static boolean typeIsOK = true;
 	
 	private static boolean changeType = false;
+	
+	// lists of text fields used when adding employees
+	private final JTextField[] addEmployeeCommonTextFields;
+	private final JTextField[] addEmployeePTTextFields;
 	
 	/**
 	 * Creates new form MainJFrame 
@@ -41,6 +46,19 @@ public class MainJFrame extends javax.swing.JFrame {
 		jPanelEdit.setVisible(false);
 		jTable1.getTableHeader().setReorderingAllowed(false);
 		jTable2.getTableHeader().setReorderingAllowed(false);
+		
+		// set the text fields lists
+		addEmployeeCommonTextFields = new JTextField[] {
+			fieldNumber,
+			fieldFName,
+			fieldLName,
+			fieldDedRate
+		};
+		addEmployeePTTextFields = new JTextField[] {
+			fieldHourWage,
+			fieldHourWeek,
+			fieldWeekYear
+		};
 	}
 	
 	private void resetLocList() {
@@ -241,8 +259,6 @@ public class MainJFrame extends javax.swing.JFrame {
 		sexIsOK = false;
 		dropDownEditSex.setSelectedIndex(selectedEmployee.getSex());
 		sexIsOK = true;
-		typeIsOK = false;
-		typeIsOK = true;
 
 		attributeTableModel.setColumnCount(0);
 		attributeTableModel.setRowCount(6);
@@ -650,7 +666,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -1017,67 +1033,101 @@ public class MainJFrame extends javax.swing.JFrame {
 		System.out.println("Saved all employees.");
 	}
 	
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-		// save the employees 
-		if (saveable) {
-			int saveDialogResult = JOptionPane.showConfirmDialog(this, "Save changes?", "Save Warning", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-			switch (saveDialogResult) {
-				case JOptionPane.CANCEL_OPTION:	// if cancel, do not close
-					return;
-				case JOptionPane.YES_OPTION:
-					try{
-						saveTable();
-					} catch (IOException e) {
-						getAngryAtUser("Error while saving.");
-					}
-			}
+	/**
+	 * Warns the user to save the employee table. Returns true if safe to proceed.
+	 * @return true if the user is okay to proceed.
+	 * @throws IOException if an IOException occurs.
+	 */
+	private boolean saveWarning() throws IOException {
+		if (!saveable) {
+			return true;
 		}
-		
+		int saveDialogResult = JOptionPane.showConfirmDialog(this, "Save changes?", "Save Warning", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+		switch (saveDialogResult) {
+			case JOptionPane.NO_OPTION:	// if cancel, do not close
+				return true;
+			case JOptionPane.YES_OPTION:
+				saveTable();
+				return true;
+			default:
+				return false;
+		}
+	}
+	
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+		boolean saved = false;
+		try {
+			saved = saveWarning();
+		} catch (IOException e) {
+			getAngryAtUser(e.toString());
+		}
 		// close the application (default close operation is do nothing)
-		this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		if (saved) {
+			this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		}
     }//GEN-LAST:event_formWindowClosing
 	
     private void addTheEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTheEmployeeActionPerformed
-        // check to make sure none of the text fields are empty
-        // Update this if everytime we add/del a field
-        if (fieldNumber.getText().isEmpty() || fieldFName.getText().isEmpty() || fieldLName.getText().isEmpty()){
-			getAngryAtUser("Some of the fields are empty!!! :(");
-        }
-		else {
-			try {
-				EmployeeInfo temp = null;
-				if (dropDownType.getSelectedItem().equals("Full time")) {
-					// do full time stuff
-					temp = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
-							dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
-				}
-				else if (dropDownType.getSelectedItem().equals("Part time") && fieldHourWage.getText().isEmpty() == false && fieldHourWeek.getText().isEmpty() == false && fieldWeekYear.getText().isEmpty() == false) {
-					// do part time stuff
-					temp = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
-						dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
-				}
-				if (temp != null) {
-					if (changeType) {
-						if (temp.getEmployeeNumber() != selectedEmployeeNumber && employeeTable.find(temp.getEmployeeNumber()) != null) {
-							getAngryAtUser("Duplicate employee number not allowed");
-						}
-						else {
-							changeType = false;
-							delButtonActionPerformed(null);
-						}
-					}
-					saveable = true;
-					employeeTable.add(temp);
-					addToEmployeeJTable(temp);
-					addPopup.setVisible(false);
-					clearFields();
-					jPanelEdit.setVisible(false);
-				}
-			} catch (NumberFormatException e) {
-				getAngryAtUser("One or more fields contain incorrect information.");
-			} catch (IllegalArgumentException e) {
-				getAngryAtUser(e.getMessage());
+        // check to make sure none of the common text fields are empty
+		for (JTextField field : addEmployeeCommonTextFields) {
+			if (field.getText().isEmpty()) {
+				getAngryAtUser("Some of the fields are empty.");
+				return;
 			}
+		}
+		try {
+			EmployeeInfo newEmployee = null;
+			// full time employee:
+			if (dropDownType.getSelectedItem().equals("Full time")) {
+				// verify that the FT fields are not empty
+				if (fieldSalary.getText().isEmpty()) {
+					getAngryAtUser("Please enter a salary");
+					return;
+				}
+				// instantiate the new FT employee
+				newEmployee = new FullTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
+						dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldSalary.getText()));
+			}
+			// part time employee:
+			else if (dropDownType.getSelectedItem().equals("Part time")) {
+				// verify that the PT fields are not empty
+				for (JTextField field : addEmployeePTTextFields) {
+					if (field.getText().isEmpty()) {
+						getAngryAtUser("Some of the fields are empty.");
+						return;
+					}
+				}
+				// instantiate the new PT employee
+				newEmployee = new PartTimeEmployee(Integer.parseInt(fieldNumber.getText()), fieldFName.getText(), fieldLName.getText(),
+					dropDownSexes.getSelectedIndex(), dropDownLocation.getSelectedIndex(), Double.parseDouble(fieldDedRate.getText()), Double.parseDouble(fieldHourWage.getText()), Double.parseDouble(fieldHourWeek.getText()), Double.parseDouble(fieldWeekYear.getText()));
+			}
+			
+			// actually add the new employee:
+			if (newEmployee != null) {
+				// remove the old employee if the changeType flag is set to true
+				if (changeType) {
+					if (newEmployee.getEmployeeNumber() != selectedEmployeeNumber && employeeTable.find(newEmployee.getEmployeeNumber()) != null) {
+						getAngryAtUser("Duplicate employee number not allowed");
+					}
+					else {
+						changeType = false;
+						delButtonActionPerformed(null);
+					}
+				}
+				// add the employee
+				employeeTable.add(newEmployee);
+				addToEmployeeJTable(newEmployee);
+				// set the UI
+				addPopup.setVisible(false);
+				clearFields();
+				jPanelEdit.setVisible(false);
+				// set the saveable flag to true
+				saveable = true;
+			}
+		} catch (NumberFormatException e) {
+			getAngryAtUser("One or more fields contain incorrect information.");
+		} catch (IllegalArgumentException e) {
+			getAngryAtUser(e.getMessage());
 		}
     }//GEN-LAST:event_addTheEmployeeActionPerformed
 	
@@ -1100,22 +1150,31 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
-		JFileChooser chooser = new JFileChooser("../EMSystem Project");
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
-		chooser.setFileFilter(filter);
-		int returnVal = chooser.showOpenDialog(this);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			try {
-				employeeTable = EmployeeHashTable.open(chooser.getSelectedFile());
-				DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
-				attributeTableModel.setColumnCount(0);
-				jPanelEdit.setVisible(false);
-				initEmployeeJTable(employeeTable);
-				resetLocList();
-				jTabbedPane1.setSelectedIndex(0);
-				saveable = true;
-			} catch (IOException | ClassNotFoundException ex) {
-				getAngryAtUser("Error encountered while opening");
+		// save the current table first
+		boolean OKToProceed = false;
+		try {
+			OKToProceed = saveWarning();
+		} catch (IOException e) {
+			getAngryAtUser(e.toString());
+		}
+		if (OKToProceed) {
+			JFileChooser chooser = new JFileChooser("../EMSystem Project");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
+			chooser.setFileFilter(filter);
+			int returnVal = chooser.showOpenDialog(this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				try {
+					employeeTable = EmployeeHashTable.open(chooser.getSelectedFile());
+					DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
+					attributeTableModel.setColumnCount(0);
+					jPanelEdit.setVisible(false);
+					initEmployeeJTable(employeeTable);
+					resetLocList();
+					jTabbedPane1.setSelectedIndex(0);
+					saveable = true;
+				} catch (IOException | ClassNotFoundException ex) {
+					getAngryAtUser("Error encountered while opening");
+				}
 			}
 		}
     }//GEN-LAST:event_openButtonActionPerformed
@@ -1179,11 +1238,14 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmLocationButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+		// save the employee table, if saveable
+		boolean okToProceed = false;
 		try {
-			// save the employee table, if saveable
-			if (saveable) {
-				saveTable();
-			}
+			okToProceed = saveWarning();
+		} catch (IOException e) {
+			getAngryAtUser(e.toString());
+		}
+		if (okToProceed) {
 			// reset selected employee number
 			selectedEmployeeNumber = -1;
 			// reset the two jTables
@@ -1195,8 +1257,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			initEmployeeJTable(employeeTable);
 			resetLocList();
 			jTabbedPane1.setSelectedIndex(0);
-		} catch (IOException e) {
-			getAngryAtUser(e.toString());
 		}
     }//GEN-LAST:event_newButtonActionPerformed
 
@@ -1222,18 +1282,23 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
-        if (jTable1.getSelectedRow() == -1) {
-            getAngryAtUser("no selected employee to remove!");
-        }
+        if (selectedEmployeeNumber == -1) {
+			getAngryAtUser("Please try to select an employee.");
+		}
         else {
-			employeeTable.remove(selectedEmployeeNumber);
-			selectedEmployeeNumber = -1;
+			// delete the employee from the display jTable
 			DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
-            int selRow = jTable1.convertRowIndexToModel(jTable1.getSelectedRow());
-            employeeTableModel.removeRow(selRow);
-            jTable1.setModel(employeeTableModel);
-            DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
-            attributeTableModel.setColumnCount(0);
+			EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
+			int row = employeeList.indexOf(employeeTable.find(selectedEmployeeNumber));
+            employeeTableModel.removeRow(row);
+			jTable1.setModel(employeeTableModel);
+			// delete the employee from the hash table
+			employeeTable.remove(selectedEmployeeNumber);
+			// reset the selected employee
+			selectedEmployeeNumber = -1;
+			jTable1.clearSelection();
+			// reset the tables
+            ((DefaultTableModel) jTable2.getModel()).setColumnCount(0);
 			jPanelEdit.setVisible(false);
         }
     }//GEN-LAST:event_delButtonActionPerformed
@@ -1332,6 +1397,7 @@ public class MainJFrame extends javax.swing.JFrame {
 			else {
 				setEditPanels();
 				jPanelEdit.setVisible(true);
+				jTable1.clearSelection();
 			}
 			searchEmployeeField.setText("");
 		} catch (NumberFormatException e) {
@@ -1351,27 +1417,26 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_dropDownEditLocationActionPerformed
 
     private void changeTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTypeButtonActionPerformed
-        if (typeIsOK) {
-			EmployeeInfo selectedEmployee = employeeTable.find(selectedEmployeeNumber);
-			clearFields();
-			fieldNumber.setText(Integer.toString(selectedEmployeeNumber));
-			fieldFName.setText(selectedEmployee.getFirstName());
-			fieldLName.setText(selectedEmployee.getLastName());
-			fieldDedRate.setText(Double.toString(selectedEmployee.getDeductionsRate()));
-			// reset all drop down menus
-			dropDownLocation.setSelectedIndex(selectedEmployee.getWorkLocation());
-			dropDownSexes.setSelectedIndex(selectedEmployee.getSex());
-			dropDownLocation.setSelectedIndex(0);
-			if (selectedEmployee instanceof FullTimeEmployee){
-				dropDownType.setSelectedIndex(1);
-			}
-			else if (selectedEmployee instanceof PartTimeEmployee) {
-				dropDownType.setSelectedIndex(0);
-			}
-			
-			changeType = true;
-			addButtonActionPerformed(null);
+		// get the selected employee
+		EmployeeInfo selectedEmployee = employeeTable.find(selectedEmployeeNumber);
+		// set up the add employee window with employee's info filled in
+		clearFields();
+		fieldNumber.setText(Integer.toString(selectedEmployeeNumber));
+		fieldFName.setText(selectedEmployee.getFirstName());
+		fieldLName.setText(selectedEmployee.getLastName());
+		fieldDedRate.setText(Double.toString(selectedEmployee.getDeductionsRate()));
+		dropDownLocation.setSelectedIndex(selectedEmployee.getWorkLocation());
+		dropDownSexes.setSelectedIndex(selectedEmployee.getSex());
+		dropDownLocation.setSelectedIndex(0);
+		if (selectedEmployee instanceof FullTimeEmployee){
+			dropDownType.setSelectedIndex(0);
 		}
+		else if (selectedEmployee instanceof PartTimeEmployee) {
+			dropDownType.setSelectedIndex(1);
+		}
+		
+		changeType = true;	// set the changeType flag to true for addButtonActionPerformed(), so it would know to delete the old employee
+		addButtonActionPerformed(null);	// call the method for adding employee
     }//GEN-LAST:event_changeTypeButtonActionPerformed
 	
 	// <editor-fold defaultstate="collapsed" desc="Auto-generated Variables Declarations">
