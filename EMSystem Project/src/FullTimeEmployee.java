@@ -1,8 +1,8 @@
 /**
  * A subclass of EmployeeInfo for full time employees. Stores the employee's yearly salary.
  * @author Longman Xu and Tommy Huang
- * @version 2018-04-04
- *
+ * @version 2018-06-19
+ * 
  */
 public class FullTimeEmployee extends EmployeeInfo {
 	

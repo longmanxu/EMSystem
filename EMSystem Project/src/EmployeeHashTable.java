@@ -4,24 +4,18 @@ import java.util.ArrayList;
 /**
  * A open hashing/closed addressing hash table class for EmployeeInfo objects.
  * Contains methods for adding and removing EmployeeInfo objects from the hash table, as well as a method for displaying its contents.
- * @author Longman Xu
- * @version 2018-05-15
+ * @author Longman Xu and Tommy Huang
+ * @version 2018-06-19
  * 
  */
 
-/*
-TODO: 
-- save and open to files
-- edit employees
-- change locations
-*/
 public class EmployeeHashTable implements Serializable {
 	
 	private final int k;  // the k value (number of buckets, length of hashTable)
 	private int num;  // keep track of total number of employees, for re-optimizing 
 	private final EmployeeArrayList[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects
-	private final ArrayList<String> locationList;
-	private File prevSaveLoc = null;
+	private final ArrayList<String> locationList;	// the list of locations
+	private File prevSaveLoc = null;	// the previous save location
 	
 	/**
 	 * Constructs a new open hashing/closed addressing hash table with the specified k value.
@@ -183,7 +177,18 @@ public class EmployeeHashTable implements Serializable {
 		}
 	}
 	
-	// returns an array off all the employees
+	/**
+	 * Return the hash table.
+	 * @return the hash table.
+	 */
+	public EmployeeArrayList[] getTable() {
+		return this.hashTable;
+	} 
+	
+	/**
+	 * Converts the hash table to an EmployeeArrayList
+	 * @return an arrayList of every employee in the hash table.
+	 */
 	public EmployeeArrayList returnAllEmployees() {
 		EmployeeArrayList resultList = new EmployeeArrayList();
 		for (EmployeeArrayList bucket : hashTable) {
@@ -194,8 +199,8 @@ public class EmployeeHashTable implements Serializable {
 	}
 	
 	/**
-	 * Converts an ArrayList&lt;EmployeeInfo&gt; into an EmployeeHashTable.
-	 * @param sourceList the ArrayList&lt;EmployeeInfo&gt; to be converted.
+	 * Converts an EmployeeArrayList into an EmployeeHashTable.
+	 * @param sourceList the EmployeeArrayList to be converted.
 	 * @return the EmployeeHashTable created from the sourceList.
 	 */
 	public static EmployeeHashTable arrayListToHashTable (ArrayList<EmployeeInfo> sourceList) {
@@ -217,6 +222,10 @@ public class EmployeeHashTable implements Serializable {
 		this.locationList.add(locationName);
 	}
 	
+	/**
+	 * Remove the specified location
+	 * @param locationName the location to be removed
+	 */
 	public void removeLocation(String locationName) {
 		int locationIndex = this.locationList.indexOf(locationName);
 		for (EmployeeArrayList bucket : this.hashTable) {

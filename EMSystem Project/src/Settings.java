@@ -3,7 +3,8 @@ import java.io.*;
 
 /**
  * A class for managing the settings file.
- * @author Longman Xu
+ * @author Longman Xu and Tommy Huang
+ * @version 2018-06-19
  */
 public class Settings implements Serializable {
 	private String filePath;

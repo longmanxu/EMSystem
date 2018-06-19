@@ -4,7 +4,7 @@ import java.io.Serializable;
 /**
  * An object for storing an employee's first name, last name, employee number, sex, work location, and deductions rate.
  * @author Longman Xu and Tommy Huang
- * @version Date: 2018-04-04
+ * @version Date: 2018-06-19
  * 
  */
 abstract public class EmployeeInfo implements Serializable {
@@ -29,6 +29,7 @@ abstract public class EmployeeInfo implements Serializable {
 	 */
 	public EmployeeInfo(int employeeNumber, String firstName, String lastName, int sex, int workLocation,
 			double deductionsRate) {
+		// check for illegal parameters
 		if (employeeNumber < 0) {
 			throw new IllegalArgumentException("The employee number should be a non-negative integer.");
 		}

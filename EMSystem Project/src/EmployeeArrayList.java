@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 /**
  * A subclass of ArrayList&lt;EmployeeInfo&gt; which provides sorting algorithms for the EmployeeInfo elements.
- * @author longm
- * @version 2018-05-28
+ * Turns out the methods in this class are obsolete... Oh well..
+ * @author Longman Xu and Tommy Huang
+ * @version 2018-06-19
  */
 public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
 	/**
@@ -110,27 +111,6 @@ public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
 	public void display(){
 		for (EmployeeInfo employee : this) {
 			System.out.println(employee.toString());
-		}
-	}
-	
-	/**
-	 * A method for testing the EmployeeArrayList class.
-	 * @param args 
-	 */
-	public static void main(String[] args) {
-		EmployeeArrayList a = new EmployeeArrayList();
-		a.add(new FullTimeEmployee(100, "hello", "bye", 0, 0, 0, 0));
-		a.add(new FullTimeEmployee(99, "what", "aa", 0, 0, 0, 0));
-		a.add(new PartTimeEmployee(52, "lad", "ayy", 2, 8, 0.6, 33, 20, 30));
-		a.add(new FullTimeEmployee(1, "WHAT", "BB", 0, 0, 0, 0));
-		a.display();
-		EmployeeArrayList b;
-		try {
-			a.save("hello.txt");
-			b = EmployeeArrayList.open("hello.txt");
-			b.display();
-		} catch (IOException | ClassNotFoundException ex) {
-			ex.printStackTrace(System.err);
 		}
 	}
 }

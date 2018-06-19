@@ -2,7 +2,7 @@
  * A subclass of EmployeeInfo for part time employees.
  * Stores the employee's hourly wage, hours worked per week, and weeks worked per year.
  * @author Longman Xu and Tommy Huang
- * @version 2018-04-04
+ * @version 2018-06-19
  *
  */
 public class PartTimeEmployee extends EmployeeInfo {

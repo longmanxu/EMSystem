@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 /**
  * The main class of the Employee Management System Project.
  * @author Longman Xu and Tommy Huang
+ * @version 2018-06-19
  */
 public class MainJFrame extends javax.swing.JFrame {
 	
@@ -100,14 +101,6 @@ public class MainJFrame extends javax.swing.JFrame {
 	 * @param msg the message to be displayed.
 	 */
 	public void getAngryAtUser(String msg) {
-		// old way of doing it (we can go back if we want, i guess)
-//		if(msg.isEmpty()) {
-//			errorMsgLabel.setText("Error");
-//		}
-//		else{
-//			errorMsgLabel.setText(msg);
-//		}
-//		errorPopup.setVisible(true);
 		JOptionPane.showConfirmDialog(null, msg, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 	}
 	
@@ -117,26 +110,29 @@ public class MainJFrame extends javax.swing.JFrame {
 	 */
 	private void initEmployeeJTable() {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
-		employeeTableModel.setRowCount(0);
-		EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
-		for (EmployeeInfo employee : employeeList) {
-			String empType = null;
-			if (employee instanceof FullTimeEmployee) {
-				empType = "Full Time";
+		employeeTableModel.setRowCount(0);	// reset the displat table to be empty
+		
+		EmployeeArrayList[] hashTable = employeeTable.getHashTable();
+		// iterate through the hash table, adding each new employee as a row
+		for (EmployeeArrayList bucket : hashTable) {
+			for (EmployeeInfo employee : bucket) {
+				String empType = null;
+				if (employee instanceof FullTimeEmployee) {
+					empType = "Full Time";
+				}
+				else if (employee instanceof PartTimeEmployee) {
+					empType = "Part Time";
+				}
+				Object[] rowData = {
+					employee.getEmployeeNumber(),
+					employee.getFirstName(),
+					employee.getLastName(),
+					employeeTable.getLocationName(employee.getWorkLocation()),
+					empType
+				};
+				employeeTableModel.addRow(rowData);
 			}
-			else if (employee instanceof PartTimeEmployee) {
-				empType = "Part Time";
-			}
-			Object[] rowData = {
-				employee.getEmployeeNumber(),
-				employee.getFirstName(),
-				employee.getLastName(),
-				employeeTable.getLocationName(employee.getWorkLocation()),
-				empType
-			};
-			employeeTableModel.addRow(rowData);
 		}
-		jTable1.setModel(employeeTableModel);
 	}
 	
 	/**
@@ -152,6 +148,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		else if (newEmployee instanceof PartTimeEmployee) {
 			empType = "Part Time";
 		}
+		// add cell information to each row
 		Object[] rowData = {
 			newEmployee.getEmployeeNumber(),
 			newEmployee.getFirstName(),
@@ -160,7 +157,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			empType
 		};
 		employeeTableModel.addRow(rowData);
-		jTable1.setModel(employeeTableModel);
 	}
 	
 	/**
@@ -169,16 +165,21 @@ public class MainJFrame extends javax.swing.JFrame {
 	 */
 	private void updateEmployeeJtable(int empNumber) {
 		DefaultTableModel employeeTableModel = (DefaultTableModel) jTable1.getModel();
-		EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
+		
 		int row = -1;
+		// get the row of the employee being changed by converting the employee hash table to a list, and finding the index
+		EmployeeArrayList employeeList = employeeTable.returnAllEmployees();
 		for (int i = 0; i < employeeList.size(); i++) {
 			if (employeeList.get(i).getEmployeeNumber() == empNumber) {
 				row = i;
 				break;
 			}
 		}
-		employeeTableModel.removeRow(row);
-		EmployeeInfo modifiedEmployee = employeeTable.returnAllEmployees().get(row);
+		
+		employeeTableModel.removeRow(row);	// remove the row from the display table
+		EmployeeInfo modifiedEmployee = employeeList.get(row);	// get the employee to be modified
+		
+		// add the row with new information
 		String empType = null;
 		if (modifiedEmployee instanceof FullTimeEmployee) {
 			empType = "Full Time";
@@ -194,7 +195,6 @@ public class MainJFrame extends javax.swing.JFrame {
 			empType
 		};
 		employeeTableModel.insertRow(row, rowData);
-		jTable1.setModel(employeeTableModel);
 	}
 	
 	/**
@@ -357,7 +357,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		} catch (IllegalArgumentException ex) {
 			saveAsButtonActionPerformed(null);
 		}
-		jTabbedPane1.setSelectedIndex(0);
+		jTabbedPane1.setSelectedIndex(0);	// reset the tab
 		System.out.println("Saved all employees.");
 	}
 	
@@ -367,9 +367,10 @@ public class MainJFrame extends javax.swing.JFrame {
 	 * @throws IOException if an IOException occurs.
 	 */
 	private boolean saveWarning() throws IOException {
-		if (!saveable) {
+		if (!saveable) {	// no need to save if there's nothing to save
 			return true;
 		}
+		
 		int saveDialogResult = JOptionPane.showConfirmDialog(this, "Save changes?", "Save Warning", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 		switch (saveDialogResult) {
 			case JOptionPane.NO_OPTION:	// if cancel, do not close
@@ -381,10 +382,7 @@ public class MainJFrame extends javax.swing.JFrame {
 				return false;
 		}
 	}
-	
-	
-	// NOTE: we have absolutely no control over how all the methods below this are arranged
-	
+		
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -1213,18 +1211,28 @@ public class MainJFrame extends javax.swing.JFrame {
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
 		// save the current table first
 		boolean OKToProceed = false;
-		try {
-			OKToProceed = saveWarning();
-		} catch (IOException e) {
-			getAngryAtUser(e.toString());
+		if (!saveable) {
+			OKToProceed = true;
 		}
+		else {
+			try {
+				OKToProceed = saveWarning();
+			} catch (IOException e) {
+				getAngryAtUser(e.toString());
+			}
+		}
+		
+		// discard current table and open new one if safe to proceed
 		if (OKToProceed) {
+			// show the chooser
 			JFileChooser chooser = new JFileChooser("../EMSystem Project");
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 			chooser.setFileFilter(filter);
 			int returnVal = chooser.showOpenDialog(this);
+			
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				try {
+					// reset the entire thing
 					employeeTable = EmployeeHashTable.open(chooser.getSelectedFile());
 					DefaultTableModel attributeTableModel = (DefaultTableModel) jTable2.getModel();
 					attributeTableModel.setColumnCount(0);
@@ -1249,15 +1257,19 @@ public class MainJFrame extends javax.swing.JFrame {
 			getAngryAtUser("Table is empty!!");
 			return;
 		}
+		
+		// show the chooser
 		JFileChooser chooser = new JFileChooser("../EMSystem Project");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this);
+		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			// save the new file at the location
 			try {
 				File f = chooser.getSelectedFile();
 				String filePath = f.getAbsolutePath();
-				if(!filePath.endsWith(".em")) {
+				if(!filePath.endsWith(".em")) {	// make sure the file has .em
 					f = new File(filePath + ".em");
 				}
 				employeeTable.save(f);
