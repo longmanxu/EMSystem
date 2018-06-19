@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 abstract public class EmployeeInfo implements Serializable {
 	
+	private static final long serialVersionUID = 0L;	// ID for serialization
+	
 	// the contents of the EmployeeInfo object
 	private int employeeNumber;
 	private String firstName;

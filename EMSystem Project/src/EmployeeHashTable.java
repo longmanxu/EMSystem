@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class EmployeeHashTable implements Serializable {
 	
+	private static final long serialVersionUID = 0L;	// ID for serialization
+	
 	private final int k;  // the k value (number of buckets, length of hashTable)
 	private int num;  // keep track of total number of employees, for re-optimizing 
 	private final EmployeeArrayList[] hashTable; // the hash table, which is an array of ArrayLists (buckets) of EmployeeInfo objects

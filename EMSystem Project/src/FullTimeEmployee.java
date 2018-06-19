@@ -6,6 +6,8 @@
  */
 public class FullTimeEmployee extends EmployeeInfo {
 	
+	private static final long serialVersionUID = 0L;	// ID for serialization
+	
 	// the FullTimeEmployee's annual salary
 	private double yearlySalary;
 	

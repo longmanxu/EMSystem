@@ -7,6 +7,8 @@
  */
 public class PartTimeEmployee extends EmployeeInfo {
 	
+	private static final long serialVersionUID = 0L;	// ID for serialization
+	
 	// added contents of the PartTimeEmployee object for calculating income
 	private double hourlyWage;
 	private double hoursPerWeek;

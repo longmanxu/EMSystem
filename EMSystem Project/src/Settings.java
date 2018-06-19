@@ -7,6 +7,9 @@ import java.io.*;
  * @version 2018-06-19
  */
 public class Settings implements Serializable {
+	
+	private static final long serialVersionUID = 0L;	// ID for serialization
+	
 	private String filePath;
 	private String lookAndFeel;
 	

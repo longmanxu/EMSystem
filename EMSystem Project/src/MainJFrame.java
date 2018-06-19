@@ -1225,7 +1225,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		// discard current table and open new one if safe to proceed
 		if (OKToProceed) {
 			// show the chooser
-			JFileChooser chooser = new JFileChooser("../EMSystem Project");
+			JFileChooser chooser = new JFileChooser("../EMSystem Project/saved_employees");
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 			chooser.setFileFilter(filter);
 			int returnVal = chooser.showOpenDialog(this);
@@ -1259,7 +1259,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		}
 		
 		// show the chooser
-		JFileChooser chooser = new JFileChooser("../EMSystem Project");
+		JFileChooser chooser = new JFileChooser("../EMSystem Project/saved_employees");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this);

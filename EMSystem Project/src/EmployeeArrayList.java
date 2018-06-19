@@ -9,6 +9,9 @@ import java.util.ArrayList;
  * @version 2018-06-19
  */
 public class EmployeeArrayList extends ArrayList<EmployeeInfo> {
+	
+	private static final long serialVersionUID = 0L;	// ID for serialization
+	
 	/**
 	 * Construct a new EmployeeArrayList.
 	 */
