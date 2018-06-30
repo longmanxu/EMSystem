@@ -33,6 +33,9 @@ public class MainJFrame extends javax.swing.JFrame {
 	// lists of text fields used to check for emptiness when adding employees; initialized in constructor
 	private final JTextField[] addEmployeeCommonTextFields;
 	private final JTextField[] addEmployeePTTextFields;
+	
+	// directory to be save employees to
+	public final File saveDirectory;
 	// </editor-fold>
 	
 	/**
@@ -65,6 +68,12 @@ public class MainJFrame extends javax.swing.JFrame {
 			fieldHourWeek,
 			fieldWeekYear
 		};
+		
+		// set the save directory
+		saveDirectory = new File("saved_employees");
+		if (!saveDirectory.exists()) {
+			saveDirectory.mkdirs();
+		}
 	}
 	
 	
@@ -1225,7 +1234,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		// discard current table and open new one if safe to proceed
 		if (OKToProceed) {
 			// show the chooser
-			JFileChooser chooser = new JFileChooser("../EMSystem Project/saved_employees");
+			JFileChooser chooser = new JFileChooser(saveDirectory);
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 			chooser.setFileFilter(filter);
 			int returnVal = chooser.showOpenDialog(this);
@@ -1259,7 +1268,7 @@ public class MainJFrame extends javax.swing.JFrame {
 		}
 		
 		// show the chooser
-		JFileChooser chooser = new JFileChooser("../EMSystem Project/saved_employees");
+		JFileChooser chooser = new JFileChooser(saveDirectory);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("EMSystem files", "em");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this);
