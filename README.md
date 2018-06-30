@@ -1,2 +1,2 @@
 # EMSystem
-Employee Management System for the ICS 2U0 course.
+Employee Management System for the ICS 4U0 course.
